@@ -434,7 +434,11 @@ let pendientes = partidos.filter(p =>
 );
 
   // Ordenar por fecha más próxima primero
-  pendientes.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  pendientes.sort((a, b) => {
+  const da = new Date((a.fecha || "9999-12-31") + "T" + (a.hora || "23:59"));
+  const db = new Date((b.fecha || "9999-12-31") + "T" + (b.hora || "23:59"));
+  return da - db;
+});
   
   // Solo los que son hoy o después
   const hoy = new Date();

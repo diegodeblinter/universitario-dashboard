@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TailAdmin — Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+<style>
+  html, body { height: auto; min-height: 100vh; overflow-y: auto; }
+  
+  .app { display: block; }
+  
+  .sidebar { position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; }
+  
+  .main { margin-left: 240px; display: block; min-height: 100vh; }
+  
+  .topbar { position: sticky; top: 0; z-index: 99; }
+  
+  .content { overflow-y: visible; padding: 20px 24px; display: flex; flex-direction: column; gap: 18px; }
+  
+  #tablaPartidos td { white-space: normal !important; }
+
+  body { visibility: hidden; }
+
+</style>
+</head>
+
+<body>
+
+
+  <div class="app">
+
+    <!-- ══ SIDEBAR ══ -->
+    <div id="sidebar-container"></div>
+
+
+    <!-- ══ MAIN ══ -->
+    <div class="main">
+
+      <div class="topbar">
+        <div class="topbar-search">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input type="text" placeholder="Type to search...">
+        </div>
+        <div class="topbar-spacer"></div>
+        <div class="topbar-icons">
+          <div class="topbar-icon-btn" style="position:relative;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 01-3.46 0" />
+            </svg>
+            <span class="notif-dot"></span>
+          </div>
+          <div class="topbar-icon-btn">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </svg>
+          </div>
+        </div>
+        <div class="topbar-user">
+          <div class="topbar-user-info">
+            <div class="topbar-user-name">Diego Rodríguez</div>
+            <div class="topbar-user-role">Ux Designer</div>
+          </div>
+          <div class="topbar-avatar">DR</div>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <!-- PANEL DE INSERTAR DATA-->
+        <div
+          style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);animation:fadeUp 0.3s ease 0.25s both;">
+
+          <div style="background: #1e293b;padding:28px 28px 32px;display:flex;flex-direction:column;gap:32px;">
+
+
+            <div>
+              <h3>Gestión de Partidos</h3>
+            </div>
+
+
+            <form id="formPartido">
+
+              <label>Género:
+                <select id="genero" required>
+                  <option value="">Seleccionar</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Juvenil">Juvenil</option>
+                  <option value="Futsal">Futsal</option>
+                  <option value="Voley">Voley</option>
+                   <option value="Basquet">Basquet</option>                 
+                  <option value="Seleccion">Seleccion</option>
+                  <option value="Mundial">Mundial</option>
+                </select>
+              </label>
+
+              <label>Liga:
+                <select id="liga" required>
+                  <option value="">Seleccionar</option>
+                </select>
+              </label>
+              <label>Fecha: <input type="date" id="fecha" ></label>
+              <label>Hora: <input type="time" id="hora"></label>
+              <label>Detalle: <input type="text" id="detalle"></label>
+              <label>Estadio: <input type="text" id="estadio"></label>
+              <label>Equipo 1: <input type="text" id="equipo1"></label>
+              <label>Logo 1: <input type="text" id="logo1" placeholder="ej: equipo1.png"></label>
+              <label>Equipo 2: <input type="text" id="equipo2"></label>
+              <label>Logo 2: <input type="text" id="logo2" placeholder="ej: equipo2.png"></label>
+              <label>Estado: <input type="text" id="estado"></label>
+              <label>Resultado: <input type="text" id="resultado"></label>
+              <label>Estado Resultado: <input type="text" id="estadoresultado"></label>
+              <div class="btn-container">
+                <button type="submit">Registrar</button>
+              </div>
+              <div class="form-buttons">
+                <button type="button" id="btnCancelar" style="display: none;">Cancelar</button>
+              </div>
+            </form>
+
+
+
+
+          </div><!-- /contenido blanco -->
+
+        </div>
+
+
+        <!-- ══ PANEL DE REGISTROS ══ -->
+        <div
+          style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);animation:fadeUp 0.3s ease 0.25s both;">
+
+          <div style="background: #212d3f;padding:28px 28px 32px;display:flex;flex-direction:column;gap:32px;">
+
+            <div class="card-c">
+              <input type="file" onchange="importarPartidos(event)">
+              <button onclick="exportarPartidos()">Exportar JSON</button>
+              <input type="text" id="buscadorPartidos" placeholder="Buscar partido..."
+                style="margin: 20px 0; padding: 8px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 5px;">
+
+              <table id="tablaPartidos">
+                <thead>
+                  <tr >
+                    <th   style="font-size: 12px;">Género</th>
+                    <th   style="font-size: 12px; width: 30px;">Liga</th>
+                    <th   style="font-size: 12px; width: 120px;">Fecha</th>
+                    <th style="font-size: 12px; width: 60px;">Hora</th>
+                    <th   style="font-size: 12px; width: -40px;">Detalle</th>
+                    <th   style="font-size: 12px; width: -10px;">Estadio</th>
+                    <th   style="font-size: 12px; width: -70px;">Equipo1</th>
+                    <th   style="font-size: 12px;">Logo1</th>
+                    <th   style="font-size: 12px;">Equipo2</th>
+                    <th   style="font-size: 12px; width: 80px;">Logo2</th>
+                    <th   style="font-size: 12px; width: -40px;">Estado</th>
+                    <th   style="font-size: 12px; width: -40px;">Resultado</th>
+                    <th   style="font-size: 12px; width: -40px;">ER</th>
+                    <th   style="font-size: 12px;">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              
+            </div><!-- /contenido blanco -->
+          </div>
+        </div>
+
+      </div><!-- /main -->
+
+    </div>
+
+
+   </div><!-- /app -->
+
+
+
+
+
+
+    <script>
+
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vzu0ZJiMUxyN53l5lQzS-A_ScHmoJ1o";
+
+// ── SIDEBAR
+ fetch('sidebar.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('sidebar-container').innerHTML = html;
+
+      // Marcar automáticamente el item activo según la página actual
+      const pagina = window.location.pathname.split('/').pop();
+      document.querySelectorAll('.nav-sub-item a').forEach(a => {
+        if (a.getAttribute('href') === pagina) {
+          a.closest('.nav-sub-item').classList.add('active');
+
+          // Abrir el submenu padre automáticamente
+          const sub = a.closest('.nav-sub');
+          if (sub) {
+            sub.classList.add('open');
+            const id = sub.id.replace('sub-', '');
+            const arrow = document.getElementById('arrow-' + id);
+            if (arrow) arrow.classList.add('open');
+            const parentItem = sub.previousElementSibling;
+            if (parentItem) parentItem.classList.add('active');
+          }
+        }
+      });
+      document.body.style.visibility = 'visible';
+    });
+
+
+      // ── NAV ──
+      function toggleMenu(id, parentEl) {
+        const sub = document.getElementById('sub-' + id);
+        const arrow = document.getElementById('arrow-' + id);
+        if (!sub) return;
+        const isOpen = sub.classList.contains('open');
+        document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+        document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+      }
+      function setNavActive(el) {
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+        document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+        el.classList.add('active');
+      }
+      function setSubActive(el) {
+        document.querySelectorAll('.nav-sub-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+      }
+      function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('open');
+        document.querySelector('.sidebar-overlay').classList.toggle('show');
+     }
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+
+
+      /*CONFIGURACION ADMIN*/
+      document.querySelectorAll('.hex-content').forEach(el => {
+        el.setAttribute('title', '');
+      });
+
+      const ligasPorGenero = {
+        'Masculino': ['Liga 1','Copa de la Liga', 'Copa Libertadores', 'Copa Sudamericana', 'Amistosos'],
+        'Femenino': ['Liga Femenina FPF', 'Copa Libertadores F', 'Amistosos'],
+        'Juvenil': ['Torneo de Reservas', 'Copa Libertadores sub20', 'Liga 3', 'Liga Juvenil sub18', 'Liga Nacional Juvenil'],
+        'Futsal': ['Joma Futsal Pro', 'Liga Futsal Pro', 'Copa Libertadores Futsal', 'Amistosos'],
+        'Voley': ['LNSV Femenina', 'Amistosos'],
+        'Basquet': ['La Liga Division II'],
+        'Seleccion': ['Copa America', 'Eliminatoria 2026', 'Amistosos'],
+        'Mundial': ['Copa del Mundo']
+      };
+
+      const generoSelect = document.getElementById('genero');
+      const ligaSelect = document.getElementById('liga');
+      const form = document.getElementById('formPartido');
+      const tablaBody = document.querySelector('#tablaPartidos tbody');
+      let editandoIndice = -1;
+
+      generoSelect.addEventListener('change', () => {
+        const ligas = ligasPorGenero[generoSelect.value] || [];
+        ligaSelect.innerHTML = '<option value="">Seleccionar</option>';
+        ligas.forEach(liga => {
+          const option = document.createElement('option');
+          option.value = liga;
+          option.textContent = liga;
+          ligaSelect.appendChild(option);
+        });
+      });
+
+      form.addEventListener('submit', guardarPartido);
+
+
+async function guardarPartido(e) {
+  e.preventDefault();
+  const partido = {
+    genero: generoSelect.value,
+    liga: ligaSelect.value,
+    fecha: document.getElementById('fecha').value,
+    hora: document.getElementById('hora').value,
+    detalle: document.getElementById('detalle').value,
+    estadio: document.getElementById('estadio').value,
+    equipo1: document.getElementById('equipo1').value,
+    logo1: document.getElementById('logo1').value,
+    equipo2: document.getElementById('equipo2').value,
+    logo2: document.getElementById('logo2').value,
+    estado: document.getElementById('estado').value,
+    resultado: document.getElementById('resultado').value,
+    estadoresultado: document.getElementById('estadoresultado').value
+  };
+
+  let partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+
+  if (editandoIndice >= 0) {
+    // Actualizar en Supabase
+    const idSupabase = partidos[editandoIndice].id;
+    if (idSupabase) {
+      await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${idSupabase}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify(partido)
+      });
+    }
+    partidos[editandoIndice] = { ...partidos[editandoIndice], ...partido };
+    editandoIndice = -1;
+    form.querySelector("button[type='submit']").textContent = "Registrar";
+  } else {
+    // Insertar en Supabase
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/partidos`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify(partido)
+    });
+    const nuevo = await res.json();
+    partido.id = nuevo[0]?.id; // guardar el id que asignó Supabase
+    partidos.push(partido);
+  }
+
+  localStorage.setItem('partidos', JSON.stringify(partidos));
+  form.reset();
+  ligaSelect.innerHTML = '';
+  mostrarPartidos();
+}
+
+async function eliminarPartido(index) {
+  let partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+  const idSupabase = partidos[index].id;
+
+  if (idSupabase) {
+    await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${idSupabase}`, {
+      method: "DELETE",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    });
+  }
+
+  partidos.splice(index, 1);
+  localStorage.setItem('partidos', JSON.stringify(partidos));
+  mostrarPartidos();
+}
+
+function editarPartido(index) {
+  const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+  const p = partidos[index];
+  editandoIndice = index;
+
+  generoSelect.value = p.genero;
+  generoSelect.dispatchEvent(new Event('change'));
+  setTimeout(() => {
+    ligaSelect.value = p.liga;
+  }, 100);
+
+  document.getElementById('fecha').value = p.fecha;
+  document.getElementById('hora').value = p.hora || '';
+  document.getElementById('detalle').value = p.detalle;
+  document.getElementById('estadio').value = p.estadio;
+  document.getElementById('equipo1').value = p.equipo1;
+  document.getElementById('logo1').value = p.logo1;
+  document.getElementById('equipo2').value = p.equipo2;
+  document.getElementById('logo2').value = p.logo2;
+  document.getElementById('estado').value = p.estado;
+  document.getElementById('resultado').value = p.resultado;
+  document.getElementById('estadoresultado').value = p.estadoresultado;
+
+  document.querySelector("button[type='submit']").textContent = "Actualizar";
+  document.getElementById("btnCancelar").style.display = "inline-block";
+
+  document.getElementById("btnCancelar").onclick = function() {
+    form.reset();
+    document.querySelector("button[type='submit']").textContent = "Registrar";
+    this.style.display = "none";
+    editandoIndice = -1;
+  };
+
+  setTimeout(() => {
+    const formEl = document.getElementById("formPartido");
+    const headerOffset = 150;
+    const elementPosition = formEl.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+  }, 100);
+}
+
+
+function mostrarPartidos() {
+        tablaBody.innerHTML = '';
+        const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+        partidos.forEach((p, i) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+        <td>${p.genero}</td>
+        <td>${p.liga}</td>
+        <td style="font-size: 11px;">${p.fecha || 'YY-MM-DD'}</td>
+        <td style="font-size: 11px;">${p.hora || '--:--'}</td>
+        <td>${p.detalle}</td>
+        <td>${p.estadio}</td>
+        <td>${p.equipo1}</td>
+        <td class="logo-tabla" ><img src="img/${p.logo1}" width="30"></td>
+        <td>${p.equipo2}</td>
+        <td class="logo-tabla" ><img src="img/${p.logo2}" width="30"></td>
+        <td>${p.estado}</td>
+        <td>${p.resultado}</td>
+        <td>${p.estadoresultado}</td>
+        <td>
+          <div style="display: flex; gap: 6px;">
+          <button class="btn-editar" onclick="editarPartido(${i})">Edit</button>
+          <button class="btn-eliminar" onclick="eliminarPartido(${i})">Delete</button>
+          <button class="btn-mover" onclick="moverArriba(${i})">⬆</button>
+          <button class="btn-mover" onclick="moverAbajo(${i})">⬇</button>
+           </div>
+        </td>
+      `;
+          tablaBody.appendChild(row);
+        });
+      }
+
+
+function exportarPartidos() {
+  const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(partidos, null, 2));
+  const link = document.createElement('a');
+  link.setAttribute("href", dataStr);
+  link.setAttribute("download", "partidos.json");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+
+
+      function importarPartidos(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const nuevosPartidos = JSON.parse(e.target.result);
+            if (!Array.isArray(nuevosPartidos)) throw new Error("Formato inválido");
+
+            const partidosExistentes = JSON.parse(localStorage.getItem('partidos')) || [];
+            const partidosCombinados = partidosExistentes.concat(nuevosPartidos);
+            localStorage.setItem('partidos', JSON.stringify(partidosCombinados));
+            mostrarPartidos();
+          } catch (error) {
+            alert("Error al importar el archivo: " + error.message);
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // Mostrar al cargar
+      document.addEventListener('DOMContentLoaded', mostrarPartidos);
+
+
+
+      //buscar
+      document.getElementById("buscadorPartidos").addEventListener("input", function () {
+        const filtro = this.value.toLowerCase();
+        const filas = document.querySelectorAll("#tablaPartidos tbody tr");
+
+        filas.forEach(fila => {
+          const textoFila = fila.textContent.toLowerCase();
+          fila.style.display = textoFila.includes(filtro) ? "" : "none";
+        });
+      });
+
+
+
+
+
+
+
+
+
+
+async function inicializarPartidos() {
+  try {
+    const dataLocal = JSON.parse(localStorage.getItem("partidos")) || [];
+    if (dataLocal.length > 0) {
+      console.log(`✅ ${dataLocal.length} partidos desde localStorage`);
+      return;
+    }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/partidos?select=*&order=fecha.asc`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if (!res.ok) throw new Error("Error Supabase");
+    const data = await res.json();
+    localStorage.setItem("partidos", JSON.stringify(data));
+    console.log(`✅ ${data.length} partidos cargados desde Supabase`);
+  } catch (e) {
+    console.error("❌ Error Supabase:", e);
+  }
+}
+
+
+
+
+      function cargarUltimosTabla() {
+        let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+
+        // Filtrar solo partidos ya jugados
+        let jugados = partidos.filter(p =>
+          p.estado.toLowerCase() !== "pendiente" &&
+          p.estado.toLowerCase() !== "pospuesto"
+        );
+
+        // Ordenar por fecha descendente (más recientes primero)
+        jugados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+        // Quedarse con los últimos 4
+        jugados = jugados.slice(0, 4);
+
+        // Llenar tabla
+        let tbody = document.querySelector("#tablaUltimos tbody");
+        tbody.innerHTML = "";
+
+        jugados.forEach(p => {
+          let row = document.createElement("tr");
+          row.innerHTML = `
+      <td>${p.fecha}</td>
+      <td>${p.liga}</td>
+      <td>${p.estadio}</td>
+      <td>
+        <img src="${p.logo1}" alt="" style="height:20px"> ${p.equipo1}
+        vs 
+        ${p.equipo2} <img src="${p.logo2}" alt="" style="height:20px">
+      </td>
+      <td>${p.resultado || "-"}</td>
+      <td>${p.estadoresultado || "-"}</td>
+    `;
+          tbody.appendChild(row);
+        });
+      }
+
+window.onload = async function() {
+  await inicializarPartidos();
+  mostrarPartidos();
+  cargarUltimosTabla();
+};
+
+
+
+      function moverArriba(index) {
+        let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+        if (index > 0) {
+          [partidos[index - 1], partidos[index]] = [partidos[index], partidos[index - 1]];
+          localStorage.setItem("partidos", JSON.stringify(partidos));
+          mostrarPartidos();
+        }
+      }
+
+      function moverAbajo(index) {
+        let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+        if (index < partidos.length - 1) {
+          [partidos[index], partidos[index + 1]] = [partidos[index + 1], partidos[index]];
+          localStorage.setItem("partidos", JSON.stringify(partidos));
+          mostrarPartidos();
+        }
+      }
+
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TailAdmin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+html, body { height: 100%; overflow: hidden; }
+.main { display: flex; flex-direction: column; overflow: hidden; }
+.content { flex: 1; overflow-y: auto; }
+body { visibility: hidden; }
+
+</style>
+</head>
+<body>
+  
+<div class="app">
+
+<!-- ══ SIDEBAR ══ -->
+<div id="sidebar-container"></div>
+
+
+
+
+
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <div class="topbar">
+    <div class="topbar-search">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Type to search...">
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-icons">
+      <div class="topbar-icon-btn" style="position:relative;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+    </div>
+    <div class="topbar-user">
+      <div class="topbar-user-info">
+        <div class="topbar-user-name">Diego Rodríguez</div>
+        <div class="topbar-user-role">Ux Designer</div>
+      </div>
+      <div class="topbar-avatar">DR</div>
+    </div>
+  </div>
+
+
+
+  
+
+
+
+
+
+
+<div class="content">
+
+
+  <!-- ══ HEADER ══ -->
+  <div class="team-header">
+    <div class="team-crest"><img src="img/universitario.png" ></div>
+    <div>
+      <div class="team-name2">Club Universitario de Deportes</div>
+      <div class="team-sub2">Fundado el 7 de agosto de 1924 · Lima, Perú</div>
+      <div class="sub-tags">
+        <span class="sub-tag">🏆 Máximo campeón del Perú</span>
+        <span class="sub-tag">📅 100 años de historia</span>
+        <span class="sub-tag">⚽ «La U» · «Los Cremas»</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <!-- ══ KPI ROW ══ -->
+<div id="ultimos4Cards" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:0;"></div>
+
+    <!-- Mid grid -->
+    <div class="mid-grid2">
+
+      <!-- 1 cards apilado en la columna izquierda -->
+
+<!-- Card calendario -->
+<div class="card" style="padding:0;overflow:hidden;max-width: 620px;">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+    <div class="card-title">Calendario de Partidos</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button onclick="cambiarMes(-1)" style="width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);">‹</button>
+      <span id="calMesAnio" style="font-size:13px;font-weight:600;color:var(--text-primary);min-width:110px;text-align:center;"></span>
+      <button onclick="cambiarMes(1)" style="width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);">›</button>
+    </div>
+  </div>
+  <div id="calendarioGrid" style="padding:16px;"></div>
+</div>
+
+
+    
+
+      <!-- 3 cards apilados en la columna derecha -->
+      <div style="display:flex; flex-direction:column; gap:16px; min-width:0; overflow:hidden;">
+
+
+
+        <!-- Card 1: Próximo Partido -->
+<!-- Card 2: Forma Reciente -->
+<div class="card" style="flex:none; overflow:hidden; min-width:0; padding:0;">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+    <div class="card-title">Forma Reciente</div>
+    <span style="font-size:11px;font-weight:600;color:var(--text-muted);">Últimos 5</span>
+  </div>
+  <div class="forma-card-body">
+    <div id="formaStats" class="forma-stats"></div>
+    <div id="formaRecienteRow" class="forma-row"></div>
+  </div>
+</div>
+
+
+
+        <!-- Card 2: Forma Reciente — NUEVO DISEÑO -->
+<div class="card" style="flex:none; overflow:hidden; min-width:0; ">
+
+</div>
+
+
+
+      </div>
+    </div>
+
+
+ 
+
+  
+
+
+
+
+</div><!-- /main -->
+
+<!-- ══ MODAL DETALLE PARTIDO ══ -->
+<div id="modalPartido" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;width:520px;max-width:94vw;box-shadow:0 24px 60px rgba(0,0,0,0.2);overflow:hidden;">
+    <div style="padding:16px 22px;background:#1c2434;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <img id="modalLigaLogo" src="" style="width:22px;height:22px;object-fit:contain;">
+        <span id="modalLigaNombre" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:.06em;text-transform:uppercase;"></span>
+      </div>
+      <button onclick="cerrarModal()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:20px;line-height:1;">&#x2715;</button>
+    </div>
+    <div style="background:#f8fafc;padding:22px;text-align:center;border-bottom:1px solid #e4eaf2;">
+      <div id="modalFecha" style="font-size:11px;font-weight:600;color:#94a3b8;margin-bottom:14px;letter-spacing:.06em;text-transform:uppercase;"></div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;max-width:360px;margin:0 auto;">
+        <div style="text-align:center;">
+          <img id="modalLogo1" src="" style="width:52px;height:52px;object-fit:contain;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.1));">
+          <div id="modalEquipo1" style="font-size:13px;font-weight:700;color:#1a2332;"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div id="modalScore" style="font-family:'Satoshi',sans-serif;font-size:38px;font-weight:800;color:#1a2332;letter-spacing:3px;line-height:1;"></div>
+          <span id="modalEstadoBadge" style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;"></span>
+        </div>
+        <div style="text-align:center;">
+          <img id="modalLogo2" src="" style="width:52px;height:52px;object-fit:contain;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.1));">
+          <div id="modalEquipo2" style="font-size:13px;font-weight:700;color:#1a2332;"></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:18px 22px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;">
+          <div style="font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Estadio</div>
+          <div id="modalEstadio" style="font-size:13px;font-weight:600;color:#1a2332;"></div>
+        </div>
+        <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;">
+          <div style="font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Jornada</div>
+          <div id="modalDetalle" style="font-size:13px;font-weight:600;color:#1a2332;"></div>
+        </div>
+      </div>
+      <div id="modalResultBar" style="display:none;">
+        <div style="font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Resultado</div>
+        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;">
+          <div id="barLocal" style="background:#3361ff;border-radius:4px;transition:width .4s;"></div>
+          <div style="background:#e2e8f0;width:4px;flex-shrink:0;"></div>
+          <div id="barVisita" style="background:#ef4444;border-radius:4px;transition:width .4s;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#94a3b8;">
+          <span id="barLocalLbl"></span><span id="barVisitaLbl"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+
+
+
+
+
+
+<script>
+// ── NAV ──
+// ── MENU ──
+function toggleMenu(id, parentEl) {
+  const sub = document.getElementById('sub-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!sub) return;
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+}
+function setNavActive(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  el.classList.add('active');
+}
+
+function setSubActive(el) {
+  document.querySelectorAll('.nav-sub-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+
+// ── SIDEBAR
+ fetch('sidebar.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('sidebar-container').innerHTML = html;
+
+      // Marcar automáticamente el item activo según la página actual
+      const pagina = window.location.pathname.split('/').pop();
+      document.querySelectorAll('.nav-sub-item a').forEach(a => {
+        if (a.getAttribute('href') === pagina) {
+          a.closest('.nav-sub-item').classList.add('active');
+
+          // Abrir el submenu padre automáticamente
+          const sub = a.closest('.nav-sub');
+          if (sub) {
+            sub.classList.add('open');
+            const id = sub.id.replace('sub-', '');
+            const arrow = document.getElementById('arrow-' + id);
+            if (arrow) arrow.classList.add('open');
+            const parentItem = sub.previousElementSibling;
+            if (parentItem) parentItem.classList.add('active');
+          }
+        }
+      });
+      document.body.style.visibility = 'visible';
+    });
+
+
+
+// ── DARK MODE ──
+function toggleTheme() {
+  const isDark = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  document.getElementById("iconSun").style.display  = isDark ? "block" : "none";
+  document.getElementById("iconMoon").style.display = isDark ? "none"  : "block";
+}
+(function() {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    const s=document.getElementById("iconSun"), m=document.getElementById("iconMoon");
+    if(s) s.style.display="block";
+    if(m) m.style.display="none";
+  }
+})();
+
+
+
+
+
+
+// -----------------------------------------------------------
+
+
+function getLigaLogo(nombreLiga) {
+  const mapa = {
+    "Liga 1": "liga1.png",
+    "Copa de la Liga": "copadelaliga.png",
+    "Copa Libertadores": "libertadores.png",
+    "Copa Sudamericana": "sudamericana.png",
+    "Liga Femenina FPF": "ligafemenina.png",
+    "Copa Libertadores F": "libertadoresf.png",
+    "Amistosos": "amistosos.png",
+    "Torneo de Reservas": "reservas.png",
+    "Copa Libertadores sub20": "libertadoressub20.png",
+    "Liga 3": "lnfa.png",
+    "Liga Nacional Juvenil": "liganaciones.png",
+    "Liga Juvenil sub18": "ligajuvenil.png",
+    "Joma Futsal Pro": "jomapro.png",
+    "Liga Futsal Pro": "futsalpro.png",
+    "Copa Libertadores Futsal": "libertadoresfutsal.png",
+    "LNSV Femenina": "voley.png",
+    "La Liga Division II": "laliga.png",
+    "Copa America": "copaamerica.png",
+    "Eliminatoria 2026": "eliminatorias.png",
+    "Copa del Mundo": "eliminatoria2026.png"
+  };
+  return mapa[nombreLiga] || "amistosos.png";
+}
+function renderTeamKPIs() {
+  let partidos = [];
+  try { partidos = JSON.parse(localStorage.getItem("partidos")) || []; } catch{}
+  
+  const liga1 = partidos.filter(p =>
+    p.liga === "La Liga Division II" && 
+    p.estado?.toLowerCase() === "finalizado"
+  );
+  
+  let sg=0, sp=0, wins=0, draws=0, losses=0;
+  liga1.forEach(p => {
+    if (!p.resultado?.includes("-")) return;
+    const [r1,r2] = p.resultado.split("-").map(Number);
+    const eL = p.equipo1?.toLowerCase() === "universitario";
+    const gU = eL?r1:r2, gR = eL?r2:r1;
+    sg+=gU; sp+=gR;
+    if (gU>gR) wins++; else if (gU===gR) draws++; else losses++;
+  });
+  
+  const pj = wins+draws+losses;
+  const pct = pj>0 ? Math.round(wins/pj*100) : 0;
+  
+  const cron = [...liga1].sort((a,b) => new Date(b.fecha)-new Date(a.fecha));
+  let rChar="—", rLen=0;
+  if (cron.length) {
+    const u = cron[0];
+    const [r1,r2] = u.resultado.split("-").map(Number);
+    const eL = u.equipo1?.toLowerCase() === "universitario";
+    rChar = (eL?r1:r2)>(eL?r2:r1) ? "V" : (eL?r1:r2)===(eL?r2:r1) ? "E" : "D";
+    for (let i=0; i<cron.length; i++) {
+      const p = cron[i];
+      if (!p.resultado?.includes("-")) break;
+      const [a,b] = p.resultado.split("-").map(Number);
+      const eL2 = p.equipo1?.toLowerCase() === "universitario";
+      const c = (eL2?a:b)>(eL2?b:a) ? "V" : (eL2?a:b)===(eL2?b:a) ? "E" : "D";
+      if (c===rChar) rLen++; else break;
+    }
+  }
+  
+  const $ = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  $("kpi-gf", sg);
+  $("kpi-gc", sp);
+  $("kpi-win", pct+"%");
+  $("kpi-racha", rLen ? rChar+" ×"+rLen : "—");
+  $("kpi-gf-sub", "En "+pj+" partidos");
+  
+  const gcS = document.getElementById("kpi-gc-sub");
+  if(gcS) {
+    gcS.textContent = sg>=sp ? "Saldo +"+(sg-sp) : "Saldo "+(sg-sp);
+    gcS.className = "stat-badge "+(sg>=sp?"up":"down");
+  }
+  $("kpi-win-sub", wins+"V  "+draws+"E  "+losses+"D");
+  
+  const rS = document.getElementById("kpi-racha-sub");
+  if(rS) {
+    const c = rChar==="V"?"#10b981" : rChar==="D"?"#ef4444" : "#94a3b8";
+    rS.textContent = rChar==="V" ? "Racha ganadora 🔥" : rChar==="D" ? "Racha perdedora" : "En empates";
+    rS.style.background = c+"22";
+    rS.style.color = c;
+  }
+}
+
+
+
+
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vzu0ZJiMUxyN53l5lQzS-A_ScHmoJ1o";
+
+async function inicializarPartidos() {
+  try {
+    const dataLocal = JSON.parse(localStorage.getItem("partidos")) || [];
+    
+    // Si ya hay datos en localStorage, no pisar con Supabase
+    if (dataLocal.length > 0) {
+      console.log(`✅ ${dataLocal.length} partidos desde localStorage`);
+      return;
+    }
+
+    // Solo cargar de Supabase si localStorage está vacío
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/partidos?select=*&order=fecha.asc`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if (!res.ok) throw new Error("Error Supabase");
+    const data = await res.json();
+    localStorage.setItem("partidos", JSON.stringify(data));
+    console.log(`✅ ${data.length} partidos cargados desde Supabase`);
+  } catch (e) {
+    console.error("❌ Error Supabase:", e);
+  }
+}
+
+function cargarUltimos4Cards() {
+  let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+
+  // Todos los pendientes con fecha, de cualquier liga
+let pendientes = partidos.filter(p =>
+  (p.estado?.toLowerCase() === "pendiente" || p.estado?.toLowerCase() === "en vivo") &&
+  p.fecha && p.fecha.trim() !== ""
+);
+
+  // Ordenar por fecha más próxima primero
+  pendientes.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  
+  // Solo los que son hoy o después
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  
+const proximos = pendientes
+  .filter(p => {
+    const [y, m, d] = p.fecha.split("-").map(Number);
+    const fechaPartido = new Date(y, m - 1, d); // sin UTC, fecha local
+    return fechaPartido >= hoy;
+  })
+  .slice(0, 4);
+
+  const cont = document.getElementById("ultimos4Cards");
+  if (!cont) return;
+  cont.innerHTML = "";
+
+  if (!proximos.length) {
+    cont.innerHTML = `<div style="grid-column:1/-1;text-align:center;font-size:12px;color:var(--text-muted);padding:20px 0;">Sin partidos pendientes próximos</div>`;
+    return;
+  }
+
+
+
+proximos.forEach(p => {
+  const ligaLogo = getLigaLogo(p.liga);
+  const enVivo = p.estado?.toLowerCase() === "en vivo";
+  const card = document.createElement("div");
+ card.style.cssText = `
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: var(--shadow);
+`;
+
+  card.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+      <img src="img/ligas/${ligaLogo}" style="width:22px;height:22px;object-fit:contain;" title="${p.liga}">
+      ${enVivo
+        ? `<span class="live-badge"><span class="live-dot"></span>EN VIVO</span>`
+        : `<span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Próximo Partido</span>`}
+      <div style="width:18px;"></div>
+    </div>
+
+    ${enVivo
+      ? `<div class="live-minute">${p.minuto ? p.minuto + "'" : "EN VIVO"}</div>`
+      : `<div style="text-align:center;font-size:11px;font-weight:500;color:var(--text-muted);background:var(--bg);border-radius:6px;padding:4px 0;margin-bottom:14px;">${p.fecha}${p.hora ? " · " + p.hora : ""}</div>`}
+
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:14px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <img src="img/${p.logo1}" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));" onerror="this.style.display='none'">
+        <span style="font-size:12px;font-weight:600;color:var(--text-primary);text-align:center;line-height:1.3;">${p.equipo1}</span>
+      </div>
+      ${enVivo
+        ? `<div class="live-score">${p.resultado || "0 - 0"}</div>`
+        : `<div style="font-size:11px;font-weight:800;letter-spacing:2px;color:#fff;background:#000;padding:7px 11px;border-radius:999px;border:1.5px solid #000;">VS</div>`}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <img src="img/${p.logo2}" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));" onerror="this.style.display='none'">
+        <span style="font-size:12px;font-weight:600;color:var(--text-primary);text-align:center;line-height:1.3;">${p.equipo2}</span>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--text-secondary);padding-top:12px;border-top:1px solid var(--border);line-height:1.5;">
+      <span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--text-primary);">${p.liga}</span>
+      <span style="display:inline-flex;align-items:center;gap:3px;color:var(--text-muted);font-size:10.5px;">🏟 ${p.estadio || "Por definir"}</span>
+    </div>
+  `;
+
+  cont.appendChild(card);
+});
+}
+
+
+
+
+// ══════════════════════════════════════
+// CALENDARIO
+// ══════════════════════════════════════
+let calFecha = new Date();
+
+function cambiarMes(delta) {
+  calFecha.setMonth(calFecha.getMonth() + delta);
+  renderCalendario();
+}
+
+function renderCalendario() {
+  const partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+  const anio = calFecha.getFullYear();
+  const mes  = calFecha.getMonth();
+
+  const nombreMes = calFecha.toLocaleString("es-PE", { month: "long", year: "numeric" });
+  document.getElementById("calMesAnio").textContent =
+    nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
+
+  const primerDia = new Date(anio, mes, 1).getDay();
+  const diasEnMes = new Date(anio, mes + 1, 0).getDate();
+
+  const partidosMes = partidos.filter(p => {
+    if (!p.fecha) return false;
+    const [y, m] = p.fecha.split("-").map(Number);
+    const esUni = p.equipo1?.toLowerCase().includes("universitario") ||
+                  p.equipo2?.toLowerCase().includes("universitario");
+    return y === anio && (m - 1) === mes && esUni;
+  });
+
+  const mapaPartidos = {};
+  partidosMes.forEach(p => {
+    const dia = parseInt(p.fecha.split("-")[2]);
+    if (!mapaPartidos[dia]) mapaPartidos[dia] = [];
+    mapaPartidos[dia].push(p);
+  });
+
+  const dias = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+
+  // Cabecera días
+let html = `
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;">
+    ${dias.map(d => `
+      <div style="text-align:center;font-size:10px;font-weight:600;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">
+        ${d}
+      </div>`).join("")}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+`;
+
+  // Vacíos iniciales
+for (let i = 0; i < primerDia; i++) {
+  html += `<div style="aspect-ratio:4/4.5;"></div>`;
+}
+
+  const hoyReal = new Date();
+
+  for (let dia = 1; dia <= diasEnMes; dia++) {
+    const partidos_dia = mapaPartidos[dia] || [];
+    const esHoy = dia === hoyReal.getDate() &&
+                  mes === hoyReal.getMonth() &&
+                  anio === hoyReal.getFullYear();
+
+    let contenidoPartidos = "";
+
+partidos_dia.forEach(p => {
+  const esLocal = p.equipo1?.toLowerCase().includes("universitario");
+  const logoRival = esLocal ? p.logo2 : p.logo1;
+  const bgCard = esLocal ? "#e5e8ec" : "#1f232a";
+  const finalizado = p.estado?.toLowerCase() === "finalizado";
+
+  if (finalizado && p.resultado?.includes("-")) {
+    const [r1, r2] = p.resultado.split("-").map(Number);
+    const gU = esLocal ? r1 : r2;
+    const gR = esLocal ? r2 : r1;
+    const bgScore = gU > gR ? "#22C55E" : gU === gR ? "#94A3B8" : "#F43F5E";
+
+    contenidoPartidos += `
+      <div style="position:absolute;inset:0;background:${bgCard};border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding-bottom:4px;">
+        <img class="cal-liga-badge" src="img/ligas/${getLigaLogo(p.liga)}">
+        <img class="cal-rival-logo" src="img/${logoRival}" onerror="this.style.display='none'">
+        <div class="cal-score-badge" style="background:${bgScore};">
+          <span>${p.resultado}</span>
+        </div>
+      </div>`;
+  } else {
+    contenidoPartidos += `
+      <div style="position:absolute;inset:0;background:${bgCard};border-radius:8px;display:flex;align-items:center;justify-content:center;">
+        <img class="cal-liga-badge" src="img/ligas/${getLigaLogo(p.liga)}">
+        <img class="cal-rival-logo-sm" src="img/${logoRival}" onerror="this.style.display='none'">
+      </div>`;
+  }
+});
+
+html += `
+  <div style="
+    aspect-ratio: 4/4.5;
+    border-radius:8px;
+    padding:5px;
+    display:flex;
+    flex-direction:column;
+    background:${esHoy ? "rgba(51,97,255,0.05)" : "transparent"};
+    border:${esHoy ? "1.5px solid rgba(51,97,255,0.25)" : "1px solid var(--border)"};
+    overflow:hidden;
+    position:relative;
+  ">
+    <div style="font-size:10px;font-weight:${esHoy?"700":"500"};color:${esHoy?"var(--blue)":"var(--text-muted)"};position:absolute;top:4px;left:6px;z-index:2;">
+      ${dia}
+    </div>
+    ${contenidoPartidos}
+  </div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById("calendarioGrid").innerHTML = html;
+}
+
+
+
+
+// Llamar al cargar
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(async html => {
+    document.getElementById('sidebar-container').innerHTML = html;
+
+    await inicializarPartidos();
+
+    const pagina = window.location.pathname.split('/').pop();
+
+    document.querySelectorAll('.nav-sub-item a').forEach(a => {
+      if (a.getAttribute('href') === pagina) {
+        a.closest('.nav-sub-item').classList.add('active');
+        const sub = a.closest('.nav-sub');
+        if (sub) {
+          sub.classList.add('open');
+          const id = sub.id.replace('sub-', '');
+          const arrow = document.getElementById('arrow-' + id);
+          if (arrow) arrow.classList.add('open');
+          const parentItem = sub.previousElementSibling;
+          if (parentItem) parentItem.classList.add('active');
+        }
+      }
+    });
+    document.body.style.visibility = 'visible';
+    renderTeamKPIs();
+    cargarUltimos4Cards();
+    renderCalendario();
+    renderFormaReciente();
+  });
+
+
+
+function esUniversitario(nombre) {
+  const n = nombre?.trim().toLowerCase();
+  return n === "universitario" || n === "universitario ii";
+}
+
+
+function dentroDeVentanaPartido(p) {
+  if (!p.hora) return true;
+  const [h, m] = p.hora.split(":").map(Number);
+  const ahoraStr = new Date().toLocaleString("en-US", {
+    timeZone: "America/Lima", hour: "2-digit", minute: "2-digit", hour12: false
+  });
+  const [hh, mm] = ahoraStr.split(":").map(Number);
+  const transcurrido = (hh*60+mm) - (h*60+m);
+  const dentro = transcurrido >= -10 && transcurrido <= 100;
+  console.log(`[EnVivo] ${p.equipo1} vs ${p.equipo2} | hora partido: ${p.hora} | hora Lima ahora: ${hh}:${String(mm).padStart(2,"0")} | min transcurridos: ${transcurrido} | dentro ventana: ${dentro}`);
+  return dentro;
+}
+
+function actualizarIndicadorDebug(texto) {
+  let el = document.getElementById("debugEnVivo");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "debugEnVivo";
+    el.style.cssText = "position:fixed;bottom:8px;right:8px;background:#000;color:#0f0;font-size:10px;padding:4px 8px;border-radius:6px;z-index:9999;font-family:monospace;opacity:0.85;max-width:90vw;";
+    document.body.appendChild(el);
+  }
+  el.textContent = "🔴 EN VIVO: " + texto;
+}
+
+
+
+
+
+
+function renderFormaReciente() {
+  let partidos = [];
+  try { partidos = JSON.parse(localStorage.getItem("partidos")) || []; } catch {}
+
+  const finalizados = partidos.filter(p =>
+    (esUniversitario(p.equipo1) || esUniversitario(p.equipo2)) &&
+    p.estado?.toLowerCase() === "finalizado" &&
+    p.resultado?.includes("-") &&
+    p.fecha
+  );
+
+  finalizados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  const ultimos5 = finalizados.slice(0, 5).reverse(); // del más antiguo al más reciente
+
+  const row = document.getElementById("formaRecienteRow");
+  const stats = document.getElementById("formaStats");
+  if (!row) return;
+
+  if (!ultimos5.length) {
+    row.innerHTML = `<div style="text-align:center;font-size:12px;color:var(--text-muted);width:100%;">Sin partidos recientes</div>`;
+    if (stats) stats.innerHTML = "";
+    return;
+  }
+
+  let g = 0, e = 0, p_ = 0;
+  const resultados = [];
+
+  row.innerHTML = ultimos5.map(p => {
+    const esLocal = esUniversitario(p.equipo1);
+    const rival = esLocal ? p.equipo2 : p.equipo1;
+    const logoUni = esLocal ? p.logo1 : p.logo2;
+    const logoRival = esLocal ? p.logo2 : p.logo1;
+    const [r1, r2] = p.resultado.split("-").map(Number);
+    const gU = esLocal ? r1 : r2;
+    const gR = esLocal ? r2 : r1;
+
+    let letra, color;
+    if (gU > gR)        { letra = "V"; color = "#22C55E"; g++; }
+    else if (gU === gR) { letra = "E"; color = "#94A3B8"; e++; }
+    else                { letra = "D"; color = "#F43F5E"; p_++; }
+    resultados.push(letra);
+
+    const rivalCorto = rival.length > 11 ? rival.slice(0, 10) + "…" : rival;
+    const fechaFmt = new Date(p.fecha + "T00:00:00")
+      .toLocaleDateString("es-PE", { day: "2-digit", month: "short" });
+
+    return `
+      <div class="forma-item">
+        <div class="forma-crest-wrap">
+          <div class="forma-crest">
+            <span class="forma-logo-fallback">${(rival || "?").charAt(0).toUpperCase()}</span>
+            <img class="forma-logo" src="img/${logoRival}" onerror="this.style.display='none'">
+          </div>
+          <span class="forma-badge" style="background:${color};">${letra}</span>
+        </div>
+        <div class="forma-score" style="color:${color};">${gU}-${gR}</div>
+        <div class="forma-rival">${esLocal ? '🏠' : '✈️'} ${rivalCorto}</div>
+        <div class="forma-tooltip">
+          <div class="forma-tooltip-teams">
+            <div class="forma-tooltip-team">
+              <img src="img/${logoUni}" onerror="this.style.display='none'">
+              <span>Universitario</span>
+            </div>
+            <div class="forma-tooltip-score" style="color:${color};">${gU} - ${gR}</div>
+            <div class="forma-tooltip-team">
+              <img src="img/${logoRival}" onerror="this.style.display='none'">
+              <span>${rival}</span>
+            </div>
+          </div>
+          <div class="forma-tooltip-meta">${fechaFmt} · ${p.liga}</div>
+        </div>
+      </div>`;
+  }).join("");
+
+  // Racha actual (desde el resultado más reciente hacia atrás)
+  let racha = 1;
+  for (let i = resultados.length - 1; i > 0; i--) {
+    if (resultados[i] === resultados[i - 1]) racha++; else break;
+  }
+  const ultimaLetra = resultados[resultados.length - 1];
+  let rachaTexto, rachaClass;
+  if (ultimaLetra === "V")      { rachaTexto = `🔥 Racha de ${racha} victoria${racha>1?'s':''}`; rachaClass = ""; }
+  else if (ultimaLetra === "D") { rachaTexto = `📉 ${racha} derrota${racha>1?'s':''} seguida${racha>1?'s':''}`; rachaClass = "loss"; }
+  else                            { rachaTexto = `${racha} empate${racha>1?'s':''} seguido${racha>1?'s':''}`; rachaClass = "draw"; }
+
+  if (stats) {
+    const total = g + e + p_;
+    const gPct = total ? (g/total*100) : 0;
+    const ePct = total ? (e/total*100) : 0;
+    const pPct = total ? (p_/total*100) : 0;
+    stats.innerHTML = `
+      <div class="forma-stats-bar">
+        <div class="forma-stats-seg win"  style="width:${gPct}%"></div>
+        <div class="forma-stats-seg draw" style="width:${ePct}%"></div>
+        <div class="forma-stats-seg loss" style="width:${pPct}%"></div>
+      </div>
+      <div class="forma-stats-labels">
+        <span><b style="color:#22C55E">${g}</b> Ganados &nbsp; <b style="color:#94A3B8">${e}</b> Empates &nbsp; <b style="color:#F43F5E">${p_}</b> Perdidos</span>
+        ${racha > 1 ? `<span class="forma-streak ${rachaClass}">${rachaTexto}</span>` : ""}
+      </div>
+    `;
+  }
+}
+
+
+
+// ══════════════════════════════════════
+// PARTIDOS EN VIVO (API-Football directo)
+// ══════════════════════════════════════
+const API_FOOTBALL_KEY = "a862b534260c69db07e887b7e21812a7"; // <-- VERIFICA que sea tu clave real, no este placeholder
+
+const NOMBRES_EQUIPOS_EN_ES = {
+  "Belgium":"Bélgica","Egypt":"Egipto","Iran":"Irán","New Zealand":"Nueva Zelanda",
+  "Spain":"España","Cabo Verde":"Cabo Verde","Saudi Arabia":"Arabia Saudita",
+  "Uruguay":"Uruguay","Argentina":"Argentina","Brazil":"Brasil","France":"Francia",
+  "Germany":"Alemania","England":"Inglaterra","Mexico":"México","Japan":"Japón",
+  "Portugal":"Portugal","Netherlands":"Países Bajos","USA":"Estados Unidos",
+  "Morocco":"Marruecos","Croatia":"Croacia","Senegal":"Senegal","Canada":"Canadá",
+  "Australia":"Australia","Switzerland":"Suiza","Denmark":"Dinamarca","Poland":"Polonia",
+  "Serbia":"Serbia","Cameroon":"Camerún","Ecuador":"Ecuador","Tunisia":"Túnez",
+  "Ghana":"Ghana","Wales":"Gales","Qatar":"Catar", "Norway": "Noruega","Iraq": "Irak"
+};
+
+function mapEstadoAPI(short) {
+  if (["1H","HT","2H","ET","BT","P","LIVE","INT"].includes(short)) return "en vivo";
+  if (["FT","AET","PEN"].includes(short)) return "finalizado";
+  return "pendiente";
+}
+
+function minutosTranscurridos(hora) {
+  const [h, m] = hora.split(":").map(Number);
+  const ahoraStr = new Date().toLocaleString("en-US", { timeZone:"America/Lima", hour:"2-digit", minute:"2-digit", hour12:false });
+  const [hh, mm] = ahoraStr.split(":").map(Number);
+  return (hh*60+mm) - (h*60+m);
+}
+
+
+
+async function actualizarPartidosEnVivo() {
+  let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+  const hoy = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Lima" });
+  const partidosMundialHoy = partidos.filter(p => p.liga === "Copa del Mundo" && p.fecha === hoy);
+
+  // Sin gastar API: si ya pasaron 120+ min y sigue "pendiente", darlo por terminado
+  let cambios = false;
+  partidosMundialHoy.forEach(p => {
+    if (!p.hora) return;
+    const t = minutosTranscurridos(p.hora);
+    if (p.estado?.toLowerCase() !== "finalizado" && t > 120) {
+      p.estado = "finalizado";
+      cambios = true;
+      console.log(`[EnVivo] ${p.equipo1} vs ${p.equipo2}: t=${t} > 120 -> finalizado (sin consultar API)`);
+    }
+  });
+
+  console.log(`[EnVivo] === Chequeo ${new Date().toLocaleTimeString("es-PE")} | hoy=${hoy} | partidos Mundial hoy: ${partidosMundialHoy.length}`);
+  partidosMundialHoy.forEach(p => console.log(`[EnVivo]   - ${p.equipo1} vs ${p.equipo2} | estado=${p.estado} | hora=${p.hora}`));
+
+  const pendientesHoy = partidosMundialHoy.filter(p =>
+    p.estado?.toLowerCase() !== "finalizado" && dentroDeVentanaPartido(p)
+  );
+
+  if (!pendientesHoy.length) {
+    if (cambios) { localStorage.setItem("partidos", JSON.stringify(partidos)); cargarUltimos4Cards(); renderCalendario(); }
+    console.log("[EnVivo] Ningún partido dentro de ventana ahora. No se consulta la API.");
+    actualizarIndicadorDebug("sin partidos en ventana (" + new Date().toLocaleTimeString("es-PE") + ")");
+    return;
+  }
+
+  // ✅ NUEVO: saltar API si ya se consultó hace menos de 5 min
+  const ultimaConsulta = parseInt(localStorage.getItem("ultimaConsultaAPI") || "0");
+  const minDesdeUltima = (Date.now() - ultimaConsulta) / 60000;
+  if (minDesdeUltima < 5) {
+    console.log(`[EnVivo] Saltando API — última consulta hace ${minDesdeUltima.toFixed(1)} min`);
+    cargarUltimos4Cards();
+    return;
+  }
+
+  console.log(`[EnVivo] Consultando API para: ${pendientesHoy.map(p=>p.equipo1+' vs '+p.equipo2).join(", ")}`);
+  actualizarIndicadorDebug("consultando API...");
+
+  try {
+    const res = await fetch("https://v3.football.api-sports.io/fixtures?live=all", {
+      headers: { "x-apisports-key": API_FOOTBALL_KEY }
+    });
+    const data = await res.json();
+    console.log("[EnVivo] Respuesta API completa:", data);
+    const liveFixtures = data.response || [];
+
+    let encontrados = 0;
+    pendientesHoy.forEach(p => {
+      const match = liveFixtures.find(f => {
+        const home = NOMBRES_EQUIPOS_EN_ES[f.teams.home.name] || f.teams.home.name;
+        const away = NOMBRES_EQUIPOS_EN_ES[f.teams.away.name] || f.teams.away.name;
+        return (home === p.equipo1 && away === p.equipo2) || (home === p.equipo2 && away === p.equipo1);
+      });
+
+      if (!match) {
+        if (p.estado === "en vivo") {
+          p.estado = "finalizado"; cambios = true;
+          console.log(`[EnVivo] ${p.equipo1} vs ${p.equipo2}: ya no está en vivo -> finalizado`);
+        } else {
+          console.log(`[EnVivo] Sin coincidencia para ${p.equipo1} vs ${p.equipo2}`);
+        }
+        return;
+      }
+
+      encontrados++;
+      const nuevoResultado = `${match.goals.home ?? 0} - ${match.goals.away ?? 0}`;
+      const nuevoEstado = mapEstadoAPI(match.fixture.status.short);
+      const elapsed = match.fixture.status.elapsed;
+
+      p.minutoBase = elapsed;
+      p.minutoTimestamp = Date.now();
+      p.estadoCorto = match.fixture.status.short;
+
+      console.log(`[EnVivo] -> ${p.equipo1} vs ${p.equipo2} = ${nuevoResultado} (${match.fixture.status.short} / min ${elapsed})`);
+
+      // Detectar gol ANTES de actualizar
+      if (p.resultado && p.resultado !== nuevoResultado) {
+        mostrarToastGol(p, nuevoResultado, elapsed);
+      }
+
+      if (p.resultado !== nuevoResultado || p.estado !== nuevoEstado || p.minuto !== elapsed) {
+        p.resultado = nuevoResultado;
+        p.estado = nuevoEstado;
+        p.minuto = elapsed;
+        cambios = true;
+      }
+    });
+
+    // ✅ NUEVO: guardar timestamp de última consulta exitosa
+    localStorage.setItem("ultimaConsultaAPI", Date.now().toString());
+    actualizarIndicadorDebug(`${new Date().toLocaleTimeString("es-PE")} · ${encontrados}/${pendientesHoy.length} en vivo`);
+
+    if (cambios) { localStorage.setItem("partidos", JSON.stringify(partidos)); cargarUltimos4Cards(); renderCalendario(); }
+  } catch (err) {
+    console.error("[EnVivo] Error:", err);
+    actualizarIndicadorDebug("ERROR: " + err.message);
+  }
+}
+
+
+actualizarPartidosEnVivo();
+setInterval(actualizarPartidosEnVivo, 7 * 60 * 1000);
+
+
+
+function tickMinutosEnVivo() {
+  console.log("[Tick] " + new Date().toLocaleTimeString("es-PE"));
+  let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+  let cambios = false;
+  partidos.forEach(p => {
+    if (p.estado !== "en vivo" || p.minutoBase == null || !p.minutoTimestamp) return;
+    if (p.estadoCorto === "HT") return;
+    const minsPasados = Math.floor((Date.now() - p.minutoTimestamp) / 60000);
+    const minutoVisual = p.minutoBase + minsPasados;
+    console.log(`[Tick] ${p.equipo1} vs ${p.equipo2}: minutoBase=${p.minutoBase} + ${minsPasados}min = ${minutoVisual}`);
+    if (p.minuto !== minutoVisual) { p.minuto = minutoVisual; cambios = true; }
+  });
+
+  if (cambios) { localStorage.setItem("partidos", JSON.stringify(partidos)); cargarUltimos4Cards(); }
+}
+
+setInterval(tickMinutosEnVivo, 60 * 1000);
+
+
+
+
+let toastGolTimer = null;
+
+function mostrarToastGol(p, nuevoResultado, minuto) {
+  let el = document.getElementById("toastGol");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "toastGol";
+    el.innerHTML = `
+      <div class="tg-ball">⚽</div>
+      <div style="flex:1;">
+        <div class="tg-title">¡Goool!</div>
+        <div class="tg-score" id="tgScore"></div>
+        <div class="tg-meta" id="tgMeta"></div>
+      </div>
+      <div class="tg-min" id="tgMin"></div>`;
+    document.body.appendChild(el);
+  }
+
+  document.getElementById("tgScore").textContent = `${p.equipo1} ${nuevoResultado} ${p.equipo2}`;
+  document.getElementById("tgMeta").textContent = `${p.liga} · ${p.estadio || ""}`;
+  document.getElementById("tgMin").textContent = minuto ? minuto + "'" : "EN VIVO";
+
+  el.classList.remove("show");
+  el.offsetHeight; // fuerza reflow para reiniciar animación
+  el.classList.add("show");
+
+  // Flash en la card correspondiente
+  document.querySelectorAll("#ultimos4Cards > div").forEach(card => {
+    const nombres = card.querySelectorAll("span");
+    const textos = [...nombres].map(s => s.textContent.trim());
+    if (textos.includes(p.equipo1) || textos.includes(p.equipo2)) {
+      card.classList.remove("card-gol-flash");
+      card.offsetHeight;
+      card.classList.add("card-gol-flash");
+      setTimeout(() => card.classList.remove("card-gol-flash"), 900);
+    }
+  });
+
+  if (toastGolTimer) clearTimeout(toastGolTimer);
+  toastGolTimer = setTimeout(() => el.classList.remove("show"), 6000);
+}
+
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</script>
+</body>
+</html>

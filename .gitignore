@@ -1,0 +1,7 @@
+olds/
+bks/
+sofascore/
+n8n-workflows/
+.vscode/
+*.py
+live.json

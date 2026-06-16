@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TailAdmin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+html, body { height: 100%; overflow: hidden; }
+.main { display: flex; flex-direction: column; overflow: hidden; }
+.content { flex: 1; overflow-y: auto; }
+body { visibility: hidden; }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══ MENU ══ -->
+<div id="sidebar-container"></div>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-search">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Type to search...">
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-icons">
+      <div class="topbar-icon-btn" style="position:relative;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+    </div>
+    <div class="topbar-user">
+      <div class="topbar-user-info">
+        <div class="topbar-user-name">Diego Rodríguez</div>
+        <div class="topbar-user-role">Ux Designer</div>
+      </div>
+      <div class="topbar-avatar">DR</div>
+    </div>
+  </div>
+
+
+
+  <div class="content palmares-page">
+
+<div class="container">
+
+  <!-- ══ HEADER ══ -->
+  <div class="team-header">
+    <div class="team-crest"><img src="img/universitario.png" ></div>
+    <div>
+      <div class="team-name">Club Universitario de Deportes</div>
+      <div class="team-sub">Fundado el 7 de agosto de 1924 · Lima, Perú</div>
+      <div class="sub-tags">
+        <span class="sub-tag">🏆 Máximo campeón del Perú</span>
+        <span class="sub-tag">📅 100 años de historia</span>
+        <span class="sub-tag">⚽ «La U» · «Los Cremas»</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ PRIMER EQUIPO ══ -->
+  <div class="title-section">
+
+   
+<!-- PRIMER EQUIPO -->
+<div class="section-heading2">
+  <div class="sec-pill">
+    <svg width="14" height="14" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    <span>Primer Equipo</span>
+  </div>
+</div>
+
+
+     <!-- ══ TORNEO NACIONALES ══ -->
+    <div class="section-heading3">
+      TORNEOS NACIONALES (29)
+    </div>
+     <!-- ══ LIGA 1 ══ -->
+    <div class="section-heading">
+         🏆 Primera División del Perú
+      <span class="record-tag">RÉCORD NACIONAL</span>
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1929.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1929</div>
+        <div class="img-hint">Liga Provincial de Football  </div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1934.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1934</div>
+        <div class="img-hint">Liga Provincial de Football</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1939.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1939</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1941.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1941</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1945.png" alt="1945" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1945</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1946.png" alt="1946" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1946</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1949.png" alt="1949" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1949</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1959.png" alt="1959" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1959</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1960.png" alt="1960" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1960</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1964" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1964</div>
+        <div class="img-hint">Campeonato Peruano</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1966" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1966</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1967" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1967</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1969" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1969</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1971" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1971</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1974" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1974</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1982.png" alt="1982" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1982</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1985" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1985</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1987.png" alt="1987" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1987</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>1</span><span class="dash">-</span><span>0</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaxxxx.png" alt="1990" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1990</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>4</span><span class="dash">-</span><span>2</span></span><img src="img/sportboys.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1992.png" alt="1992" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1992</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1993.png" alt="1993" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1993</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1998.png" alt="1998" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1998</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+         <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3(4)</span><span class="dash">-</span><span>3(2)</span></span><img src="img/cristal.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1999.png" alt="1999" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1999</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2000.png" alt="2000" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2000</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2009.png" alt="2009" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2009</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>0</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2013.png" alt="2013" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2013</div>
+        <div class="img-hint">Campeonato Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>1(5)</span><span class="dash">-</span><span>1(4)</span></span><img src="img/cuscofc.png"></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2025.png" alt="2023" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year ">2023</div>
+        <div class="img-hint">Futbol Profesional Liga 1</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>0</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2025.png" alt="2024" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year ">2024</div>
+        <div class="img-hint">Futbol Profesional Liga 1</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2025.png" alt="2025" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year ">2025</div>
+        <div class="img-hint">Futbol Profesional Liga 1</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+    </div>
+    <br></br>  <br></br>
+
+
+
+     <!-- ══ TORNEO CORTOS  ══ -->
+    <div class="section-heading3">
+       TORNEO CORTOS (13)
+    </div>
+   <!-- ══ TORNEO APERTURA ══ -->
+    <div class="section-heading">
+       Torneo Apertura  (9)
+      <span class="record-tag">RÉCORD NACIONAL</span>
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1998a.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1998</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1999a.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1999</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2000a.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2000</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2002a.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2002</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>1</span><span class="dash">-</span><span>0</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2008a.png" alt="1945" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2008</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1946" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2016</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/apertura.png" alt="1949" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2020</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/apertura.png" alt="1959" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2024</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+          <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/apertura.png" alt="1959" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2025</div>
+        <div class="img-hint">Torneo Apertura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+
+    </div>
+     <br></br>
+     <!-- ══ TORNEO clausura ══ -->
+    <div class="section-heading">
+       TTorneo Clausura (4)
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2000c.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2000</div>
+        <div class="img-hint">Torneo Clausura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/clausura.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2023</div>
+        <div class="img-hint">Torneo Clausura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/clausura.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2024</div>
+        <div class="img-hint">Torneo Clausura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/clausura.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2025</div>
+        <div class="img-hint">Torneo Clausura</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+    </div>
+     <br></br> <br></br>
+
+
+
+     <!-- ══ TORNEO CORTOS  ══ -->
+    <div class="section-heading3">
+       TORNEOS DE LA LIGA (12)
+    </div>
+     <!-- ══ Campeonato Regional del Perú ══ -->
+    <div class="section-heading">
+      🏆 Campeonato Regional del Perú (4)
+      <span class="record-tag">RÉCORD NACIONAL</span>
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1985</div>
+        <div class="img-hint">Campeonato Regional del Perú</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>1</span></span><img src="img/cni.png"></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1987</div>
+        <div class="img-hint">Campeonato Regional del Perú</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>0</span></span><img src="img/unionhuaral.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1988</div>
+        <div class="img-hint">Campeonato Regional del Perú</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1990-II</div>
+        <div class="img-hint">Campeonato Regional del Perú</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+    </div>
+    <br></br>  
+     <!-- ══ Torneo Regional - Zona Metropolitana ══ -->
+    <div class="section-heading">
+      🏆 Torneo Regional - Zona Metropolitana (6)
+      <span class="record-tag">RÉCORD NACIONAL</span>
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1984</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1987rm.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1987</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>0</span></span><img src="img/unionhuaral.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1988</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1989-II</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1990-I</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+   
+
+    <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1991-II</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+    </div>
+    <br></br> 
+     <!-- ══ Torneo Descentralizado══ -->
+    <div class="section-heading">
+      🏆 Torneo Descentralizado (1)
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1985</div>
+        <div class="img-hint">T. Torneo Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+    </div>
+    <br></br> 
+     <!-- ══ Torneo Descentralizado══ -->
+    <div class="section-heading">
+      🏆 Torneo de Primeros Equipos (1)
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1934.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1934</div>
+        <div class="img-hint">T. Torneo Descentralizado</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+    </div>
+    <br></br> <br></br>
+
+
+     <!-- ══ TORNEO CORTOS  ══ -->
+    <div class="section-heading3">
+      COPAS NACIONALES (1)
+    </div>
+     <!-- ══ TORNEO regionales metropolitana══ -->
+    <div class="section-heading">
+      🏆 Copas Nacionales
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/presi.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1970</div>
+        <div class="img-hint">Presidente de la República</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>4</span><span class="dash">-</span><span>0</span></span><img src="img/melgar.png"></div>
+      </div>
+
+
+    </div>
+    <br></br>
+
+
+  </div>
+
+  <!-- ══ EQUIPO FEMENINO══ -->
+  <div class="title-section">
+
+<!-- EQUIPO FEMENINO -->
+<div class="section-heading2">
+  <div class="sec-pill">
+    <svg width="14" height="14" fill="none" stroke="#f472b6" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    <span>Equipo Femenino</span>
+  </div>
+</div>
+
+     <!-- ══ TORNEO NACIONALES ══ -->
+    <div class="section-heading3">
+      TORNEOS NACIONALES (11)
+    </div>
+     <!-- ══ FUTBOL FEMENINO ══ -->
+    <div class="section-heading">
+      🏆 Primera División de Fútbol Femenino Peruano
+      <span class="record-tag">RÉCORD NACIONAL</span>
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1996f.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1996</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1997f.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1997-I</div>
+        <div class="img-hint">Campeonato Femenino</div>
+              <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1997f2.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1997-II</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/cristal.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2001f.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2001</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>?</span><span class="dash">-</span><span>?</span></span><img src="img/sportboys.png"></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2002fe.png" alt="1941" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2002</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>2</span></span><img src="img/sportboys.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2003fe.png" alt="1945" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2003</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/sportboys.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2014fn.png" alt="1946" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2014</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>7</span><span class="dash">-</span><span>0</span></span><img src="img/vargas.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2015fe.png" alt="1949" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2015</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>8</span><span class="dash">-</span><span>0</span></span><img src="img/cgtp.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2016fe.png" alt="1959" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2016</div>
+        <div class="img-hint">Campeonato Femenino</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>5</span><span class="dash">-</span><span>1</span></span><img src="img/villaverde.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2019f.png" alt="1960" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2019</div>
+        <div class="img-hint">Copa Perú Femenina</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>6</span><span class="dash">-</span><span>1</span></span><img src="img/amazon.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2025f.png" alt="1964" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2023</div>
+        <div class="img-hint">Liga Femenina FPF</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+
+    </div>
+
+
+    <br></br>  <br></br>
+
+         <!-- ══ TORNEO CORTOS  ══ -->
+    <div class="section-heading3">
+      TORNEO CORTOS (2)
+    </div>
+     <!-- ══ TORNEO APERTURA ══ -->
+    <div class="section-heading">
+      🏆 Torneo Apertura  (1)
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2002fa.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2003</div>
+        <div class="img-hint">Torneo Apertura</div>
+         <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+
+    </div>
+
+
+    <br></br> 
+     <!-- ══ TORNEO clausura ══ -->
+    <div class="section-heading">
+      🏆 Torneo Clausura (1)
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/clausuraf.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2025</div>
+        <div class="img-hint">Torneo Clausura</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>1(4)</span><span class="dash">-</span><span>1(2)</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      
+    </div>
+
+     <br></br> <br></br>
+
+
+
+     <!-- ══ TORNEO CORTOS  ══ -->
+    <div class="section-heading3">
+      TORNEOS DE LA LIGA (5)
+    </div>
+     <!-- ══ TORNEO regionales del peru ══ -->
+    <div class="section-heading">
+      🏆 Torneo Regional (1)
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2019fr.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2019</div>
+        <div class="img-hint">C. Regional del Perú</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+    </div>
+
+    <br></br>  
+     <!-- ══ TORNEO regionales metropolitana══ -->
+    <div class="section-heading">
+      🏆 Torneos Zona-Metropolitana/Lima (4)
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2014fm.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2014</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>4</span><span class="dash">-</span><span>1</span></span><img src="img/cristal.png"></div>
+
+      </div>
+
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2016fn.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2015</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+         <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+            <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2016f.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2016</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>4</span><span class="dash">-</span><span>1</span></span><img src="img/lacantera.png"></div>
+
+      </div>
+            <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2019zn.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2019</div>
+        <div class="img-hint">T. Regional Metropolitana</div>
+                <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+      
+    </div>
+
+<br></br>
+
+
+
+    </div>
+
+  <!-- ══ EQUIPO DE RESERVA -->
+  <div class="title-section">
+
+<!-- EQUIPO DE RESERVA -->
+<div class="section-heading2">
+  <div class="sec-pill">
+    <svg width="14" height="14" fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    <span>Equipo de Reserva</span>
+  </div>
+</div>
+
+
+     <!-- ══ TORNEO NACIONALES ══ -->
+    <div class="section-heading3">
+      TORNEOS NACIONALES (6)
+    </div>
+
+
+     <!-- ══ FUTBOL DE RESERVA ══ -->
+    <div class="section-heading">
+      🏆 Torneo de Promoción y Reserva  (1)
+
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2024r.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2024</div>
+        <div class="img-hint">T. de Promoción y Reserva</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/melgar.png"></div>
+
+      </div>
+
+    
+
+
+    </div>
+<br></br> 
+
+
+     <!-- ══ FUTBOL DE RESERVA ══ -->
+    <div class="section-heading">
+      🏆 Torneo del Inca de Reservas  (2)
+
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2014Ir.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2014</div>
+        <div class="img-hint">Torneo del Inca de Reservas</div>
+         <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>0(6)</span><span class="dash">-</span><span>0(5)</span></span><img src="img/cristal.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2014Ir.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2015</div>
+        <div class="img-hint">Torneo del Inca de Reservas</div>
+         <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+    </div>
+
+
+
+  
+
+
+
+    <br></br> 
+     <!-- ══ TORNEO regionales del peru ══ -->
+    <div class="section-heading">
+      🏆 Torneo de Reservas (3)
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/1930r.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1930</div>
+        <div class="img-hint">Torneo de Reservas</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/torneoreservas.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1931</div>
+        <div class="img-hint">Torneo de Reservas</div>
+         <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/torneoreservas.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">1932</div>
+        <div class="img-hint">Torneo de Reservas</div>
+         <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+    
+    </div>
+
+    
+<br></br><br></br>
+
+
+    <div class="section-heading3">
+      TORNEOS INTERNACIONALES (1)
+    </div>
+
+     <!-- ══ TORNEO INTERNACIONAL ══ -->
+    <div class="section-heading">
+      🏆 Torneos internacionales 
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2011rl.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2011</div>
+        <div class="img-hint">Copa Libertadores Sub-20</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>1(4)</span><span class="dash">-</span><span>1(2)</span></span><img src="img/boca.png"></div>
+
+      </div>
+
+    </div>
+<br></br>
+    </div>
+
+  <!-- ══ EQUIPO DE FUTSAL -->
+  <div class="title-section">
+
+<div class="section-heading2">
+  <div class="sec-pill">
+    <svg width="14" height="14" fill="none" stroke="#fb923c" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    <span>Equipo de Futsal</span>
+  </div>
+</div>
+
+
+     <!-- ══ TORNEO NACIONALES ══ -->
+    <div class="section-heading3">
+      TORNEOS NACIONALES (3)
+    </div>
+
+
+     <!-- ══ FUTBOL DE FUTSAL ══ -->
+    <div class="section-heading">
+      🏆 Primera División de Fútbol Sala
+      
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2005fut.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2005</div>
+        <div class="img-hint">Liga Futsal Pro</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>6</span><span class="dash">-</span><span>4</span></span><img src="img/jap.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2019fut.png" alt="1934" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2019</div>
+        <div class="img-hint">Liga Futsal Pro</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>8</span><span class="dash">-</span><span>5</span></span><img src="img/overall.png"></div>
+
+      </div>
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/2024fut.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2024</div>
+        <div class="img-hint">Liga Futsal Pro</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>5</span><span class="dash">-</span><span>4</span></span><img src="img/pantawalon.png"></div>
+
+      </div>
+
+    
+
+
+    </div>
+
+
+    <br></br>  <br></br>
+
+     <!-- ══ TORNEO CORTOS  ══ -->
+    <div class="section-heading3">
+       TORNEO CORTOS (1)
+    </div>
+
+    <div class="section-heading">
+      🏆 Torneo Clausura
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/Z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2012</div>
+        <div class="img-hint">Torneo Clausura</div>
+         <div class="img-hint2"><img src="img/universitario.png" ></div>
+      </div>
+
+
+  
+    </div>
+
+
+<br></br><br></br>
+
+    
+    <div class="section-heading3">
+      TORNEOS DE LA LIGA (1)
+    </div>
+
+     <!-- ══ TORNEO DE VERNANO ══ -->
+    <div class="section-heading">
+      🏆 Copas & Torneos Locales 
+    </div>
+
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2008</div>
+        <div class="img-hint">Torneo de Verano</div>
+      </div>
+
+    </div>
+
+    
+<br></br>
+
+
+
+    </div>
+
+    <!-- ══ EQUIPO DE VOLEY -->
+  <div class="title-section">
+
+<div class="section-heading2">
+  <div class="sec-pill">
+    <svg width="14" height="14" fill="none" stroke="#f4381b" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    <span>Equipo de Voley</span>
+  </div>
+</div>
+
+
+
+     <!-- ══ TORNEO NACIONALES ══ -->
+    <div class="section-heading3">
+      TORNEO LOCALES (1)
+    </div>
+     <!-- ══ FUTBOL DE REVALIDACION ══ -->
+    <div class="section-heading">
+      🏆 Liga Peruana de Vóley
+      
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/voley3lugar.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2025-26</div>
+        <div class="img-hint">Podio en LNSV - Tercer Lugar</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>0</span></span><img src="img/geminis.png"></div>
+
+      </div>
+    
+
+    
+
+    </div>
+
+
+ <br></br>  <br></br>
+
+     <!-- ══ TORNEO NACIONALES ══ -->
+    <div class="section-heading3">
+      TORNEO NACIONAL DE REVALIDACION (2)
+    </div>
+     <!-- ══ FUTBOL DE REVALIDACION ══ -->
+    <div class="section-heading">
+      🏆 Campeonato Promocional 
+      
+    </div>
+    <div class="cups-grid">
+
+      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/copaperuvoley.png" alt="1939" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2009</div>
+        <div class="img-hint">Copa Perú</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>0</span></span><img src="img/vallejo.png"></div>
+
+      </div>
+    
+
+      <div class="cup-card">
+        <div class="cup-img-wrap"><img src="/img/copas/nacional_Intermedia.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
+        <div class="cup-year">2023</div>
+        <div class="img-hint">Liga Nacional Intermedia</div>
+        <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>0</span></span><img src="img/molivoleibol.png"></div>
+
+      </div>
+
+
+
+
+
+    
+
+
+    </div>
+
+
+
+
+<br></br>
+
+    
+
+
+  </div>  
+
+  </div>
+
+
+
+
+
+  <footer>
+    Palmarés actualizado · Datos basados en fuentes oficiales del club.<br>
+    El título 2026 está sujeto a confirmación final de temporada.
+  </footer>
+
+</div>
+
+
+
+   </div>
+
+</div><!-- /main -->
+
+</div><!-- /app -->
+
+
+
+
+
+
+
+<script>
+// ── MENU ──
+function toggleMenu(id, parentEl) {
+  const sub = document.getElementById('sub-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!sub) return;
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+}
+function setNavActive(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  el.classList.add('active');
+}
+function setSubActive(el) {
+  document.querySelectorAll('.nav-sub-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// ── SIDEBAR
+ fetch('sidebar.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('sidebar-container').innerHTML = html;
+
+      // Marcar automáticamente el item activo según la página actual
+      const pagina = window.location.pathname.split('/').pop();
+      document.querySelectorAll('.nav-sub-item a').forEach(a => {
+        if (a.getAttribute('href') === pagina) {
+          a.closest('.nav-sub-item').classList.add('active');
+
+          // Abrir el submenu padre automáticamente
+          const sub = a.closest('.nav-sub');
+          if (sub) {
+            sub.classList.add('open');
+            const id = sub.id.replace('sub-', '');
+            const arrow = document.getElementById('arrow-' + id);
+            if (arrow) arrow.classList.add('open');
+            const parentItem = sub.previousElementSibling;
+            if (parentItem) parentItem.classList.add('active');
+          }
+        }
+      });
+      document.body.style.visibility = 'visible';
+    });
+
+
+// ── DARK MODE ──
+function toggleTheme() {
+  const isDark = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  document.getElementById("iconSun").style.display  = isDark ? "block" : "none";
+  document.getElementById("iconMoon").style.display = isDark ? "none"  : "block";
+}
+(function() {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    const s=document.getElementById("iconSun"), m=document.getElementById("iconMoon");
+    if(s) s.style.display="block";
+    if(m) m.style.display="none";
+  }
+})();
+</script>
+</body>
+</html>

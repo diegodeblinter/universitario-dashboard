@@ -1,0 +1,34 @@
+[
+  {
+    "id": 15186837,
+    "local": "Bélgica",
+    "visita": "Egipto",
+    "estado": "pendiente",
+    "minuto": "-",
+    "resultado": "0 - 0"
+  },
+  {
+    "id": 15186832,
+    "local": "Irán",
+    "visita": "Nueva Zelanda",
+    "estado": "pendiente",
+    "minuto": "-",
+    "resultado": "0 - 0"
+  },
+  {
+    "id": 15186783,
+    "local": "España",
+    "visita": "Cabo Verde",
+    "estado": "pendiente",
+    "minuto": "-",
+    "resultado": "0 - 0"
+  },
+  {
+    "id": 15186811,
+    "local": "Arabia Saudita",
+    "visita": "Uruguay",
+    "estado": "pendiente",
+    "minuto": "-",
+    "resultado": "0 - 0"
+  }
+]

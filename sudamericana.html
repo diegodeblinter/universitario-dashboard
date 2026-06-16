@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TailAdmin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+html, body { height: 100%; overflow: hidden; }
+.main { display: flex; flex-direction: column; overflow: hidden; }
+.content { flex: 1; overflow-y: auto; }
+body { visibility: hidden; }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══ SIDEBAR ══ -->
+<div id="sidebar-container"></div>
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-search">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Type to search...">
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-icons">
+      <div class="topbar-icon-btn" style="position:relative;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+    </div>
+    <div class="topbar-user">
+      <div class="topbar-user-info">
+        <div class="topbar-user-name">Diego Rodríguez</div>
+        <div class="topbar-user-role">Ux Designer</div>
+      </div>
+      <div class="topbar-avatar">DR</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══ KPI ROW ══ -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-top">
+          <div><div class="stat-label">Goles Marcados</div><div class="stat-value" id="kpi-gf">—</div></div>
+          <div class="stat-icon-wrap green"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        </div>
+        <div class="stat-badge up" id="kpi-gf-sub">Liga 1</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-top">
+          <div><div class="stat-label">Goles Recibidos</div><div class="stat-value" id="kpi-gc">—</div></div>
+          <div class="stat-icon-wrap orange"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+        </div>
+        <div class="stat-badge down" id="kpi-gc-sub">Liga 1</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-top">
+          <div><div class="stat-label">% Victorias</div><div class="stat-value" id="kpi-win">—</div></div>
+          <div class="stat-icon-wrap blue"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        </div>
+        <div class="stat-badge up" id="kpi-win-sub">De partidos jugados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-top">
+          <div><div class="stat-label">Racha Actual</div><div class="stat-value" id="kpi-racha">—</div></div>
+          <div class="stat-icon-wrap teal"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        </div>
+        <div class="stat-badge" id="kpi-racha-sub" style="background:rgba(14,165,233,0.1);color:var(--teal);">Últimos partidos</div>
+      </div>
+    </div>
+
+    <!-- Mid grid -->
+    <div class="mid-grid">
+
+      <!-- 1 cards apilado en la columna izquierda -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="chart-legend-row">
+              <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span>Total Revenue<span class="legend-date">12.04.2022—12.05.2022</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#10b981"></span>Total Sales<span class="legend-date">12.04.2022—12.05.2022</span></div>
+            </div>
+          </div>
+          <div class="tab-group">
+            <button class="tab-btn active">Day</button>
+            <button class="tab-btn">Week</button>
+            <button class="tab-btn">Month</button>
+          </div>
+        </div>
+
+        <!-- Filtros + tablas -->
+        <div class="controls">
+          <div class="select-wrap">
+            <select id="viewSelect">
+              <option value="overview" selected>Overview</option>
+              <option value="Copa Sudamericana">Copa Sudamericana</option>
+            </select>
+          </div>
+          <div class="select-wrap">
+            <select id="yearSelect">
+              <option>2023</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tabla posiciones -->
+        <div class="table-card" id="tablaPosiciones">
+          <table>
+            <thead>
+              <tr>
+                <th class="th-first" style="width:40px;text-align:center;">Pos</th>
+                <th class="th-team">Equipo</th>
+                <th>PJ</th><th>G</th><th>E</th><th>P</th>
+                <th>GF</th><th>GC</th><th>DG</th><th>Pts</th>
+                <th>Últimas 5</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+          <div class="legend">
+            <div class="legend-item-pos"><div class="legend-pip" style="background:var(--cl-bar)"></div>Octavos de final</div>
+            <div class="legend-item-pos"><div class="legend-pip" style="background:var(--el-bar)"></div>Eliminatoria</div>
+          </div>
+        </div>
+
+        <!-- Tabla partidos -->
+        <div class="table-wrap" id="tablaPartidos" style="display:none;">
+          <table class="tabla-partidos">
+            <colgroup>
+              <col style="width:110px"><col style="width:60px"><col style="width:250px">
+              <col style="width:420px"><col style="width:120px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Fecha</th><th>Liga</th><th>Estadio</th>
+                <th>Equipos</th><th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyPartidos"></tbody>
+          </table>
+
+          <!-- ══ PAGINACIÓN ══ -->
+          <div class="pagination-wrap" id="paginacionPartidos">
+            <div class="pagination-info" id="paginacionInfo">
+              Mostrando <strong id="pgFrom">1</strong>–<strong id="pgTo">14</strong> de <strong id="pgTotal">0</strong> partidos
+            </div>
+            <div class="pagination-controls">
+              <!-- Prev -->
+              <button class="page-nav-btn" id="btnPrev" onclick="cambiarPagina(-1)" disabled>
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <!-- Números -->
+              <div class="page-numbers" id="pageNumbers"></div>
+              <!-- Next -->
+              <button class="page-nav-btn" id="btnNext" onclick="cambiarPagina(1)">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3 cards apilados en la columna derecha -->
+      <div style="display:flex; flex-direction:column; gap:16px; min-width:0; overflow:hidden;">
+
+        <!-- Card 1: Próximo Partido -->
+        <div class="card card-proximo" style="flex:none; overflow:hidden; min-width:0;">
+          <div class="card1">Próximo Partido</div>
+          <table style="width:100%;"><tbody id="proximopartido"></tbody></table>
+        </div>
+
+
+        <!-- Card 2: Forma Reciente — NUEVO DISEÑO -->
+        <div class="card" style="flex:none; overflow:hidden; min-width:0;">
+          <!-- Header con título + leyenda -->
+          <div class="forma-header-row">
+            <span class="forma-title">Forma reciente</span>
+            <div class="forma-legend">
+              <div class="forma-legend-item"><div class="forma-legend-dot" style="background:#22C55E;"></div>Victoria</div>
+              <div class="forma-legend-item"><div class="forma-legend-dot" style="background:#94A3B8;"></div>Empate</div>
+              <div class="forma-legend-item"><div class="forma-legend-dot" style="background:#F43F5E;"></div>Derrota</div>
+            </div>
+          </div>
+
+          <!-- Banner del equipo con badges resumen -->
+          <div class="forma-team-banner">
+            <div class="forma-team-avatar">
+              <svg width="24" height="24" viewBox="0 0 30 30" fill="none">
+               <div class="esquema2"><img src="img/ligas/sudamericana.png" > </div>
+              </svg>
+            </div>
+            <div>
+              <div class="forma-team-name">Universitario de Deportes</div>
+              <div class="forma-team-sub" id="forma-sub-label">Últimos partidos</div>
+            </div>
+            <div class="forma-summary-badges" id="forma-badges"></div>
+          </div>
+
+          <!-- Barras -->
+          <div class="forma-chart-area" id="forma-bars"></div>
+          <!-- Etiquetas -->
+          <div class="forma-labels-area" id="forma-labels"></div>
+        </div>
+
+       <!-- Card 3: Últimos Partidos -->
+        <div class="card" style="flex:none; overflow:hidden; min-width:0;">
+          <div class="card3-header">
+            <div>
+              <div class="card3-title">Historial de partidos</div>
+              <div class="card3-sub">Universitario · Copa Sudamericana</div>
+            </div>
+            <div class="card3-streaks" id="card3-streaks"></div>
+          </div>
+          <div id="ultimosLiga1" style="width:100%;"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Cancha + Stats jugadores -->
+    <div class="cancha-grid" style="display:grid; grid-template-columns:517px 1fr; gap:16px; align-items:start; align-items:stretch;">
+
+      <!-- CARD IZQUIERDO: Cancha -->
+      <div class="card" style="padding:16px; background:#1a2332; border-color:rgba(255,255,255,0.08);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="esquema"><img src="img/universitario.png" ></div>
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);">Universitario</span>
+          </div>
+          <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(247, 244, 244, 0.863);">3 – 5 – 2</span>
+        </div>
+
+        <!-- Cancha SVG -->
+        <div style="position:relative;width:100%;aspect-ratio:0.65;background:#1e4020;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(0,0,0,0.07) 40px,rgba(0,0,0,0.07) 80px);border-radius:8px;overflow:hidden;">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 260 400" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="12" width="236" height="376" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <line x1="12" y1="200" x2="248" y2="200" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <circle cx="130" cy="200" r="36" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <circle cx="130" cy="200" r="2" fill="rgba(255,255,255,0.3)"/>
+            <rect x="62" y="12" width="136" height="58" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <rect x="92" y="12" width="76" height="26" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <circle cx="130" cy="56" r="1.5" fill="rgba(255,255,255,0.3)"/>
+            <path d="M 94,70 A 36,36 0 0 1 166,70" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <rect x="62" y="330" width="136" height="58" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <rect x="92" y="362" width="76" height="26" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <circle cx="130" cy="344" r="1.5" fill="rgba(255,255,255,0.3)"/>
+            <path d="M 94,330 A 36,36 0 0 0 166,330" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <rect x="104" y="6" width="52" height="8" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <rect x="104" y="386" width="52" height="8" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          </svg>
+
+          <div class="overview-column large">
+            <div class="pitch-container">
+              
+              <div id="formation" class="formation">
+              </div>
+            </div>
+            <div class="liga-box"> 
+              <span id="ligaNombrePlayer">Player</span>
+            </div>
+          </div>
+
+        
+        </div>
+
+        <!-- Leyenda posiciones -->
+        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#fbbf24;"></div><span style="font-size:9px;color:rgba(255,255,255,0.4);">GK</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#60a5fa;"></div><span style="font-size:9px;color:rgba(255,255,255,0.4);">DEF</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#a78bfa;"></div><span style="font-size:9px;color:rgba(255,255,255,0.4);">MID</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#f87171;"></div><span style="font-size:9px;color:rgba(255,255,255,0.4);">ATT</span></div>
+        </div>
+      </div>
+
+      <!-- CARD DERECHO: Tabla de jugadores -->
+      <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+
+        <!-- Toolbar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:var(--bg-white);border-bottom:1px solid var(--border);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img src="img/ligas/sudamericana.png" style="width:22px;height:22px;object-fit:contain;">
+            <span style="font-size:14px;font-weight:700;color:var(--text-primary);">Plantel</span>
+            <span style="font-size:12px;color:var(--text-muted);">· Universitario de Deportes</span>
+          </div>
+          <div style="position:relative;">
+            <select id="filtroAnioPlayer" style="appearance:none;background:var(--bg);border:1.5px solid var(--border);color:var(--text-primary);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;padding:6px 32px 6px 12px;border-radius:8px;cursor:pointer;outline:none;transition:border-color .15s;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <option>2023</option>
+            </select>
+            <svg style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+
+        <svg width="0" height="0" style="position:absolute">
+          <defs>
+            <symbol id="indicator-shape" viewBox="0 0 8 50">
+              <path fill="currentColor" d="M8 1 L3 6 V44 L8 49 Z"/>
+            </symbol>
+          </defs>
+        </svg>
+
+        <!-- Tabla -->
+        <div style="overflow-x:auto;overflow-y:auto;max-height:780px;">
+          <table class="players-table">
+            <thead>
+              <tr>
+                <th style="width:14px;padding:11px 6px;"></th>
+                <th style="text-align:left;padding:11px 10px;min-width:90px;">Instructions</th>
+                <th style="text-align:center;padding:11px 8px;width:56px;">Nat</th>
+                <th style="text-align:center;padding:11px 8px;min-width:80px;">Ability</th>
+                <th style="text-align:left;padding:11px 10px;min-width:160px;">Player</th>
+                <th style="text-align:center;padding:11px 8px;min-width:100px;">Position</th>
+                <th style="text-align:center;padding:11px 8px;width:60px;">Matches</th>
+                <th style="text-align:center;padding:11px 8px;width:50px;">Goals</th>
+                <th style="text-align:center;padding:11px 8px;width:60px;">Assists</th>
+                <th style="text-align:center;padding:11px 8px;min-width:70px;">Dorsal</th>
+                <th style="text-align:center;padding:11px 8px;min-width:80px;">Performance</th>
+                <th style="text-align:center;padding:11px 8px;width:70px;">Avr. Rat</th>
+              </tr>
+            </thead>
+            <tbody id="playersBody"></tbody>
+          </table>
+        </div>
+
+        <!-- ══ PAGINACIÓN JUGADORES ══ -->
+        <div class="pagination-wrap" id="paginacionJugadores" style="margin-top:auto;">
+          <div class="pagination-info2" id="pgPlayersInfo">
+            Mostrando <strong id="pgPlayersFrom">1</strong>–<strong id="pgPlayersTo">10</strong> de <strong id="pgPlayersTotal">0</strong> jugadores
+          </div>
+          <div class="pagination-controls2">
+            <button class="page-nav-btn" id="btnPlayersPrev" onclick="cambiarPaginaPlayers(-1)" disabled>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="page-numbers" id="pageNumbersPlayers"></div>
+            <button class="page-nav-btn" id="btnPlayersNext" onclick="cambiarPaginaPlayers(1)">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <!-- ══ GRÁFICO PUNTOS POR JORNADA ══ -->
+    <div class="card" id="cardGraficoJornadas" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Puntos por Jornada</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Progresión acumulada en la temporada</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:center;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);"><div style="width:10px;height:3px;background:#3361ff;border-radius:2px;"></div>Universitario</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);"><div style="width:10px;height:3px;background:#10b981;border-radius:2px;"></div>Líder</div>
+        </div>
+      </div>
+      <canvas id="chartJornadas" height="90"></canvas>
+    </div>
+  
+     <div class="bottom-grid" style="grid-template-columns: 1fr;">
+
+
+
+    </div>
+
+
+
+</div><!-- /main -->
+
+<!-- ══ MODAL DETALLE PARTIDO ══ -->
+<div id="modalPartido" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;width:520px;max-width:94vw;box-shadow:0 24px 60px rgba(0,0,0,0.2);overflow:hidden;">
+    <div style="padding:16px 22px;background:#1c2434;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <img id="modalLigaLogo" src="" style="width:22px;height:22px;object-fit:contain;">
+        <span id="modalLigaNombre" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:.06em;text-transform:uppercase;"></span>
+      </div>
+      <button onclick="cerrarModal()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:20px;line-height:1;">&#x2715;</button>
+    </div>
+    <div style="background:#f8fafc;padding:22px;text-align:center;border-bottom:1px solid #e4eaf2;">
+      <div id="modalFecha" style="font-size:11px;font-weight:600;color:#94a3b8;margin-bottom:14px;letter-spacing:.06em;text-transform:uppercase;"></div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;max-width:360px;margin:0 auto;">
+        <div style="text-align:center;">
+          <img id="modalLogo1" src="" style="width:52px;height:52px;object-fit:contain;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.1));">
+          <div id="modalEquipo1" style="font-size:13px;font-weight:700;color:#1a2332;"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div id="modalScore" style="font-family:'Satoshi',sans-serif;font-size:38px;font-weight:800;color:#1a2332;letter-spacing:3px;line-height:1;"></div>
+          <span id="modalEstadoBadge" style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;"></span>
+        </div>
+        <div style="text-align:center;">
+          <img id="modalLogo2" src="" style="width:52px;height:52px;object-fit:contain;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.1));">
+          <div id="modalEquipo2" style="font-size:13px;font-weight:700;color:#1a2332;"></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:18px 22px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;">
+          <div style="font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Estadio</div>
+          <div id="modalEstadio" style="font-size:13px;font-weight:600;color:#1a2332;"></div>
+        </div>
+        <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;">
+          <div style="font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Jornada</div>
+          <div id="modalDetalle" style="font-size:13px;font-weight:600;color:#1a2332;"></div>
+        </div>
+      </div>
+      <div id="modalResultBar" style="display:none;">
+        <div style="font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Resultado</div>
+        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;">
+          <div id="barLocal" style="background:#3361ff;border-radius:4px;transition:width .4s;"></div>
+          <div style="background:#e2e8f0;width:4px;flex-shrink:0;"></div>
+          <div id="barVisita" style="background:#ef4444;border-radius:4px;transition:width .4s;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#94a3b8;">
+          <span id="barLocalLbl"></span><span id="barVisitaLbl"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+
+
+
+
+
+
+<script>
+// ── NAV ──
+function toggleMenu(id, parentEl) {
+  const sub = document.getElementById('sub-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!sub) return;
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+}
+function setNavActive(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  el.classList.add('active');
+}
+function setSubActive(el) {
+  document.querySelectorAll('.nav-sub-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+
+// ── SIDEBAR
+ fetch('sidebar.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('sidebar-container').innerHTML = html;
+
+      // Marcar automáticamente el item activo según la página actual
+      const pagina = window.location.pathname.split('/').pop();
+      document.querySelectorAll('.nav-sub-item a').forEach(a => {
+        if (a.getAttribute('href') === pagina) {
+          a.closest('.nav-sub-item').classList.add('active');
+
+          // Abrir el submenu padre automáticamente
+          const sub = a.closest('.nav-sub');
+          if (sub) {
+            sub.classList.add('open');
+            const id = sub.id.replace('sub-', '');
+            const arrow = document.getElementById('arrow-' + id);
+            if (arrow) arrow.classList.add('open');
+            const parentItem = sub.previousElementSibling;
+            if (parentItem) parentItem.classList.add('active');
+          }
+        }
+      });
+      document.body.style.visibility = 'visible';
+    });
+
+// ── FILTROS ──
+const filtroLiga = document.getElementById("viewSelect");
+const filtroAnio = document.getElementById("yearSelect");
+const tablaPosiciones = document.getElementById("tablaPosiciones");
+const tablaPartidos   = document.getElementById("tablaPartidos");
+
+// ── PAGINACIÓN (estado global) ──
+const ROWS_PER_PAGE = 14;
+let paginaActual = 1;
+let partidosFiltrados = [];  // todos los partidos del filtro actual
+
+// ── DATOS POSICIONES ──
+const DATA = {
+  overview: {
+    2023: [
+      {name:"Goiás",                logo:"img/goias.png",            pj:6, g:3, e:3, p:0, gf:7,  gc:3,  last:"DWWDW", zone:"cl"},
+      {name:"Universitario",        logo:"img/universitario.png",    pj:6, g:3, e:1, p:2, gf:6, gc:5,  last:"DWLLW", zone:"el"},
+      {name:"Santa Fe",             logo:"img/santafe.png",          pj:6, g:2, e:1, p:3, gf:5, gc:6,  last:"WLLWL", zone:""},
+      {name:"Gimnasia",             logo:"img/gimnasia.png",         pj:6, g:1, e:1, p:4, gf:2,  gc:6,  last:"LLWDL", zone:""}
+
+    ]
+
+  }
+};
+
+const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
+
+function render() {
+  const view = document.getElementById("viewSelect").value;
+  const year = parseInt(document.getElementById("yearSelect").value);
+  const rows = (DATA[view]?.[year]) || [];
+  rows.sort((a,b) => {
+    const pa = a.g*3+a.e, pb = b.g*3+b.e;
+    if (pb!==pa) return pb-pa;
+    const da = a.gf-a.gc, db = b.gf-b.gc;
+    if (db!==da) return db-da;
+    return b.gf-a.gf;
+  });
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = "";
+  rows.forEach((t,i) => {
+    const pts = t.g*3+t.e;
+    const dg  = t.gf-t.gc;
+    const dgStr   = dg>0?"+"+dg:String(dg);
+    const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
+    const last5 = (t.last||"DDDDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
+    const zClass = t.zone?"zone-"+t.zone:"";
+    tbody.insertAdjacentHTML("beforeend",`
+      <tr class="${zClass}">
+        <td class="td-pos">${i+1}</td>
+        <td class="td-team"><div class="team-cell"><img src="${t.logo}" class="team-logo"><span class="team-name">${t.name}</span></div></td>
+        <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+        <td>${t.gf}</td><td>${t.gc}</td>
+        <td class="${dgClass}">${dgStr}</td>
+        <td><span class="pts-val">${pts}</span></td>
+        <td><div class="last5">${last5}</div></td>
+      </tr>`);
+  });
+}
+
+// ══════════════════════════════════════
+// TABLA DE PARTIDOS + PAGINACIÓN
+// ══════════════════════════════════════
+
+function getLigaLogo(nombreLiga) {
+  const mapa = {
+    "Liga 1":"liga1.png","Copa Libertadores":"libertadores.png",
+    "Copa Sudamericana":"sudamericana.png","Liga Femenina FPF":"ligafemenina.png",
+    "Amistosos":"amistosos.png","Torneo de Reservas":"reservas.png",
+    "Copa Libertadores sub20":"libertadoressub20.png","Liga 3":"liga3.png",
+    "Liga Futsal Pro":"futsalpro.png","Copa Libertadores Futsal":"libertadoresfutsal.png",
+    "Liga Voley":"voley.png"
+  };
+  return mapa[nombreLiga]||"defaultliga.png";
+}
+
+function cargarPartidos() {
+  const json = localStorage.getItem("partidos");
+  if (!json) return [];
+  try { return JSON.parse(json); } catch { return []; }
+}
+
+/* Renderiza la página actual de partidosFiltrados */
+function renderPaginaPartidos() {
+  const tbody = document.getElementById("tbodyPartidos");
+  tbody.innerHTML = "";
+
+  const total    = partidosFiltrados.length;
+  const totalPag = Math.ceil(total / ROWS_PER_PAGE) || 1;
+  if (paginaActual > totalPag) paginaActual = totalPag;
+
+  const desde = (paginaActual - 1) * ROWS_PER_PAGE;
+  const hasta = Math.min(desde + ROWS_PER_PAGE, total);
+  const pagina = partidosFiltrados.slice(desde, hasta);
+
+  if (total === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#94a3b8;">Seleccione una liga para ver los partidos.</td></tr>';
+  } else {
+    pagina.forEach(p => {
+      const tieneResultado = p.resultado && p.resultado.trim() !== "" && p.resultado.trim() !== "vs";
+      const scoreHtml = tieneResultado
+        ? `<div class="tp-score">${p.resultado}</div>`
+        : `<div class="tp-score pendiente">. vs .</div>`;
+      const estadoNorm = (p.estado||"").toLowerCase();
+      let pillClass = "";
+      if (estadoNorm.includes("vivo")||estadoNorm.includes("live")) pillClass="live";
+      else if (estadoNorm.includes("pend")||estadoNorm.includes("prox")||estadoNorm.includes("próx")) pillClass="pendiente";
+      else if (estadoNorm.includes("susp")) pillClass="suspendido";
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="tp-fecha">${p.fecha}</td>
+        <td class="tp-liga-col"><div class="tp-liga-wrap"><img src="img/ligas/${getLigaLogo(p.liga)}" alt="${p.liga}"></div></td>
+        <td><div class="tp-liga-info"><span class="tp-liga-nombre">${p.detalle}</span><span class="tp-liga-estadio">${p.estadio}</span></div></td>
+        <td><div class="tp-equipos">
+          <div class="tp-local"><img src="img/${p.logo1}" alt="${p.equipo1}"><span>${p.equipo1}</span></div>
+          ${scoreHtml}
+          <div class="tp-visita"><span>${p.equipo2}</span><img src="img/${p.logo2}" alt="${p.equipo2}"></div>
+        </div></td>
+        <td class="tp-estado"><span class="tp-pill ${pillClass}">${p.estado}</span></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Actualizar info de paginación
+  document.getElementById("pgFrom").textContent  = total === 0 ? 0 : desde + 1;
+  document.getElementById("pgTo").textContent    = hasta;
+  document.getElementById("pgTotal").textContent = total;
+
+  // Botones prev / next
+  document.getElementById("btnPrev").disabled = paginaActual <= 1;
+  document.getElementById("btnNext").disabled = paginaActual >= totalPag;
+
+  // Números de página
+  renderNumeroPaginas(totalPag);
+}
+
+function renderNumeroPaginas(totalPag) {
+  const container = document.getElementById("pageNumbers");
+  container.innerHTML = "";
+
+  if (totalPag <= 1) return;  // no mostrar si solo hay 1 página
+
+  const crearBtn = (num) => {
+    const btn = document.createElement("button");
+    btn.className = "page-btn" + (num === paginaActual ? " active" : "");
+    btn.textContent = num;
+    btn.onclick = () => { paginaActual = num; renderPaginaPartidos(); };
+    return btn;
+  };
+
+  const crearEllipsis = () => {
+    const span = document.createElement("span");
+    span.className = "page-ellipsis";
+    span.textContent = "…";
+    return span;
+  };
+
+  // Mostrar máximo 7 botones con ellipsis
+  if (totalPag <= 7) {
+    for (let i = 1; i <= totalPag; i++) container.appendChild(crearBtn(i));
+  } else {
+    container.appendChild(crearBtn(1));
+    if (paginaActual > 3) container.appendChild(crearEllipsis());
+    const start = Math.max(2, paginaActual - 1);
+    const end   = Math.min(totalPag - 1, paginaActual + 1);
+    for (let i = start; i <= end; i++) container.appendChild(crearBtn(i));
+    if (paginaActual < totalPag - 2) container.appendChild(crearEllipsis());
+    container.appendChild(crearBtn(totalPag));
+  }
+}
+
+function cambiarPagina(delta) {
+  const totalPag = Math.ceil(partidosFiltrados.length / ROWS_PER_PAGE) || 1;
+  paginaActual = Math.max(1, Math.min(paginaActual + delta, totalPag));
+  renderPaginaPartidos();
+}
+
+function actualizarPartidos() {
+  const liga = filtroLiga.value;
+  const anio = filtroAnio.value;
+
+  if (!liga || liga === "overview") {
+    partidosFiltrados = [];
+    paginaActual = 1;
+    renderPaginaPartidos();
+    return;
+  }
+
+  const todos = cargarPartidos();
+  partidosFiltrados = todos.filter(p =>
+    p.genero === "Masculino" &&
+    p.liga === liga &&
+    p.fecha.startsWith(anio)
+  );
+  paginaActual = 1;  // siempre empezar desde la página 1 al cambiar filtro
+  renderPaginaPartidos();
+}
+
+function actualizarTablas() {
+  const liga = filtroLiga.value;
+  if (liga === "overview") {
+    tablaPosiciones.style.display = "block";
+    tablaPartidos.style.display   = "none";
+    render();
+  } else {
+    tablaPosiciones.style.display = "none";
+    tablaPartidos.style.display   = "block";
+    actualizarPartidos();
+  }
+}
+
+filtroAnio.addEventListener("change", actualizarTablas);
+filtroLiga.addEventListener("change", actualizarTablas);
+
+window.addEventListener("DOMContentLoaded", () => {
+  filtroLiga.value = "overview";
+  filtroAnio.value = "2023";
+  actualizarTablas();
+});
+
+
+
+
+// ══════════════════════════════════════
+// PRÓXIMO PARTIDO 
+// ══════════════════════════════════════
+
+function obtenerLogoLiga(liga) {
+  const mapa = {
+    "Liga 1":"liga1.png","Copa Libertadores":"libertadores.png",
+    "Copa Sudamericana":"sudamericana.png","Liga Femenina FPF":"ligafemenina.png",
+    "Copa America":"copaamerica.png","Eliminatoria 2026":"eliminatorias.png"
+  };
+  return mapa[liga]||"default.png";
+}
+
+function cargarProximoPartido(genero, liga) {
+  let partidos = JSON.parse(localStorage.getItem("partidos"))||[];
+  let pendientes = partidos.filter(p =>
+    p.estado?.toLowerCase()==="pendiente" && p.genero===genero && p.liga===liga
+  );
+  const tbody = document.getElementById("proximopartido");
+  tbody.innerHTML = "";
+  if (!pendientes.length) {
+    tbody.innerHTML = `<tr><td style="text-align:center;font-size:12px;color:var(--text-muted);padding:16px 0;">No hay partidos pendientes</td></tr>`;
+    return;
+  }
+  pendientes.sort((a,b)=>new Date(a.fecha)-new Date(b.fecha));
+  const p = pendientes[0];
+  tbody.innerHTML = `<tr><td>
+    <div class="proximo-partido">
+      <div class="pp-fecha">${p.fecha}</div>
+      <div class="pp-equipos-grid">
+        <div class="pp-team-col"><img src="img/${p.logo1}" alt=""><span>${p.equipo1}</span></div>
+        <div class="pp-vs">VS</div>
+        <div class="pp-team-col"><img src="img/${p.logo2}" alt=""><span>${p.equipo2}</span></div>
+      </div>
+      <div class="pp-info">
+        <span class="pp-liga"><img src="img/ligas/${obtenerLogoLiga(p.liga)}" alt=""> ${p.liga}</span>
+<span class="pp-estadio">
+  <span class="icon-estadio">🏟</span> ${p.estadio}
+</span>
+      </div>
+    </div>
+  </td></tr>`;
+}
+
+
+
+
+// ══════════════════════════════════════
+// FORMA RECIENTE 
+// ══════════════════════════════════════
+function cargarFormaReciente() {
+  let partidos = JSON.parse(localStorage.getItem("partidos"))||[];
+  partidos = partidos.filter(p =>
+    p.liga === "Copa Sudamericana" &&
+    (p.equipo1.toLowerCase() === "universitario" || p.equipo2.toLowerCase() === "universitario") &&
+    p.resultado && p.estado.toLowerCase() === "finalizado"
+  );
+  partidos.sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+  const ultimos = partidos.slice(-8);
+
+  const barsEl   = document.getElementById("forma-bars");
+  const labelsEl = document.getElementById("forma-labels");
+  const badgesEl = document.getElementById("forma-badges");
+  const subLabel = document.getElementById("forma-sub-label");
+
+  if (!barsEl || !labelsEl) return;
+
+  barsEl.innerHTML   = "";
+  labelsEl.innerHTML = "";
+  badgesEl.innerHTML = "";
+
+  if (!ultimos.length) {
+    barsEl.innerHTML = `<div style="flex:1;text-align:center;font-size:12px;color:var(--text-muted);padding:20px 0;">Sin partidos registrados</div>`;
+    subLabel.textContent = "Sin datos";
+    return;
+  }
+
+  subLabel.textContent = `Últimos ${ultimos.length} partidos`;
+
+  const colorMap  = { W: "#22C55E", D: "#94A3B8", L: "#F43F5E" };
+  const labelMap  = { W: "V",       D: "E",       L: "D"       };
+  const heightMap = { W: 110,       D: 60,        L: 28        };
+
+  // Contar para badges
+  const counts = { W: 0, D: 0, L: 0 };
+
+  // Datos procesados
+  const datos = ultimos.map(p => {
+    let golesU, golesR, logoRival, nombreRival, shortRival, colorRival, bgRival;
+    const esLocal = p.equipo1.toLowerCase() === "universitario";
+    if (esLocal) {
+      logoRival   = p.logo2;
+      nombreRival = p.equipo2;
+      [golesU, golesR] = p.resultado.split("-").map(Number);
+    } else {
+      logoRival   = p.logo1;
+      nombreRival = p.equipo1;
+      [golesR, golesU] = p.resultado.split("-").map(Number);
+    }
+    let result = golesU > golesR ? "W" : golesU < golesR ? "L" : "D";
+    counts[result]++;
+
+    // Short name (primeras 2-3 letras)
+    shortRival = nombreRival.replace(/^(Sporting|Sport|Alianza|Atlético|Atletico|Deportivo|FC |FBC )/i,"").substring(0,3).toUpperCase();
+
+    return { result, score: p.resultado, logoRival, nombreRival, shortRival };
+  });
+
+  // Badges resumen
+  [["W","V","#22C55E"], ["D","E","#94A3B8"], ["L","D","#F43F5E"]].forEach(([k, lbl, c]) => {
+    const b = document.createElement("div");
+    b.className = "forma-badge";
+    b.style.cssText = `background:${c}18; border:1px solid ${c}44;`;
+    b.innerHTML = `<span class="forma-badge-num" style="color:${c};">${counts[k]}</span><span class="forma-badge-lbl">${lbl}</span>`;
+    badgesEl.appendChild(b);
+  });
+
+  // Barras + Etiquetas
+  datos.forEach(d => {
+    const h = heightMap[d.result];
+    const c = colorMap[d.result];
+
+    // Columna barra
+    const col = document.createElement("div");
+    col.className = "forma-bar-col";
+
+    const scoreEl = document.createElement("div");
+    scoreEl.className = "forma-bar-score";
+    scoreEl.style.color = c;
+    scoreEl.textContent = d.score;
+
+    const bar = document.createElement("div");
+    bar.className = "forma-bar";
+    bar.style.cssText = `height:${h}px; background:${c};`;
+    bar.innerHTML = `<span>${labelMap[d.result]}</span>`;
+
+    col.appendChild(scoreEl);
+    col.appendChild(bar);
+    barsEl.appendChild(col);
+
+    // Columna etiqueta
+    const lbl = document.createElement("div");
+    lbl.className = "forma-label-col";
+
+    const avatar = document.createElement("div");
+    avatar.className = "forma-rival-avatar";
+    avatar.style.background = "#F1F5F9";
+
+    // Intentar mostrar imagen, fallback a texto
+    const img = document.createElement("img");
+    img.src = "img/" + d.logoRival;
+    img.style.cssText = "width:16px;height:16px;object-fit:contain;";
+    img.onerror = () => {
+      avatar.removeChild(img);
+      const sp = document.createElement("span");
+      sp.textContent = d.shortRival;
+      sp.style.cssText = `font-size:7px;font-weight:800;color:#64748b;`;
+      avatar.appendChild(sp);
+    };
+    avatar.appendChild(img);
+
+    const name = document.createElement("p");
+    name.className = "forma-rival-name";
+    // Nombre corto
+    name.textContent = d.nombreRival.replace(/^(Sporting |Sport |Alianza |Atlético |Atletico |Deportivo |FC |FBC )/i,"").substring(0, 8);
+
+    lbl.appendChild(avatar);
+    lbl.appendChild(name);
+    labelsEl.appendChild(lbl);
+  });
+}
+
+
+
+
+// ══════════════════════════════════════
+// ÚLTIMOS PARTIDOS 
+// ══════════════════════════════════════
+function cargarUltimosLiga1() {
+  let partidos = JSON.parse(localStorage.getItem("partidos"))||[];
+  let liga1 = partidos.filter(p=>p.liga==="Copa Sudamericana"&&p.estado.toLowerCase()==="finalizado");
+  liga1.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  const ultimos = liga1.slice(0,5);
+  const cont = document.getElementById("ultimosLiga1");
+  const streaksCont = document.getElementById("card3-streaks");
+  if (!cont) return;
+  cont.innerHTML = "";
+  if (streaksCont) streaksCont.innerHTML = "";
+
+  const cfgR = {
+    W:{ color:"#22C55E", bg:"#F0FDF4", border:"#BBF7D0", label:"V" },
+    D:{ color:"#64748B", bg:"#F1F5F9", border:"#CBD5E1", label:"E" },
+    L:{ color:"#DC2626", bg:"#FEE2E2", border:"#FECACA", label:"D" },
+  };
+
+  if (!ultimos.length) {
+    cont.innerHTML = `<div style="text-align:center;font-size:12px;color:var(--text-muted);padding:16px 0;">Sin partidos registrados</div>`;
+    return;
+  }
+
+  // Streak dots (cronológico, más antiguo a izquierda)
+  if (streaksCont) {
+    [...ultimos].reverse().forEach(p => {
+      let r1=0,r2=0;
+      if (p.resultado&&p.resultado.includes("-")) [r1,r2]=p.resultado.split("-").map(n=>parseInt(n.trim()));
+      let estado="D";
+      if (p.equipo1.toLowerCase()==="universitario") { if(r1>r2)estado="W"; else if(r1<r2)estado="L"; }
+      else if (p.equipo2.toLowerCase()==="universitario") { if(r2>r1)estado="W"; else if(r2<r1)estado="L"; }
+      const r = cfgR[estado];
+      const d = document.createElement("div");
+      d.className = "card3-streak-dot";
+      d.style.cssText = `background:${r.bg};border:1px solid ${r.border};color:${r.color};`;
+      d.textContent = r.label;
+      streaksCont.appendChild(d);
+    });
+  }
+
+  ultimos.forEach(p => {
+    let r1=0,r2=0;
+    if (p.resultado&&p.resultado.includes("-")) [r1,r2]=p.resultado.split("-").map(n=>parseInt(n.trim()));
+    let estado="D";
+    if (p.equipo1.toLowerCase()==="universitario") { if(r1>r2)estado="W"; else if(r1<r2)estado="L"; }
+    else if (p.equipo2.toLowerCase()==="universitario") { if(r2>r1)estado="W"; else if(r2<r1)estado="L"; }
+    const r = cfgR[estado];
+    const localWins = r1 > r2;
+    const visitWins = r2 > r1;
+    const dateShort = p.fecha ? p.fecha.substring(5).replace("-","/") : "";
+
+    const div = document.createElement("div");
+    div.className = "partido-item";
+    div.innerHTML = `
+      <div class="partido-acento" style="background:${r.color};"></div>
+      <div class="partido-fecha">
+        <div class="partido-fecha-top">${dateShort}</div>
+        <div class="partido-fecha-sub">Final</div>
+      </div>
+      <div class="partido-sep"></div>
+      <div class="partido-equipos">
+        <div class="partido-equipo-row">
+          <div class="partido-logo-wrap" >
+            <img src="img/${p.logo1}" onerror="this.style.display='none'">
+          </div>
+          <span class="partido-nombre" style="font-weight:${localWins?'700':'400'};color:${localWins?'var(--text-primary)':'var(--text-secondary)'};">${p.equipo1}</span>
+          <span class="partido-gol" style="font-weight:${localWins?'800':'400'};color:${localWins?'var(--text-primary)':'var(--text-muted)'};">${r1}</span>
+        </div>
+        <div class="partido-equipo-row">
+          <div class="partido-logo-wrap" >
+            <img src="img/${p.logo2}" onerror="this.style.display='none'">
+          </div>
+          <span class="partido-nombre" style="font-weight:${visitWins?'700':'400'};color:${visitWins?'var(--text-primary)':'var(--text-secondary)'};">${p.equipo2}</span>
+          <span class="partido-gol" style="font-weight:${visitWins?'800':'400'};color:${visitWins?'var(--text-primary)':'var(--text-muted)'};">${r2}</span>
+        </div>
+      </div>
+      <div class="partido-badge" style="background:${r.color};">${r.label}</div>`;
+    cont.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  filtroLiga.value = "overview";
+  filtroAnio.value = "2023";
+  actualizarTablas();
+  cargarProximoPartido("Masculino","Copa Sudamericana");
+  cargarFormaReciente();
+  cargarUltimosLiga1();
+});
+
+
+
+// ══════════════════════════════════════
+// CANCHA Y STATS
+// ══════════════════════════════════════
+
+const players = [
+
+{id: 1, year: 2023, role: "DL",duty: "Defender",nation: "Argentina",name: "Matías Di Benedetto",position: "DL DC DR",pj: "8",
+  goals: "1",asis: "0",dorsal: "- 05 -",performance: "good",photo: "img/equipo/matias_dibenedetto.png",rat:"7.2"},  
+{id: 2, year: 2023, role: "MR",duty: "Wing-back",nation: "Perú",name: "Andy Polo",position: "MR RW DR",pj: "9",
+  goals: "0",asis: "3",dorsal: "- 24 -",performance: "good",photo: "img/equipo/andy_polo.png",rat:"7.1"},
+{id: 3, year: 2023, role: "AM",duty: "Create",nation: "Perú",name: "Piero Quispe",position: "AM MC",pj: "8",
+  goals: "2",asis: "0",dorsal: "- 36 -",performance: "good",photo: "img/equipo/piero_quispe.png",rat:"7.1"},
+{id: 4, year: 2023, role: "DM",duty: "Hold",nation: "Chile",name: "Rodrigo Ureña",position: "DM MC",pj: "8",
+  goals: "0",asis: "0",dorsal: "- 18-",performance: "good",photo: "img/equipo/rodrigo_ureña.png",rat:"7.0"}, 
+{id: 5, year: 2023, role: "DC",duty: "Defender",nation: "Paraguay",name: "Williams Riveros",position: "DC",pj: "9",
+  goals: "1",asis: "0",dorsal: "- 03 -",performance: "good",photo: "img/equipo/williams_riveros.png",rat:"7.0"},
+{id: 6, year: 2023, role: "ST",duty: "Attack",nation: "Perú",name: "Alex Valera",position: "ST",pj: "6",
+  goals: "1",asis: "0",dorsal: "- 20 -",performance: "Medium",photo: "img/equipo/alex_valera.png",rat:"6.9"},
+{id: 7, year: 2023, role: "GK",duty: "Goalkeeper",nation: "Perú",name: "José Carvallo",position: "GK",pj: "7",
+  goals: "0",asis: "0",dorsal: "- 01 -",performance: "Medium",photo: "img/equipo/jose_carvallo.png",rat:"6.9"},
+{id: 8, year: 2023, role: "ST",duty: "Attack",nation: "Argentina",name: "Emanuel Herrera",position: "ST",pj: "5",
+  goals: "2",asis: "1",dorsal: "- 15 -",performance: "Medium",photo: "img/equipo/emanuel_herrera.png",rat:"6.9"},
+{id: 9, year: 2023, role: "MC",duty: "Build",nation: "Argentina",name: "Matín Pérez Guedes",position: "MC AM",pj: "8",
+  goals: "0",asis: "0",dorsal: "- 16 -",performance: "Fair",photo: "img/equipo/martin_guedes.png",rat:"6.8"},
+{id: 10, year: 2023, role: "MC",duty: "Build",nation: "Argentina",name: "Horacio Calcaterra",position: "MC DM AM",pj: "9",
+  goals: "0",asis: "0",dorsal: "- 10 -",performance: "Fair",photo: "img/equipo/horacio_calcaterra.png",rat:"6.8"},
+{id: 11, year: 2023, role: "GK",duty: "Goalkeeper",nation: "Perú",name: "Diego Romero",position: "DC",pj: "2",
+  goals: "0",asis: "0",dorsal: "- 21 -",performance: "Fair",photo: "img/equipo/diego_romero.png",rat:"6.8"},
+{id: 12, year: 2023, role: "ST",duty: "Attack",nation: "Perú",name: "Edison Flores",position: "ST",pj: "2",
+  goals: "1",asis: "0",dorsal: "- 19 -",performance: "Fair",photo: "img/equipo/edison_flores.png",rat:"6.8"},
+{id: 13, year: 2023, role: "ST",duty: "Attack",nation: "Uruguay",name: "Luis Urruti",position: "LW ST",pj: "8",
+  goals: "0",asis: "0",dorsal: "- 11 -",performance: "Fair",photo: "img/equipo/luis_urruti.png",rat:"6.7"},  
+{id: 14, year: 2023, role: "ST",duty: "Roam",nation: "Perú",name: "Daniel Rivera",position: "LW ST RW",pj: "3",
+  goals: "0",asis: "0",dorsal: "- 17 -",performance: "Fair",photo: "img/equipo/jose_rivera.png",rat:"6.6"},
+{id: 15, year: 2023, role: "DM",duty: "Hold",nation: "Perú",name: "Jorge Murrugarra",position: "DM MC",pj: "5",
+  goals: "0",asis: "0",dorsal: "- 23 -",performance: "Fair",photo: "img/equipo/jorge_murrugarra.png",rat:"6.6"},
+{id: 16, year: 2023, role: "ML",duty: "Wing-back",nation: "Perú",name: "Nelson Cabanillas",position: "ML DL",pj: "6",
+  goals: "0",asis: "1",dorsal: "- 27 -",performance: "Fair",photo: "img/equipo/nelson_cabanillas.png",rat:"6.6"},  
+{id: 17, year: 2023, role: "DR",duty: "Defender",nation: "Perú",name: "Aldo Corzo",position: "DC DR",pj: "9",
+  goals: "0",asis: "0",dorsal: "- 29 -",performance: "Fair",photo: "img/equipo/aldo_corzo.png",rat:"6.5"},
+{id: 18, year: 2023, role: "DM",duty: "Hold",nation: "Perú",name: "Alfonso Barco",position: "DM MC",pj: "7",
+  goals: "0",asis: "0",dorsal: "- 04 -",performance: "Fair",photo: "img/equipo/alfonso_barco.png",rat:"6.5"},
+{id: 19, year: 2023, role: "ML",duty: "Wing-back",nation: "Perú",name: "José Bolivar",position: "ML DL",pj: "5",
+  goals: "0",asis: "1",dorsal: "- 14 -",performance: "Fair",photo: "img/equipo/jose_bolivar.png",rat:"6.5"},
+{id: 20, year: 2023, role: "ST",duty: "Attack",nation: "Perú",name: "Alexander Succar",position: "ST",pj: "6",
+  goals: "1",asis: "0",dorsal: "- 07 -",performance: "Fair",photo: "img/equipo/alexander_succar.png",rat:"6.5"},
+{id: 21, year: 2023, role: "MR",duty: "Wing-back",nation: "Perú",name: "Hugo Ancajima",position: "MR",pj: "2",
+  goals: "0",asis: "0",dorsal: "- 26 -",performance: "Fair",photo: "img/equipo/hugo_ancajima.png",rat:"6.4"},
+{id: 22, year: 2023, role: "DC",duty: "Defender",nation: "Perú",name: "Marco Saravia",position: "DC",pj: "3",
+  goals: "0",asis: "0",dorsal: "- 02 -",performance: "Fair",photo: "img/equipo/marco_saravia.png",rat:"6.4"},
+{id: 23, year: 2023, role: "AM",duty: "Create",nation: "Perú",name: "YUriel Celi",position: "AM",pj: "1",
+  goals: "0",asis: "0",dorsal: "- 77 -",performance: "Fair",photo: "img/equipo/yuriel_Celi.png",rat:"6.1"},
+{id: 24, year: 2023, role: "DC",duty: "Defender",nation: "Perú",name: "Piero Guzman",position: "DC",pj: "0",
+  goals: "0",asis: "0",dorsal: "- 30 -",performance: "None",photo: "img/equipo/piero_guzman.png",rat:"0.0"},
+{id: 25, year: 2023, role: "MC",duty: "Build",nation: "Perú",name: "Jordan Guivin",position: "MC DM",pj: "0",
+  goals: "0",asis: "0",dorsal: "- 08 -",performance: "None",photo: "img/equipo/jordan_guivin.png",rat:"0.0"},
+
+
+
+
+];
+
+const tbody = document.getElementById("playersBody");
+
+
+// ── Paginación jugadores ──
+const PLAYERS_PER_PAGE = 10;
+let paginaPlayers = 1;
+let playersFiltrados = [];
+
+function renderPlayers(playersArray) {
+  playersFiltrados = playersArray;
+  paginaPlayers = 1;
+  renderPaginaPlayers();
+}
+
+function renderPaginaPlayers() {
+  tbody.innerHTML = "";
+  const total    = playersFiltrados.length;
+  const totalPag = Math.ceil(total / PLAYERS_PER_PAGE) || 1;
+  if (paginaPlayers > totalPag) paginaPlayers = totalPag;
+
+  const desde = (paginaPlayers - 1) * PLAYERS_PER_PAGE;
+  const hasta = Math.min(desde + PLAYERS_PER_PAGE, total);
+  const pagina = playersFiltrados.slice(desde, hasta);
+
+  pagina.forEach(p => {
+    const tr = document.createElement("tr");
+    const roleColor = getRoleColor(p.role);
+    tr.innerHTML = `
+      <td class="indicator-cell">
+        <svg class="indicator-svg ${roleColor}"><use href="#indicator-shape"></use></svg>
+      </td>
+      <td><div class="role-row"><i class="fa-solid fa-address-card"></i><div><div class="role">${p.role}</div><div class="sub">${p.duty}</div></div></div></td>
+      <td><img src="img/bandera/${p.nation}.png" alt="${p.nation}" class="flag-img"></td>
+      <td class="stars">${getStarsFromRating(p.rat)}</td>
+      <td><div style="display:flex;align-items:center;gap:8px;"><img src="${p.photo}" style="width:38px;height:38px;border-radius:50%;"><span>${p.name}</span></div></td>
+      <td>${p.position}</td>
+      <td><span class="pill">${p.pj}</span></td>
+      <td>${p.goals}</td>
+      <td><span class="pill">${p.asis}</span></td>
+      <td>${p.dorsal}</td>
+      <td>${getPerformanceCurve(p.rat)}</td>
+      <td class="avr-cell"><div class="avr-value ${getRatingClass(p.rat)}">${p.rat}</div></td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Info
+  document.getElementById("pgPlayersFrom").textContent  = total === 0 ? 0 : desde + 1;
+  document.getElementById("pgPlayersTo").textContent    = hasta;
+  document.getElementById("pgPlayersTotal").textContent = total;
+
+  // Botones prev/next
+  document.getElementById("btnPlayersPrev").disabled = paginaPlayers <= 1;
+  document.getElementById("btnPlayersNext").disabled = paginaPlayers >= totalPag;
+
+
+const container = document.getElementById("pageNumbersPlayers");
+if (container) container.innerHTML = "";
+}
+
+function cambiarPaginaPlayers(delta) {
+  const totalPag = Math.ceil(playersFiltrados.length / PLAYERS_PER_PAGE) || 1;
+  paginaPlayers = Math.max(1, Math.min(paginaPlayers + delta, totalPag));
+  renderPaginaPlayers();
+}
+
+function getRoleColor(role) {
+  const rojo = ["ST", "LW", "RW"];
+  const celeste = ["AM", "MC", "MR", "ML", "DM"];
+  const amarillo = ["DR", "DC", "DL"];
+  const verde = ["GK"];
+
+  if (rojo.includes(role)) return "red";
+  if (verde.includes(role)) return "green";
+  if (amarillo.includes(role)) return "yellow";
+  if (celeste.includes(role)) return "celeste";
+
+  return "gray"; // fallback por si acaso
+}
+
+const filtroAnioPlayer = document.getElementById("filtroAnioPlayer");
+
+filtroAnioPlayer.addEventListener("change", () => {
+  const selectedYear = parseInt(filtroAnioPlayer.value);
+  const filteredPlayers = players
+    .filter(p => p.year === selectedYear)
+.sort((a, b) => {
+  const ratDiff = parseFloat(b.rat) - parseFloat(a.rat);
+  if (ratDiff !== 0) return ratDiff;
+
+  // desempate por partidos jugados
+  return parseInt(b.pj) - parseInt(a.pj);
+});
+
+  renderPlayers(filteredPlayers);
+  renderFormation(filteredPlayers, formation_1_5_3_2);
+
+    // ✅ AGREGA ESTA LÍNEA
+  renderTeamKPIs();
+});
+
+// Render inicial en player
+const initialPlayers = players
+  .filter(p => p.year === parseInt(filtroAnioPlayer.value))
+.sort((a, b) => {
+  const ratDiff = parseFloat(b.rat) - parseFloat(a.rat);
+  if (ratDiff !== 0) return ratDiff;
+  return parseInt(b.pj) - parseInt(a.pj);
+});
+
+renderPlayers(initialPlayers);
+
+
+function getStarsFromRating(rat) {
+  const filled = Math.round(rat / 2); // 0–5
+  let stars = "";
+
+  for (let i = 1; i <= 5; i++) {
+    stars += i <= filled
+      ? '<span class="star full">★</span>'
+      : '<span class="star empty">★</span>';
+  }
+
+  return stars;
+}
+
+function getPerformanceCurve(rat) {
+  rat = parseFloat(rat);
+
+  if (rat >= 8) { // Muy buena - zigzag alto
+    return `<svg class="perf very-good" viewBox="0 0 60 22">
+              <path d="M12 18 L20 6 L30 6 L40 -10 L50 4 L60 8 L70 -12" />
+
+                          
+            </svg>`;
+  }
+
+  if (rat >= 7) { // Buena - zigzag medio-alto
+    return `<svg class="perf good" viewBox="0 0 60 22">
+              <path d="M2 16 L10 12 L20 8 L30 12 L40 6 L50 10 L58 6" />
+            </svg>`;
+  }
+
+  if (rat >= 6) { // Media - zigzag plano
+    return `<svg class="perf ok" viewBox="0 0 60 22">
+              <path d="M2 12 L10 13 L20 12 L30 13 L40 12 L50 13 L58 12" />
+            </svg>`;
+  }
+
+  // Mala - zigzag descendente
+  return `<svg class="perf bad" viewBox="0 0 60 22">
+            <path d="M2 10 L10 12 L20 14 L30 13 L40 16 L50 18 L58 18" />
+          </svg>`;
+}
+
+
+function getRatingClass(rating) {
+  const ratNum = parseFloat(rating);
+
+  if (isNaN(ratNum) || ratNum < 6) return "low-rating";
+  if (ratNum < 7) return "medium-rating";
+  if (ratNum < 8) return "high-rating";
+  return "celeste-rating";
+}
+
+// EL MEJOR 11
+const formation_1_5_3_2 = [
+  {role: "GK", top: 89.5, left: 50.7}, // Portero
+
+
+  {role: "ML", top: 57, left: 20}, // Defensa izquierdo
+  {role: "DL", top: 72, left: 29.8},
+  {role: "DC", top: 72, left: 51},
+  {role: "DR", top: 72, left: 72},
+  {role: "MR", top: 57, left: 81},
+
+  {role: "AM", top: 37, left: 25}, // mediocampistas
+  {role: "DM", top: 48, left: 51},
+  {role: "MC", top: 37, left: 76},
+
+  {role: "ST", top: 18, left: 36}, // delanteros
+  {role: "ST", top: 18, left: 65.5}
+];
+
+function renderFormation(playersArray, formation) {
+  const formationDiv = document.getElementById("formation");
+  formationDiv.innerHTML = ""; // limpiar
+
+  // Hacemos copia para no tocar el array original
+  const availablePlayers = [...playersArray];
+
+  formation.forEach(pos => {
+    // Buscamos primer jugador disponible con ese rol
+const candidates = availablePlayers
+  .filter(p => p.role === pos.role)
+  .sort((a, b) => {
+  const ratDiff = parseFloat(b.rat) - parseFloat(a.rat);
+  if (ratDiff !== 0) return ratDiff;
+  return parseInt(b.pj) - parseInt(a.pj);
+});
+
+const player = candidates.length > 0
+  ? candidates[0]
+  : {name:"-", photo:"img/default.png", rat:"0.0", role:"-"};
+
+// eliminar el jugador elegido para que no se repita
+const removeIndex = availablePlayers.findIndex(p => p.name === player.name);
+if (removeIndex !== -1) {
+  availablePlayers.splice(removeIndex, 1);
+}
+
+    const playerDiv = document.createElement("div");
+    playerDiv.classList.add("player-on-pitch");
+    playerDiv.style.top = pos.top + "%";
+    playerDiv.style.left = pos.left + "%";
+
+playerDiv.innerHTML = `
+<div style="display:flex; align-items:center; gap:6px;">
+  <img src="${player.photo}" alt="${player.name}" class="player-photo">
+
+  <div class="player-rat-wrapper">
+    <div class="player-rat ${getRatingClass(player.rat)}">
+      ${player.rat}
+    </div>
+    <img 
+      src="img/bandera/${player.nation}.png" 
+      alt="${player.nation}" 
+      class="player-flag"
+    >
+  </div>
+</div>
+
+  <div style="text-align:center;">
+    <span class="player-role">${player.role}</span> - <span class="player-duty">${player.duty}</span>
+  </div>
+  <div class="player-name" style="text-align:center; margin-top:2px;">
+    ${player.name}
+  </div>
+`;
+
+    formationDiv.appendChild(playerDiv);
+  });
+}
+// Ejemplo de uso
+const selectedYear = parseInt(filtroAnioPlayer.value);
+const filteredPlayers = players.filter(p => p.year === selectedYear);
+renderFormation(filteredPlayers, formation_1_5_3_2);
+
+
+
+
+// ══════════════════════════════════════
+// KPI ROW
+// ══════════════════════════════════════
+function renderTeamKPIs() {
+  const year = parseInt(document.getElementById("filtroAnioPlayer")?.value || "2026");
+  let partidos = [];
+  try { partidos = JSON.parse(localStorage.getItem("partidos")) || []; } catch{}
+  const liga1 = partidos.filter(p =>
+    p.liga === "Copa Sudamericana" && p.estado?.toLowerCase() === "finalizado" && p.fecha?.startsWith(String(year))
+  );
+  let gf=0,gc=0,wins=0,draws=0,losses=0;
+  liga1.forEach(p => {
+    if (!p.resultado?.includes("-")) return;
+    const [r1,r2] = p.resultado.split("-").map(Number);
+    const eL = p.equipo1?.toLowerCase() === "universitario";
+    const gU=eL?r1:r2, gR=eL?r2:r1;
+    gf+=gU; gc+=gR;
+    if (gU>gR) wins++; else if (gU===gR) draws++; else losses++;
+  });
+  const pj=wins+draws+losses, pct=pj>0?Math.round(wins/pj*100):0;
+  const cron=[...liga1].sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  let rChar="—", rLen=0;
+  if (cron.length) {
+    const u=cron[0]; const [r1,r2]=u.resultado.split("-").map(Number);
+    const eL=u.equipo1?.toLowerCase()==="universitario";
+    rChar=(eL?r1:r2)>(eL?r2:r1)?"V":(eL?r1:r2)===(eL?r2:r1)?"E":"D";
+    for (let i=0;i<cron.length;i++) {
+      const p=cron[i]; if(!p.resultado?.includes("-")) break;
+      const [a,b]=p.resultado.split("-").map(Number);
+      const eL2=p.equipo1?.toLowerCase()==="universitario";
+      const c=(eL2?a:b)>(eL2?b:a)?"V":(eL2?a:b)===(eL2?b:a)?"E":"D";
+      if (c===rChar) rLen++; else break;
+    }
+  }
+  const $=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  $("kpi-gf",gf); $("kpi-gc",gc); $("kpi-win",pct+"%");
+  $("kpi-racha",rLen?rChar+" ×"+rLen:"—");
+  $("kpi-gf-sub","En "+pj+" partidos · "+year);
+  const gcS=document.getElementById("kpi-gc-sub");
+  if(gcS){gcS.textContent=gf>=gc?"Saldo +"+(gf-gc):"Saldo "+(gf-gc);gcS.className="stat-badge "+(gf>=gc?"up":"down");}
+  $("kpi-win-sub",wins+"V  "+draws+"E  "+losses+"D");
+  const rS=document.getElementById("kpi-racha-sub");
+  if(rS){const c=rChar==="V"?"#10b981":rChar==="D"?"#ef4444":"#94a3b8";rS.textContent=rChar==="V"?"Racha ganadora 🔥":rChar==="D"?"Racha perdedora":"En empates";rS.style.background=c+"22";rS.style.color=c;}
+}
+
+// ══════════════════════════════════════
+// GRÁFICO PUNTOS POR JORNADA
+// ══════════════════════════════════════
+let _chartIns = null;
+function renderGraficoJornadas() {
+  const year = parseInt(document.getElementById("yearSelect")?.value||"2026");
+  const view = document.getElementById("viewSelect")?.value||"overview";
+  const card = document.getElementById("cardGraficoJornadas");
+  if (!card) return;
+  if (view !== "overview") { card.style.display="none"; return; }
+  const rows = (DATA["overview"]?.[year]) || [];
+  if (!rows.length) { card.style.display="none"; return; }
+  card.style.display = "block";
+  const sorted=[...rows].sort((a,b)=>(b.g*3+b.e)-(a.g*3+a.e));
+  const lider=sorted[0];
+  const uni=rows.find(r=>r.name?.toLowerCase().includes("universitario"))||sorted[0];
+  const pjT=uni.pj||34;
+  function simPts(total,pj,seed){
+    let s=seed; const r=()=>{s=(s*9301+49297)%233280;return s/233280;};
+    const pts=[0];
+    for(let i=1;i<=pj;i++){const n=pts[i-1]+Math.max(0,Math.min(3,Math.round(total/pj+(r()-0.4)*1.5)));pts.push(Math.min(n,total));}
+    pts[pj]=total; return pts;
+  }
+  const dU=simPts(uni.g*3+uni.e,pjT,(uni.g*3+uni.e)*7+pjT);
+  const dL=simPts(lider.g*3+lider.e,pjT,(lider.g*3+lider.e)*13+pjT);
+  const labels=Array.from({length:pjT+1},(_,i)=>i===0?"":"J"+i);
+  const canvas=document.getElementById("chartJornadas");
+  if (!canvas||typeof Chart==="undefined") return;
+  if (_chartIns) _chartIns.destroy();
+  _chartIns=new Chart(canvas,{
+    type:"line",
+    data:{labels,datasets:[
+      {label:"Universitario",data:dU,borderColor:"#3361ff",backgroundColor:"rgba(51,97,255,0.08)",borderWidth:2.5,pointRadius:3,pointBackgroundColor:"#3361ff",tension:0.35,fill:true},
+      {label:uni.name===lider.name?"Líder":lider.name,data:dL,borderColor:"#10b981",backgroundColor:"rgba(16,185,129,0.03)",borderWidth:2,borderDash:[5,4],pointRadius:2,pointBackgroundColor:"#10b981",tension:0.35,fill:false}
+    ]},
+    options:{responsive:true,interaction:{mode:"index",intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:"#1c2434",titleColor:"#94a3b8",bodyColor:"#fff",borderColor:"rgba(255,255,255,0.1)",borderWidth:1,padding:10,
+        callbacks:{title:c=>c[0].label||"Inicio",label:c=>" "+c.dataset.label+": "+c.parsed.y+" pts"}}},
+      scales:{
+        x:{grid:{color:"#e2e8f0"},ticks:{font:{size:10,family:"'Plus Jakarta Sans',sans-serif"},color:"#94a3b8",maxTicksLimit:18}},
+        y:{grid:{color:"#e2e8f0"},ticks:{font:{size:10,family:"'Plus Jakarta Sans',sans-serif"},color:"#94a3b8"},beginAtZero:true}
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════
+// MODAL DETALLE PARTIDO
+// ══════════════════════════════════════
+function abrirModalPartido(p) {
+  document.getElementById("modalPartido").style.display="flex";
+  const $=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v||"";};
+  $("modalFecha",p.fecha); $("modalLigaNombre",p.liga);
+  $("modalEquipo1",p.equipo1); $("modalEquipo2",p.equipo2);
+  $("modalEstadio",p.estadio||"—"); $("modalDetalle",p.detalle||"—");
+  const ll=document.getElementById("modalLigaLogo");
+  const l1=document.getElementById("modalLogo1"), l2=document.getElementById("modalLogo2");
+  if(ll) ll.src="img/ligas/"+getLigaLogo(p.liga||"");
+  if(l1) l1.src="img/"+(p.logo1||"");
+  if(l2) l2.src="img/"+(p.logo2||"");
+  const tieneRes=p.resultado?.includes("-");
+  const scoreEl=document.getElementById("modalScore");
+  const badgeEl=document.getElementById("modalEstadoBadge");
+  const barDiv=document.getElementById("modalResultBar");
+  if(scoreEl) scoreEl.textContent=tieneRes?p.resultado:"vs";
+  if(barDiv)  barDiv.style.display=tieneRes?"block":"none";
+  if(tieneRes){
+    const [r1,r2]=p.resultado.split("-").map(Number), tot=r1+r2||1;
+    const bL=document.getElementById("barLocal"), bV=document.getElementById("barVisita");
+    if(bL) bL.style.width=Math.round(r1/tot*100)+"%";
+    if(bV) bV.style.width=Math.round(r2/tot*100)+"%";
+    const bLL=document.getElementById("barLocalLbl"), bVL=document.getElementById("barVisitaLbl");
+    if(bLL) bLL.textContent=(p.equipo1||"")+" · "+r1;
+    if(bVL) bVL.textContent=(p.equipo2||"")+" · "+r2;
+  }
+  const est=(p.estado||"").toLowerCase();
+  let bg="#e2e8f0", col="#475569";
+  if(est.includes("vivo")||est.includes("live")){bg="rgba(16,185,129,0.15)";col="#059669";}
+  else if(est.includes("final")){bg="rgba(51,97,255,0.1)";col="#3361ff";}
+  if(badgeEl){badgeEl.textContent=p.estado||"";badgeEl.style.background=bg;badgeEl.style.color=col;}
+}
+function cerrarModal(){document.getElementById("modalPartido").style.display="none";}
+document.addEventListener("click",e=>{if(e.target.id==="modalPartido")cerrarModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")cerrarModal();});
+
+// Hacer filas de partidos clickables (se ejecuta después de cada render)
+const _origRP = renderPaginaPartidos;
+window.renderPaginaPartidos = function(){
+  _origRP();
+  document.querySelectorAll("#tbodyPartidos tr").forEach((tr,i)=>{
+    const p=partidosFiltrados[(paginaActual-1)*ROWS_PER_PAGE+i];
+    if(!p) return;
+    tr.style.cursor="pointer"; tr.title="Ver detalle";
+    tr.onclick = ()=>abrirModalPartido(p);
+  });
+}
+
+// ── Inicializar KPI y gráfico cuando el sidebar ya está cargado ──
+document.addEventListener("DOMContentLoaded",()=>{
+  renderTeamKPIs();
+  // El gráfico espera a que Chart.js esté disponible
+  const waitChart=setInterval(()=>{
+    if(typeof Chart!=="undefined"){clearInterval(waitChart);renderGraficoJornadas();}
+  },100);
+});
+document.getElementById("viewSelect")?.addEventListener("change",renderGraficoJornadas);
+document.getElementById("yearSelect")?.addEventListener("change",()=>{renderGraficoJornadas();renderTeamKPIs();});
+document.getElementById("filtroAnioPlayer")?.addEventListener("change",renderTeamKPIs);
+
+
+
+// ── DARK MODE ──
+function toggleTheme() {
+  const isDark = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  document.getElementById("iconSun").style.display  = isDark ? "block" : "none";
+  document.getElementById("iconMoon").style.display = isDark ? "none"  : "block";
+}
+(function() {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    const s=document.getElementById("iconSun"), m=document.getElementById("iconMoon");
+    if(s) s.style.display="block";
+    if(m) m.style.display="none";
+  }
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+</body>
+</html>

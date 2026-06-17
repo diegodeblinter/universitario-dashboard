@@ -513,59 +513,57 @@ const ROWS_PER_PAGE = 14;
 let paginaActual = 1;
 let partidosFiltrados = [];  // todos los partidos del filtro actual
 
-// ── DATOS POSICIONES ──
-const DATA = {
-  overview: {
-      2026: [
-      {name:"Coquimbo Unido",             logo:"img/coquimbo.png",           pj:6, g:3, e:1, p:2, gf:8,  gc:6,  last:"WLWWL", zone:"cl"},
-      {name:"Deportes Tolima",            logo:"img/tolima.png",             pj:6, g:2, e:2, p:2, gf:7, gc:6,  last:"LWWLD", zone:"cl"},
-      {name:"Nacional",                   logo:"img/nacionaluruguay.png",    pj:6, g:2, e:2, p:2, gf:7, gc:9,  last:"WLLDW", zone:"el"},
-      {name:"Universitario",              logo:"img/universitario.png",      pj:6, g:1, e:3, p:2, gf:5,  gc:6,  last:"LWLDD", zone:""}
-
-    ],
-    2025: [
-      {name:"River Plate",                logo:"img/riverplate.png",       pj:6, g:3, e:3, p:0, gf:13,  gc:7,  last:"DDWWD", zone:"cl"},
-      {name:"Universitario",              logo:"img/universitario.png",    pj:6, g:2, e:2, p:2, gf:4, gc:4,  last:"LWDWD", zone:"cl"},
-      {name:"Independiente del Valle",    logo:"img/idv.png",              pj:6, g:2, e:2, p:2, gf:8, gc:11,  last:"WDDLW", zone:"el"},
-      {name:"Barcelona SC",               logo:"img/barcelona.png",        pj:6, g:1, e:1, p:4, gf:4,  gc:7,  last:"DLLLL", zone:""}
-
-    ],
-    2024: [
-      {name:"Junior",                 logo:"img/junior.png",                pj:6, g:2, e:4, p:0, gf:7,  gc:4,  last:"DDDWD", zone:"cl"},
-      {name:"Botafogo",               logo:"img/botafogo.png",              pj:6, g:3, e:1, p:2, gf:6, gc:1,  last:"LWWWD", zone:"cl"},
-      {name:"Liga de Quito",          logo:"img/ldu.png",                   pj:6, g:2, e:1, p:3, gf:6, gc:6,  last:"WDLLW", zone:"el"},
-      {name:"Universitario",          logo:"img/universitario.png",         pj:6, g:1, e:2, p:3, gf:5,  gc:9,  last:"DLDLL", zone:""}
-
-    ]
-  }
-};
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+async function render() {
   const view = document.getElementById("viewSelect").value;
   const year = parseInt(document.getElementById("yearSelect").value);
-  const rows = (DATA[view]?.[year]) || [];
-  rows.sort((a,b) => {
-    const pa = a.g*3+a.e, pb = b.g*3+b.e;
-    if (pb!==pa) return pb-pa;
-    const da = a.gf-a.gc, db = b.gf-b.gc;
-    if (db!==da) return db-da;
-    return b.gf-a.gf;
-  });
+
+  if (view !== "overview") return;
+
   const tbody = document.getElementById("tbody");
+  tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Copa Libertadores')}&temporada=eq.${year}&select=*&order=g.desc,gf.desc`,
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+  );
+  const rows = await res.json();
+
+  rows.sort((a, b) => {
+    const pa = a.g*3+a.e, pb = b.g*3+b.e;
+    if (pb !== pa) return pb - pa;
+    const da = a.gf-a.gc, db = b.gf-b.gc;
+    if (db !== da) return db - da;
+    return b.gf - a.gf;
+  });
+
+  const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
   tbody.innerHTML = "";
-  rows.forEach((t,i) => {
+
+  rows.forEach((t, i) => {
     const pts = t.g*3+t.e;
-    const dg  = t.gf-t.gc;
-    const dgStr   = dg>0?"+"+dg:String(dg);
+    const dg = t.gf-t.gc;
+    const dgStr = dg>0?"+"+dg:String(dg);
     const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-    const last5 = (t.last||"DDDDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = t.zone?"zone-"+t.zone:"";
-    tbody.insertAdjacentHTML("beforeend",`
+    const last5 = t.forma
+      ? t.forma.split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("")
+      : "";
+    const zClass = t.zona ? "zone-"+t.zona : "";
+
+    tbody.insertAdjacentHTML("beforeend", `
       <tr class="${zClass}">
         <td class="td-pos">${i+1}</td>
-        <td class="td-team"><div class="team-cell"><img src="${t.logo}" class="team-logo"><span class="team-name">${t.name}</span></div></td>
+        <td class="td-team">
+          <div class="team-cell">
+            <img src="img/${t.logo}" class="team-logo" onerror="this.style.display='none'">
+            <span class="team-name">${t.equipo}</span>
+          </div>
+        </td>
         <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
         <td>${t.gf}</td><td>${t.gc}</td>
         <td class="${dgClass}">${dgStr}</td>
@@ -574,7 +572,6 @@ function render() {
       </tr>`);
   });
 }
-
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN
 // ══════════════════════════════════════

@@ -548,80 +548,67 @@ const ROWS_PER_PAGE = 14;
 let paginaActual = 1;
 let partidosFiltrados = [];  // todos los partidos del filtro actual
 
-// ── DATOS POSICIONES ──
-const DATA = {
-  overview: {
-    2026: [
-      {name:"Alianza Lima",      logo:"img/alianzalima.png",   pj:20, pg:18, pp:2,  sg:55, sp:18, ds:37,  pts_set:1660, pts:52, last:"WWWWW", zone:"cl"},
-      {name:"San Martín",        logo:"img/sanmartin.png",     pj:20, pg:17, pp:3,  sg:57, sp:22, ds:35,  pts_set:1841, pts:51, last:"WWWWW", zone:"cl"},
-      {name:"Universitario",     logo:"img/universitario.png", pj:20, pg:15, pp:5,  sg:49, sp:23, ds:26,  pts_set:1637, pts:44, last:"LWWLL", zone:"cl"},
-      {name:"Atlético Atenea",   logo:"img/atenea.png",     pj:20, pg:11, pp:9,  sg:44, sp:36, ds:8,   pts_set:1732, pts:35, last:"WWLWW", zone:"cl"},
-      {name:"Dep. Géminis",      logo:"img/geminis.png",       pj:20, pg:12, pp:8,  sg:41, sp:31, ds:10,  pts_set:1603, pts:34, last:"WWLWL", zone:"cl"},
-      {name:"Regatas Lima",      logo:"img/regatas.png",       pj:20, pg:11, pp:9,  sg:42, sp:36, ds:6,   pts_set:1751, pts:30, last:"LWWLW", zone:"cl"},
-      {name:"Circolo Sportivo",  logo:"img/circolo.png",       pj:20, pg:9,  pp:11, sg:36, sp:44, ds:-8,  pts_set:1681, pts:27, last:"WWLLW", zone:"cl"},
-      {name:"Deportivo SOAN",    logo:"img/soan.png",          pj:20, pg:5,  pp:15, sg:29, sp:48, ds:-19, pts_set:1573, pts:18, last:"LWLLL", zone:"cl"},
-      {name:"Rebaza Acosta",     logo:"img/rebaza.png",        pj:20, pg:5,  pp:15, sg:26, sp:51, ds:-25, pts_set:1579, pts:15, last:"LLWLL", zone:"el"},
-      {name:"Olva Latino",       logo:"img/olva.png",          pj:20, pg:5,  pp:15, sg:24, sp:52, ds:-28, pts_set:1574, pts:15, last:"LLWLL", zone:"el"}
-    ],
-    2025: [
-    {name:"Universitario",     logo:"img/universitario.png", pj:11, pg:10, pp:1,  sg:7,  sp:25, ds:32,  pts_set:907, pts:30, last:"WWWWW", zone:"cl"},
-    {name:"San Martín",        logo:"img/sanmartin.png",     pj:11, pg:10, pp:1,  sg:13, sp:19, ds:32,  pts_set:1060, pts:30, last:"WWWWW", zone:"cl"},
-    {name:"Alianza Lima",      logo:"img/alianzalima.png",   pj:11, pg:9,  pp:2,  sg:9,  sp:19, ds:28,  pts_set:830, pts:27, last:"WWLLW", zone:"cl"},
-    {name:"Circolo Sportivo",  logo:"img/circolo.png",       pj:11, pg:6,  pp:5,  sg:22, sp:1,  ds:23,  pts_set:948, pts:18, last:"LLWWW", zone:"cl"},
-    {name:"Dep. Géminis",      logo:"img/geminis.png",       pj:11, pg:6,  pp:5,  sg:19, sp:3,  ds:16,  pts_set:909, pts:17, last:"LWWWL", zone:"cl"},
-    {name:"Atlético Atenea",   logo:"img/atenea.png",        pj:11, pg:6,  pp:5,  sg:22, sp:0,  ds:22,  pts_set:946, pts:17, last:"WLWWL", zone:"cl"},
-    {name:"Regatas Lima",      logo:"img/regatas.png",       pj:11, pg:6,  pp:5,  sg:19, sp:4,  ds:15,  pts_set:935, pts:16, last:"WWLLL", zone:"cl"},
-    {name:"Rebaza Acosta",     logo:"img/rebaza.png",        pj:11, pg:4,  pp:7,  sg:25, sp:-6, ds:19,  pts_set:936, pts:13, last:"LLLWW", zone:"cl"},
-    {name:"Deportivo SOAN",    logo:"img/soan.png",          pj:11, pg:2,  pp:9,  sg:27, sp:-11,ds:16,  pts_set:871, pts:10, last:"LLLLW", zone:"cl"},
-    {name:"Olva Latino",       logo:"img/olva.png",          pj:11, pg:4,  pp:7,  sg:27, sp:-12,ds:15,  pts_set:859, pts:9,  last:"LLWLL", zone:"cl"},
-    {name:"Kazoku No Perú",    logo:"img/kazoku.png",        pj:11, pg:2,  pp:9,  sg:29, sp:-17,ds:12,  pts_set:790, pts:8,  last:"WLLWW", zone:"rel"},
-    {name:"Deportivo Wanka",   logo:"img/wanka.png",         pj:11, pg:1,  pp:10, sg:31, sp:-25,ds:6,   pts_set:718, pts:4,  last:"LLLLL", zone:"rel"}
-  ]
 
-  }
-};
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
-  const rows = (DATA["overview"]?.[parseInt(document.getElementById("yearSelect").value)]) || [];
-  
-  // Ordenar por puntos, desempate por ds
-  rows.sort((a,b) => b.pts !== a.pts ? b.pts - a.pts : b.ds - a.ds);
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+async function render() {
+  const view = document.getElementById("viewSelect").value;
+  const year = parseInt(document.getElementById("yearSelect").value);
+
+  if (view !== "overview") return;
 
   const tbody = document.getElementById("tbody");
+  tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('LNSV Femenina')}&temporada=eq.${year}&select=*`,
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+  );
+  const rows = await res.json();
+
+  // Ordenar por pts_extra desc, desempate por diferencia de sets (gf-gc)
+  rows.sort((a, b) => {
+    if (b.pts_extra !== a.pts_extra) return b.pts_extra - a.pts_extra;
+    return (b.gf - b.gc) - (a.gf - a.gc);
+  });
+
+  const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
   tbody.innerHTML = "";
-rows.forEach((t, i) => {
-  const dsStr   = t.ds > 0 ? "+" + t.ds : String(t.ds);
-  const dgClass = t.ds > 0 ? "dg-pos" : t.ds < 0 ? "dg-neg" : "dg-zer";
-  const last5   = (t.last||"LLLLL").split("").map(c =>
-    `<div class="dot ${dotClass[c]||'dot-l'}"></div>`
-  ).join("");
-  const zClass = t.zone ? "zone-" + t.zone : ""; // ← agrega esto
 
-  tbody.insertAdjacentHTML("beforeend", `
-    <tr class="${zClass}">
-      <td class="td-pos">${i+1}</td>
-      <td class="td-team">
-        <div class="team-cell">
-          <img src="${t.logo}" class="team-logo">
-          <span class="team-name">${t.name}</span>
-        </div>
-      </td>
-      <td>${t.pj}</td>
-      <td>${t.pg}</td>
-      <td>${t.pp}</td>
-      <td>${t.sg}</td>
-      <td>${t.sp}</td>
-      <td class="${dgClass}">${dsStr}</td>
-      <td>${t.pts_set}</td>
-      <td><span class="pts-val">${t.pts}</span></td>
-      <td><div class="last5">${last5}</div></td>
-    </tr>`);
-});
+  rows.forEach((t, i) => {
+    const ds = t.gf - t.gc;
+    const dsStr = ds > 0 ? "+" + ds : String(ds);
+    const dgClass = ds > 0 ? "dg-pos" : ds < 0 ? "dg-neg" : "dg-zer";
+    const last5 = t.forma
+      ? t.forma.split("").map(c => `<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("")
+      : "";
+    const zClass = t.zona ? "zone-" + t.zona : "";
 
+    tbody.insertAdjacentHTML("beforeend", `
+      <tr class="${zClass}">
+        <td class="td-pos">${i+1}</td>
+        <td class="td-team">
+          <div class="team-cell">
+            <img src="img/${t.logo}" class="team-logo" onerror="this.style.display='none'">
+            <span class="team-name">${t.equipo}</span>
+          </div>
+        </td>
+        <td>${t.pj}</td>
+        <td>${t.g}</td>
+        <td>${t.p}</td>
+        <td>${t.gf}</td>
+        <td>${t.gc}</td>
+        <td class="${dgClass}">${dsStr}</td>
+        <td>${t.pts_set || 0}</td>
+        <td><span class="pts-val">${t.pts_extra || 0}</span></td>
+        <td><div class="last5">${last5}</div></td>
+      </tr>`);
+  });
 }
-
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN
 // ══════════════════════════════════════

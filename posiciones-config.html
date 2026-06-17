@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Config — Tabla de Posiciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html, body { height: auto; min-height: 100vh; overflow-y: auto; }
+.app { display: block; }
+.sidebar { position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; }
+.main { margin-left: 240px; display: block; min-height: 100vh; }
+.topbar { position: sticky; top: 0; z-index: 99; }
+.content { overflow-y: visible; padding: 20px 24px; display: flex; flex-direction: column; gap: 18px; }
+body { visibility: hidden; }
+
+/* ── FORM PANEL ── */
+.panel { background:#1e293b; border-radius:12px; padding:24px 28px; box-shadow:0 2px 12px rgba(0,0,0,0.2); }
+.panel h3 { color:#f1f5f9; font-size:15px; font-weight:700; margin:0 0 20px; }
+.form-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:12px; }
+.form-group { display:flex; flex-direction:column; gap:5px; }
+.form-group label { font-size:11px; font-weight:600; color:#94a3b8; text-transform:uppercase; letter-spacing:.05em; }
+.form-group input, .form-group select {
+  background:#0f172a; border:1px solid #334155; border-radius:8px;
+  padding:8px 10px; color:#f1f5f9; font-size:13px; font-family:'Satoshi',sans-serif;
+  outline:none; transition:border .2s;
+}
+.form-group input:focus, .form-group select:focus { border-color:#3b82f6; }
+.form-group input[type=number] { -moz-appearance:textfield; }
+.form-group input[type=number]::-webkit-inner-spin-button { display:none; }
+
+.btn-row { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+.btn { padding:9px 20px; border-radius:8px; border:none; cursor:pointer; font-size:13px; font-weight:600; font-family:'Satoshi',sans-serif; transition:opacity .2s; }
+.btn:hover { opacity:.85; }
+.btn-primary { background:#3b82f6; color:#fff; }
+.btn-secondary { background:#334155; color:#94a3b8; }
+.btn-danger { background:#ef4444; color:#fff; }
+.btn-warning { background:#f59e0b; color:#fff; }
+
+/* ── FILTROS ── */
+.filtros { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+.filtros select, .filtros input {
+  background:#0f172a; border:1px solid #334155; border-radius:8px;
+  padding:7px 10px; color:#f1f5f9; font-size:13px; font-family:'Satoshi',sans-serif; outline:none;
+}
+
+/* ── TABLA ── */
+.tabla-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+thead tr { border-bottom:1px solid #334155; }
+th { padding:8px 10px; text-align:left; font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
+th.center, td.center { text-align:center; }
+tbody tr { border-bottom:1px solid #1e293b; transition:background .15s; }
+tbody tr:hover { background:#1e293b; }
+td { padding:8px 10px; color:#cbd5e1; font-size:12px; vertical-align:middle; }
+td img { width:22px; height:22px; object-fit:contain; }
+
+.zona-badge {
+  display:inline-block; padding:2px 8px; border-radius:20px;
+  font-size:10px; font-weight:700; text-transform:uppercase;
+}
+.zona-clasificado { background:rgba(59,130,246,0.15); color:#60a5fa; }
+.zona-eliminado   { background:rgba(148,163,184,0.1);  color:#64748b; }
+.zona-descenso    { background:rgba(239,68,68,0.15);   color:#f87171; }
+.zona-normal      { background:rgba(148,163,184,0.1);  color:#94a3b8; }
+
+.forma-dot {
+  display:inline-flex; width:16px; height:16px; border-radius:50%;
+  align-items:center; justify-content:center; font-size:9px; font-weight:800; color:#fff;
+}
+.dot-W { background:#22c55e; }
+.dot-D { background:#94a3b8; }
+.dot-L { background:#ef4444; }
+
+.acciones { display:flex; gap:6px; }
+.btn-sm { padding:4px 10px; border-radius:6px; border:none; cursor:pointer; font-size:11px; font-weight:600; font-family:'Satoshi',sans-serif; }
+.btn-edit { background:#1d4ed8; color:#fff; }
+.btn-del  { background:#dc2626; color:#fff; }
+
+.toast {
+  position:fixed; bottom:20px; right:20px; background:#22c55e; color:#fff;
+  padding:10px 18px; border-radius:10px; font-size:13px; font-weight:600;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2); z-index:9999;
+  transform:translateY(60px); opacity:0; transition:all .3s;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast.error { background:#ef4444; }
+
+#statusMsg { font-size:12px; color:#64748b; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-search">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Type to search...">
+      </div>
+      <div class="topbar-spacer"></div>
+      <div class="topbar-user">
+        <div class="topbar-user-info">
+          <div class="topbar-user-name">Diego Rodríguez</div>
+          <div class="topbar-user-role">Ux Designer</div>
+        </div>
+        <div class="topbar-avatar">DR</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ FORM ══ -->
+      <div class="panel">
+        <h3 id="formTitle">➕ Registrar Equipo en Tabla</h3>
+        <div class="form-grid">
+          <div class="form-group" style="grid-column:span 2;">
+            <label>Liga</label>
+            <select id="fLiga">
+              <option value="Copa del Mundo">Copa del Mundo</option>
+              <option value="Liga 1">Liga 1</option>
+              <option value="Liga 3">Liga 3</option>              
+              <option value="Copa Libertadores">Copa Libertadores</option>
+              <option value="Copa Libertadores F">Copa Libertadores F</option>
+              <option value="Copa Libertadores Sub20">Copa Libertadores Sub20</option>
+              <option value="Copa Libertadores Fut">Copa Libertadores Fut</option>
+              <option value="Copa Sudamericana">Copa Sudamericana</option>
+              <option value="Liga Femenina FPF">Liga Femenina FPF</option>
+              <option value="Liga Nacional Juvenil">Liga Nacional Juvenil</option>
+              <option value="Liga Juvenil">Liga Juvenil</option>
+              <option value="Torneo de Reservas">Torneo de Reservas</option>
+              <option value="Copa de la Liga">Copa de la Liga</option>
+              <option value="Futsal Joma Pro">Futsal Joma Pro</option>
+              <option value="Futsal Liga Pro">Futsal Liga Pro</option>
+              <option value="LNSV Femenina">LNSV Femenina</option> 
+              <option value="La Liga Division II">La Liga Division II</option> 
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Temporada</label>
+            <input type="number" id="fTemporada" value="2026" min="2000" max="2099">
+          </div>
+          <div class="form-group">
+            <label>Grupo</label>
+            <input type="text" id="fGrupo" placeholder="A, B, C...">
+          </div>
+
+<div class="form-group">
+  <label>Categoría</label>
+  <select id="fCategoria">
+    <option value="">—</option>
+    <option value="sub18">Sub-18</option>
+    <option value="sub16">Sub-16</option>
+    <option value="sub20">Sub-20</option>
+  </select>
+</div>
+
+
+          <div class="form-group" style="grid-column:span 2;">
+            <label>Equipo</label>
+            <input type="text" id="fEquipo" placeholder="Nombre del equipo">
+          </div>
+          <div class="form-group" style="grid-column:span 2;">
+            <label>Logo (img/...)</label>
+            <input type="text" id="fLogo" placeholder="ej: argentina.png">
+          </div>
+          <div class="form-group">
+            <label>PJ</label>
+            <input type="number" id="fPj" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>G</label>
+            <input type="number" id="fG" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>E</label>
+            <input type="number" id="fE" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>P</label>
+            <input type="number" id="fP" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>GF</label>
+            <input type="number" id="fGf" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>GC</label>
+            <input type="number" id="fGc" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>Zona</label>
+            <select id="fZona">
+              <option value="clasificado">Clasificado</option>
+              <option value="cl">Copa Libertadores</option>
+              <option value="el">Copa Sudamericana</option>
+              <option value="el">Eliminatoria</option>       
+              <option value="el">Fase Final</option>        
+              <option value="eliminado">Eliminado</option>
+              <option value="descenso">Descenso</option>
+              <option value="normal">Normal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Forma (W/D/L)</label>
+            <input type="text" id="fForma" placeholder="ej: W" maxlength="1">
+          </div>
+<div class="form-group">
+  <label>PTS V</label>
+  <input type="number" id="fPtsExtra" value="0" min="0">
+</div>
+<div class="form-group">
+  <label>PTS Set</label>
+  <input type="number" id="fPtsSet" value="0" min="0">
+</div>
+
+
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="guardar()">💾 Guardar</button>
+          <button class="btn btn-secondary" onclick="cancelarEdicion()">✖ Cancelar</button>
+        </div>
+        <div id="statusMsg"></div>
+      </div>
+
+      <!-- ══ TABLA ══ -->
+      <div class="panel">
+        <div class="filtros">
+          <select id="filtroLiga" onchange="cargarTabla()">
+              <option value="Copa del Mundo">Copa del Mundo</option>
+              <option value="Liga 1">Liga 1</option>
+              <option value="Liga 3">Liga 3</option>              
+              <option value="Copa Libertadores">Copa Libertadores</option>
+              <option value="Copa Libertadores F">Copa Libertadores F</option>
+              <option value="Copa Libertadores Sub20">Copa Libertadores Sub20</option>
+              <option value="Copa Libertadores Fut">Copa Libertadores Fut</option>
+              <option value="Copa Sudamericana">Copa Sudamericana</option>
+              <option value="Liga Femenina FPF">Liga Femenina FPF</option>
+              <option value="Liga Nacional Juvenil">Liga Nacional Juvenil</option>
+              <option value="Liga Juvenil">Liga Juvenil</option>
+              <option value="Torneo de Reservas">Torneo de Reservas</option>
+              <option value="Copa de la Liga">Copa de la Liga</option>
+              <option value="Futsal Joma Pro">Futsal Joma Pro</option>
+              <option value="Futsal Liga Pro">Futsal Liga Pro</option>
+              <option value="LNSV Femenina">LNSV Femenina</option> 
+              <option value="La Liga Division II">La Liga Division II</option> 
+          </select>
+          <select id="filtroTemporada" onchange="cargarTabla()">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+          </select>
+          <input type="text" id="filtroGrupo" placeholder="Grupo (A, B...)" style="width:120px;" oninput="filtrarTabla()">
+          <span id="conteoRegistros" style="font-size:12px;color:#64748b;margin-left:auto;"></span>
+        </div>
+
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Grupo</th>
+                <th>Cat.</th>
+                <th>Equipo</th>
+                <th class="center">PJ</th>
+                <th class="center">G</th>
+                <th class="center">E</th>
+                <th class="center">P</th>
+                <th class="center">GF</th>
+                <th class="center">GC</th>
+                <th class="center">DG</th>
+                <th class="center">PTS</th>
+                <th class="center">Zona</th>
+                <th class="center">Forma</th>
+                <th class="center">PTS V</th>
+                <th class="center">PTS Set</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyPosiciones"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+let editandoId = null;
+let todosLosRegistros = [];
+
+// ── SIDEBAR ──
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('sidebar-container').innerHTML = html;
+    const pagina = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-sub-item a').forEach(a => {
+      if (a.getAttribute('href') === pagina) {
+        a.closest('.nav-sub-item').classList.add('active');
+        const sub = a.closest('.nav-sub');
+        if (sub) {
+          sub.classList.add('open');
+          const id = sub.id.replace('sub-', '');
+          const arrow = document.getElementById('arrow-' + id);
+          if (arrow) arrow.classList.add('open');
+          const parentItem = sub.previousElementSibling;
+          if (parentItem) parentItem.classList.add('active');
+        }
+      }
+    });
+    document.body.style.visibility = 'visible';
+  });
+
+// ── HELPERS ──
+function showToast(msg, error = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (error ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function setStatus(msg) {
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+function getFormData() {
+  return {
+    liga:       document.getElementById('fLiga').value,
+    temporada:  parseInt(document.getElementById('fTemporada').value),
+    grupo:      document.getElementById('fGrupo').value.toUpperCase().trim(),
+    categoria: document.getElementById('fCategoria').value,
+    equipo:     document.getElementById('fEquipo').value.trim(),
+    logo:       document.getElementById('fLogo').value.trim(),
+    pj:         parseInt(document.getElementById('fPj').value) || 0,
+    g:          parseInt(document.getElementById('fG').value) || 0,
+    e:          parseInt(document.getElementById('fE').value) || 0,
+    p:          parseInt(document.getElementById('fP').value) || 0,
+    gf:         parseInt(document.getElementById('fGf').value) || 0,
+    gc:         parseInt(document.getElementById('fGc').value) || 0,
+    zona:       document.getElementById('fZona').value,
+    forma:      document.getElementById('fForma').value.toUpperCase().trim(),
+    pts_extra: parseInt(document.getElementById('fPtsExtra').value) || 0,
+    pts_set:   parseInt(document.getElementById('fPtsSet').value) || 0,
+
+  };
+}
+
+function limpiarForm() {
+  document.getElementById('fEquipo').value = '';
+  document.getElementById('fLogo').value = '';
+  document.getElementById('fGrupo').value = '';
+  document.getElementById('fCategoria').value = '';
+  document.getElementById('fPj').value = 0;
+  document.getElementById('fG').value = 0;
+  document.getElementById('fE').value = 0;
+  document.getElementById('fP').value = 0;
+  document.getElementById('fGf').value = 0;
+  document.getElementById('fGc').value = 0;
+  document.getElementById('fZona').value = 'clasificado';
+  document.getElementById('fForma').value = '';
+  document.getElementById('fPtsExtra').value = 0;
+  document.getElementById('fPtsSet').value = 0;
+  setStatus('');
+}
+
+function cancelarEdicion() {
+  editandoId = null;
+  document.getElementById('formTitle').textContent = '➕ Registrar Equipo en Tabla';
+  limpiarForm();
+}
+
+// ── GUARDAR (INSERT / UPDATE) ──
+async function guardar() {
+  const data = getFormData();
+  if (!data.equipo) { showToast('Ingresa el nombre del equipo', true); return; }
+
+  setStatus('Guardando...');
+  try {
+    if (editandoId) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/posiciones?id=eq.${editandoId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Error al actualizar');
+      showToast('✅ Actualizado correctamente');
+    } else {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/posiciones`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Error al insertar');
+      showToast('✅ Registrado correctamente');
+    }
+    editandoId = null;
+    document.getElementById('formTitle').textContent = '➕ Registrar Equipo en Tabla';
+    limpiarForm();
+    await cargarTabla();
+  } catch (e) {
+    showToast('❌ Error: ' + e.message, true);
+    setStatus('');
+  }
+}
+
+// ── ELIMINAR ──
+async function eliminar(id) {
+  if (!confirm('¿Eliminar este registro?')) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/posiciones?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (!res.ok) throw new Error('Error al eliminar');
+    showToast('🗑 Eliminado');
+    await cargarTabla();
+  } catch (e) {
+    showToast('❌ ' + e.message, true);
+  }
+}
+
+// ── EDITAR ──
+function editar(id) {
+  const r = todosLosRegistros.find(x => x.id === id);
+  if (!r) return;
+  editandoId = id;
+  document.getElementById('formTitle').textContent = '✏️ Editando: ' + r.equipo;
+  document.getElementById('fLiga').value = r.liga;
+  document.getElementById('fTemporada').value = r.temporada;
+  document.getElementById('fGrupo').value = r.grupo || '';
+  document.getElementById('fCategoria').value = r.categoria || '';
+  document.getElementById('fEquipo').value = r.equipo;
+  document.getElementById('fLogo').value = r.logo || '';
+  document.getElementById('fPj').value = r.pj;
+  document.getElementById('fG').value = r.g;
+  document.getElementById('fE').value = r.e;
+  document.getElementById('fP').value = r.p;
+  document.getElementById('fGf').value = r.gf;
+  document.getElementById('fGc').value = r.gc;
+  document.getElementById('fZona').value = r.zona || 'normal';
+  document.getElementById('fForma').value = r.forma || '';
+  document.getElementById('fPtsExtra').value = r.pts_extra || 0;
+  document.getElementById('fPtsSet').value = r.pts_set || 0;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CARGAR TABLA ──
+async function cargarTabla() {
+  const liga = document.getElementById('filtroLiga').value;
+  const temp = document.getElementById('filtroTemporada').value;
+  const tbody = document.getElementById('tbodyPosiciones');
+  tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:#64748b;padding:20px;">Cargando...</td></tr>';
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent(liga)}&temporada=eq.${temp}&select=*&order=grupo.asc,g.desc,gf.desc`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+    const data = await res.json();
+    todosLosRegistros = data;
+    document.getElementById('conteoRegistros').textContent = data.length + ' registros';
+    renderTabla(data);
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="14" style="text-align:center;color:#ef4444;padding:20px;">Error: ${e.message}</td></tr>`;
+  }
+}
+
+function filtrarTabla() {
+  const filtro = document.getElementById('filtroGrupo').value.toLowerCase().trim();
+  const filtrados = filtro
+    ? todosLosRegistros.filter(r => 
+        (r.equipo || '').toLowerCase().includes(filtro) ||
+        (r.grupo || '').toLowerCase().includes(filtro)
+      )
+    : todosLosRegistros;
+  renderTabla(filtrados);
+}
+
+function renderTabla(data) {
+  const tbody = document.getElementById('tbodyPosiciones');
+  tbody.innerHTML = '';
+
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:#64748b;padding:20px;">Sin registros</td></tr>';
+    return;
+  }
+
+  data.forEach(r => {
+    const dg = r.gf - r.gc;
+    const pts = r.g * 3 + r.e;
+const zonaMap = { cl:'zona-clasificado', el:'zona-eliminado', rel:'zona-descenso', normal:'zona-normal' };
+const zonaClass = zonaMap[r.zona] || 'zona-normal';
+const zonaLabel = { cl:'Libertadores', el:'Sudamericana', rel:'Descenso', normal:'—' };
+    const formaHTML = r.forma
+      ? `<div class="forma-dot dot-${r.forma}">${r.forma === 'W' ? 'V' : r.forma === 'L' ? 'D' : 'E'}</div>`
+      : '—';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong style="color:#60a5fa;">${r.grupo || '—'}</strong></td>
+      <td><span style="font-size:10px;color:#94a3b8;">${r.categoria || '—'}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:7px;">
+          <img src="img/${r.logo}" onerror="this.style.display='none'">
+          <span style="color:#f1f5f9;font-weight:600;">${r.equipo}</span>
+        </div>
+      </td>
+      <td class="center">${r.pj}</td>
+      <td class="center">${r.g}</td>
+      <td class="center">${r.e}</td>
+      <td class="center">${r.p}</td>
+      <td class="center">${r.gf}</td>
+      <td class="center">${r.gc}</td>
+      <td class="center" style="color:${dg>0?'#22c55e':dg<0?'#ef4444':'#94a3b8'};">${dg>0?'+'+dg:dg}</td>
+      <td class="center"><strong style="color:#f1f5f9;">${pts}</strong></td>
+      <td class="center"><span class="zona-badge ${zonaClass}">${r.zona || 'normal'}</span></td>
+      <td class="center">${formaHTML}</td>
+      <td class="center">${r.pts_extra || 0}</td>
+      <td class="center">${r.pts_set || 0}</td>
+      <td>
+        <div class="acciones">
+          <button class="btn-sm btn-edit" onclick="editar(${r.id})">Editar</button>
+          <button class="btn-sm btn-del" onclick="eliminar(${r.id})">Borrar</button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── NAV ──
+function toggleMenu(id, parentEl) {
+  const sub = document.getElementById('sub-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!sub) return;
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+}
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+function toggleTheme() {
+  const isDark = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  document.getElementById("iconSun").style.display  = isDark ? "block" : "none";
+  document.getElementById("iconMoon").style.display = isDark ? "none"  : "block";
+}
+(function() {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    const s=document.getElementById("iconSun"), m=document.getElementById("iconMoon");
+    if(s) s.style.display="block";
+    if(m) m.style.display="none";
+  }
+})();
+
+window.onload = () => cargarTabla();
+</script>
+</body>
+</html>

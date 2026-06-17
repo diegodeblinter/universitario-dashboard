@@ -519,73 +519,66 @@ const ROWS_PER_PAGE = 14;
 let paginaActual = 1;
 let partidosFiltrados = [];  // todos los partidos del filtro actual
 
-// ── DATOS POSICIONES ──
-const DATA = {
-  overview: {
 
-2026: [
-  {name:"1.º de Mayo",           logo:"img/1demayo.png",       pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Academia Refriaire",    logo:"img/hermanosrey.png",   pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"ADEBAMI",               logo:"img/adebami.png",       pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"AFA Rímac",             logo:"img/afarimac.png",      pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Deportivo FC",          logo:"img/deportivofc.png",   pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Palermo FC",            logo:"img/palermo.png",       pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Panta Walon",           logo:"img/pantawalon.png",    pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Rheafa Rímac",          logo:"img/rheafa.png",        pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Santa María",           logo:"img/santamaria.png",    pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:""},
-  {name:"Universitario",         logo:"img/universitario.png", pj:0, g:0, e:0, p:0,  gf:0, gc:0, last:"", zone:"rel"}
-],
-
-
-2025: [
-  {name:"Panta Walon",      logo:"img/pantawalon.png",   pj:17, g:14, e:1, p:2,  gf:97, gc:27, last:"LLWDW", zone:""},
-  {name:"Universitario",    logo:"img/universitario.png",pj:17, g:13, e:1, p:3,  gf:73, gc:30, last:"WWWWL", zone:""},
-  {name:"AFA Rímac",        logo:"img/afarimac.png",     pj:17, g:10, e:2, p:5,  gf:59, gc:41, last:"WLWDL", zone:""},
-  {name:"1.º de Mayo",      logo:"img/1demayo.png",      pj:17, g:6,  e:4, p:7,  gf:39, gc:48, last:"WLLWL", zone:""},
-  {name:"A. Refriaire",     logo:"img/hermanosrey.png",  pj:17, g:6,  e:3, p:8,  gf:58, gc:53, last:"LLWLW", zone:""},
-  {name:"Palermo FC",       logo:"img/palermo.png",      pj:17, g:6,  e:3, p:8,  gf:49, gc:70, last:"WWWWW", zone:""},
-  {name:"ADEBAMI",          logo:"img/adebami.png",      pj:17, g:5,  e:3, p:9,  gf:50, gc:71, last:"LWLLL", zone:""},
-  {name:"Marañon FC",       logo:"img/marañonfc.png",    pj:17, g:5,  e:2, p:10, gf:35, gc:62, last:"WDLLL", zone:""},
-  {name:"Santa María",      logo:"img/santamaria.png",   pj:17, g:4,  e:3, p:10, gf:39, gc:78, last:"LLWWW", zone:""},
-  {name:"UNMSM",            logo:"img/sanmarcos.png",    pj:17, g:3,  e:4, p:10, gf:50, gc:69, last:"LDLLW", zone:"rel"}
-]
-  }
-};
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
-  const view = document.getElementById("viewSelect").value;
-  const year = parseInt(document.getElementById("yearSelect").value);
-  const rows = (DATA[view]?.[year]) || [];
-  rows.sort((a,b) => {
-    const pa = a.g*3+a.e, pb = b.g*3+b.e;
-    if (pb!==pa) return pb-pa;
-    const da = a.gf-a.gc, db = b.gf-b.gc;
-    if (db!==da) return db-da;
-    return b.gf-a.gf;
-  });
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
-  rows.forEach((t,i) => {
-    const pts = t.g*3+t.e;
-    const dg  = t.gf-t.gc;
-    const dgStr   = dg>0?"+"+dg:String(dg);
-    const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-    const last5 = (t.last||"DDDDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = t.zone?"zone-"+t.zone:"";
-    tbody.insertAdjacentHTML("beforeend",`
-      <tr class="${zClass}">
-        <td class="td-pos">${i+1}</td>
-        <td class="td-team"><div class="team-cell"><img src="${t.logo}" class="team-logo"><span class="team-name">${t.name}</span></div></td>
-        <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
-        <td>${t.gf}</td><td>${t.gc}</td>
-        <td class="${dgClass}">${dgStr}</td>
-        <td><span class="pts-val">${pts}</span></td>
-        <td><div class="last5">${last5}</div></td>
-      </tr>`);
-  });
-}
+  const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+  async function render() {
+    const view = document.getElementById("viewSelect").value;
+    const year = parseInt(document.getElementById("yearSelect").value);
+
+    if (view !== "overview") return;
+
+    const tbody = document.getElementById("tbody");
+    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
+
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Futsal Joma Pro')}&temporada=eq.${year}&select=*&order=g.desc,gf.desc`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const rows = await res.json();
+
+    rows.sort((a, b) => {
+      const pa = a.g*3+a.e, pb = b.g*3+b.e;
+      if (pb !== pa) return pb - pa;
+      const da = a.gf-a.gc, db = b.gf-b.gc;
+      if (db !== da) return db - da;
+      return b.gf - a.gf;
+    });
+
+    const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
+    tbody.innerHTML = "";
+
+    rows.forEach((t, i) => {
+      const pts = t.g*3+t.e;
+      const dg = t.gf-t.gc;
+      const dgStr = dg>0?"+"+dg:String(dg);
+      const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
+      const last5 = t.forma
+        ? t.forma.split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("")
+        : "";
+      const zClass = t.zona ? "zone-"+t.zona : "";
+
+      tbody.insertAdjacentHTML("beforeend", `
+        <tr class="${zClass}">
+          <td class="td-pos">${i+1}</td>
+          <td class="td-team">
+            <div class="team-cell">
+              <img src="img/${t.logo}" class="team-logo" onerror="this.style.display='none'">
+              <span class="team-name">${t.equipo}</span>
+            </div>
+          </td>
+          <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+          <td>${t.gf}</td><td>${t.gc}</td>
+          <td class="${dgClass}">${dgStr}</td>
+          <td><span class="pts-val">${pts}</span></td>
+          <td><div class="last5">${last5}</div></td>
+        </tr>`);
+    });
+  }
 
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN

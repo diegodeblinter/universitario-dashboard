@@ -522,131 +522,65 @@ const ROWS_PER_PAGE = 14;
 let paginaActual = 1;
 let partidosFiltrados = [];  // todos los partidos del filtro actual
 
-// ── DATOS POSICIONES ──
-const DATA = {
-  overview: {
-
-2026: [
-  {name:"Alianza Lima",        logo:"img/alianzalima.png",        pj:17, g:12, e:4, p:1,  gf:30, gc:8,  last:"WDWWD", zone:"cl"},
-  {name:"Los Chankas",         logo:"img/chankas.png",            pj:17, g:10, e:4, p:3,  gf:25, gc:21, last:"LDWLD", zone:"cl"},
-  {name:"Cienciano",           logo:"img/cienciano.png",          pj:17, g:10, e:3, p:4,  gf:34, gc:22, last:"WWLDW", zone:"cl"},
-  {name:"Universitario",       logo:"img/universitario.png",      pj:17, g:8,  e:5, p:4,  gf:24, gc:15, last:"WDLDW", zone:"cl"},
-  {name:"FBC Melgar",          logo:"img/melgar.png",             pj:17, g:8,  e:4, p:5,  gf:29, gc:20, last:"WDWDW", zone:"el"},
-  {name:"Cusco FC",            logo:"img/cuscofc.png",            pj:17, g:8,  e:3, p:6,  gf:21, gc:24, last:"DDLWW", zone:"el"},
-  {name:"Deportivo Garcilaso", logo:"img/garcilaso.png",          pj:17, g:7,  e:5, p:5,  gf:21, gc:18, last:"WWWDW", zone:"el"},
-  {name:"Alianza Atlético",    logo:"img/sullana.png",            pj:17, g:5,  e:6, p:6,  gf:20, gc:18, last:"WLWDL", zone:"el"},
-  {name:"Comerciantes Unidos", logo:"img/comerciantesunidos.png", pj:17, g:5,  e:6, p:6,  gf:18, gc:20, last:"LDLDL", zone:""},
-  {name:"ADT",                 logo:"img/adt.png",                pj:17, g:5,  e:5, p:7,  gf:22, gc:21, last:"WDWLL", zone:""},
-  {name:"Sport Boys",          logo:"img/sportboys.png",          pj:17, g:5,  e:5, p:7,  gf:15, gc:19, last:"LDWDW", zone:""},
-  {name:"Sporting Cristal",    logo:"img/cristal.png",            pj:17, g:5,  e:4, p:8,  gf:28, gc:30, last:"DDLWL", zone:""},
-  {name:"UTC",                 logo:"img/utc.png",                pj:17, g:4,  e:6, p:7,  gf:21, gc:26, last:"LLNDD", zone:""},
-  {name:"Dep. Moquegua",       logo:"img/moquegua.png",           pj:17, g:5,  e:3, p:9,  gf:17, gc:24, last:"LDLDL", zone:""},
-  {name:"FC Cajamarca",        logo:"img/cajamarca.png",          pj:17, g:4,  e:5, p:8,  gf:23, gc:28, last:"WWWDD", zone:""},
-  {name:"Atlético Grau",       logo:"img/grau.png",               pj:17, g:4,  e:4, p:9,  gf:12, gc:18, last:"LLWLW", zone:"rel"},
-  {name:"Sport Huancayo",      logo:"img/huancayo.png",           pj:17, g:4,  e:4, p:9,  gf:21, gc:31, last:"LWLDL", zone:"rel"},
-  {name:"ADC Juan Pablo II",   logo:"img/juanpablo.png",          pj:17, g:4,  e:4, p:9,  gf:22, gc:40, last:"DLDLL", zone:"rel"}
-],
-
-
-    2025: [
-      {name:"Universitario",        logo:"img/universitario.png",      pj:35,g:24,e:7, p:4, gf:67,gc:25,last:"WWWDL",zone:"cl"},
-      {name:"Cusco FC",             logo:"img/cuscofc.png",            pj:35,g:21,e:7, p:7, gf:63,gc:35,last:"WWDWW",zone:"cl"},
-      {name:"Alianza Lima",         logo:"img/alianzalima.png",        pj:35,g:20,e:8, p:7, gf:53,gc:30,last:"LWWDW",zone:"cl"},
-      {name:"Sporting Cristal",     logo:"img/cristal.png",            pj:35,g:19,e:6, p:10,gf:60,gc:37,last:"WLWWW",zone:"cl"},
-      {name:"Alianza Atlético",     logo:"img/sullana.png",            pj:35,g:17,e:6, p:12,gf:43,gc:30,last:"LLDWW",zone:"el"},
-      {name:"FBC Melgar",           logo:"img/melgar.png",             pj:35,g:14,e:14,p:7, gf:52,gc:37,last:"DWLWD",zone:"el"},
-      {name:"Deportivo Garcilaso",  logo:"img/garcilaso.png",          pj:35,g:14,e:10,p:11,gf:48,gc:40,last:"WLLWD",zone:"el"},
-      {name:"Cienciano",            logo:"img/cienciano.png",          pj:35,g:13,e:11,p:11,gf:54,gc:46,last:"LWWLW",zone:"el"},
-      {name:"Los Chankas",          logo:"img/chankas.png",            pj:35,g:14,e:8, p:13,gf:45,gc:53,last:"WWWLW",zone:""},
-      {name:"ADT",                  logo:"img/adt.png",                pj:35,g:13,e:10,p:12,gf:43,gc:50,last:"DLLWD",zone:""},
-      {name:"Sport Huancayo",       logo:"img/huancayo.png",           pj:35,g:14,e:6, p:15,gf:51,gc:49,last:"LLLWL",zone:""},
-      {name:"Atlético Grau",        logo:"img/grau.png",               pj:35,g:9, e:11,p:15,gf:42,gc:48,last:"LLDLL",zone:""},
-      {name:"Comerciantes Unidos",  logo:"img/comerciantesunidos.png", pj:35,g:9, e:10,p:16,gf:37,gc:52,last:"WWLWD",zone:""},
-      {name:"Sport Boys",           logo:"img/sportboys.png",          pj:35,g:9, e:9, p:17,gf:40,gc:53,last:"LWLDL",zone:""},
-      {name:"Juan Pablo II",        logo:"img/juanpablo.png",          pj:35,g:8, e:9, p:18,gf:33,gc:51,last:"LLLWL",zone:""},
-      {name:"UTC",                  logo:"img/utc.png",                pj:35,g:8, e:8, p:19,gf:33,gc:62,last:"WWDLL",zone:""},
-      {name:"Ayacucho FC",          logo:"img/ayacucho.png",           pj:35,g:8, e:5, p:22,gf:30,gc:56,last:"LWLLL",zone:"rel"},
-      {name:"Alianza Universidad",  logo:"img/alianzauniversidad.png", pj:35,g:7, e:7, p:21,gf:39,gc:66,last:"LLDLW",zone:"rel"},
-      {name:"Deportivo Binacional",logo:"img/binacional.png",          pj:35,g:0, e:0, p:35,gf:0, gc:0, last:"LLLLL",zone:"rel"}
-    ],
-    2024: [
-      {name:"Universitario",       logo:"img/universitario.png", pj:34,g:23,e:8,p:3,  gf:63,gc:17,last:"WWLWD",zone:"cl"},
-      {name:"Sporting Cristal",    logo:"img/cristal.png",       pj:34,g:23,e:5,p:6,  gf:91,gc:35,last:"WLWWW",zone:"cl"},
-      {name:"FBC Melgar",          logo:"img/melgar.png",        pj:34,g:21,e:7,p:6,  gf:66,gc:35,last:"DWWWD",zone:"cl"},
-      {name:"Alianza Lima",        logo:"img/alianzalima.png",   pj:34,g:22,e:3,p:9,  gf:57,gc:27,last:"DWWWL",zone:"cl"},
-      {name:"Cusco FC",            logo:"img/cuscofc.png",       pj:34,g:18,e:6,p:10, gf:50,gc:44,last:"WWLLW",zone:"el"},
-      {name:"Cienciano",           logo:"img/cienciano.png",     pj:34,g:14,e:10,p:10,gf:48,gc:44,last:"LDWLW",zone:"el"},
-      {name:"Atlético Grau",       logo:"img/grau.png",          pj:34,g:12,e:15,p:7, gf:44,gc:28,last:"WWDWW",zone:"el"},
-      {name:"ADT",                 logo:"img/adt.png",           pj:34,g:14,e:9,p:11, gf:47,gc:40,last:"LLWDW",zone:"el"},
-      {name:"Alianza Atlético",    logo:"img/sullana.png",       pj:34,g:11,e:11,p:12,gf:28,gc:34,last:"WWLWD",zone:""},
-      {name:"Los Chankas",         logo:"img/chankas.png",       pj:34,g:10,e:9,p:15, gf:42,gc:47,last:"WLWLD",zone:""},
-      {name:"Sport Huancayo",      logo:"img/huancayo.png",      pj:34,g:10,e:8,p:16, gf:39,gc:57,last:"WLLLD",zone:""},
-      {name:"Deportivo Garcilaso", logo:"img/garcilaso.png",     pj:34,g:10,e:7,p:17, gf:37,gc:43,last:"LWDLD",zone:""},
-      {name:"Sport Boys",          logo:"img/sportboys.png",     pj:34,g:9,e:8,p:17,  gf:32,gc:51,last:"WLDDL",zone:""},
-      {name:"Comerciantes Unidos", logo:"img/comerciantesunidos.png",pj:34,g:9,e:8,p:17,gf:36,gc:60,last:"LLDDL",zone:""},
-      {name:"UTC",                 logo:"img/utc.png",           pj:34,g:7,e:10,p:17, gf:35,gc:53,last:"LLLDD",zone:""},
-      {name:"Carlos Mannucci",     logo:"img/mannucci.png",      pj:34,g:7,e:10,p:17, gf:34,gc:64,last:"LLWWD",zone:"rel"},
-      {name:"César Vallejo",       logo:"img/vallejo.png",       pj:34,g:6,e:12,p:16, gf:34,gc:55,last:"LDLLL",zone:"rel"},
-      {name:"Unión Comercio",      logo:"img/unioncomercio.png", pj:34,g:3,e:8,p:23,  gf:30,gc:79,last:"LWLLL",zone:"rel"}
-    ],
-    2023: [
-      {name:"Alianza Lima",         logo:"img/alianzalima.png",   pj:36,g:24,e:7,p:5,  gf:55,gc:22,last:"WDWDW",zone:"cl"},
-      {name:"Universitario",        logo:"img/universitario.png", pj:36,g:22,e:7,p:7,  gf:57,gc:22,last:"WWWDW",zone:"cl"},
-      {name:"Sporting Cristal",     logo:"img/cristal.png",       pj:36,g:19,e:14,p:3, gf:64,gc:31,last:"DLWLW",zone:"cl"},
-      {name:"FBC Melgar",           logo:"img/melgar.png",        pj:36,g:17,e:12,p:7, gf:55,gc:35,last:"WWDWW",zone:"cl"},
-      {name:"Sport Huancayo",       logo:"img/huancayo.png",      pj:36,g:16,e:8,p:12, gf:52,gc:39,last:"DWLWL",zone:"el"},
-      {name:"ADT",                  logo:"img/adt.png",           pj:36,g:14,e:13,p:9, gf:44,gc:36,last:"WWWDD",zone:"el"},
-      {name:"Deportivo Garcilaso",  logo:"img/garcilaso.png",     pj:36,g:13,e:13,p:10,gf:56,gc:47,last:"LLDWL",zone:"el"},
-      {name:"César Vallejo",        logo:"img/vallejo.png",       pj:36,g:14,e:9,p:13, gf:50,gc:42,last:"LWLDW",zone:"el"},
-      {name:"Cusco FC",             logo:"img/cuscofc.png",       pj:36,g:14,e:8,p:14, gf:42,gc:45,last:"LWLDL",zone:""},
-      {name:"Cienciano",            logo:"img/cienciano.png",     pj:36,g:13,e:9,p:14, gf:44,gc:48,last:"WWLWL",zone:""},
-      {name:"Carlos Mannucci",      logo:"img/mannucci.png",      pj:36,g:13,e:8,p:15, gf:33,gc:40,last:"DLLWD",zone:""},
-      {name:"Atlético Grau",        logo:"img/grau.png",          pj:36,g:10,e:11,p:15,gf:48,gc:48,last:"DLDWL",zone:""},
-      {name:"UTC",                  logo:"img/utc.png",           pj:36,g:8,e:16,p:12, gf:37,gc:45,last:"WDDLD",zone:""},
-      {name:"Alianza Atlético",     logo:"img/sullana.png",       pj:36,g:10,e:9,p:17, gf:46,gc:58,last:"LWDLL",zone:""},
-      {name:"Sport Boys",           logo:"img/sportboys.png",     pj:36,g:11,e:8,p:17, gf:28,gc:49,last:"LDWLW",zone:""},
-      {name:"Unión Comercio",       logo:"img/unioncomercio.png", pj:36,g:9,e:9,p:18,  gf:42,gc:72,last:"LDLLW",zone:"rel"},
-      {name:"Deportivo Binacional", logo:"img/binacional.png",    pj:36,g:10,e:5,p:21, gf:53,gc:68,last:"LWDLL",zone:"rel"},
-      {name:"Deportivo Municipal",  logo:"img/municipal.png",     pj:36,g:11,e:3,p:22, gf:36,gc:54,last:"WLWWL",zone:"rel"},
-      {name:"Academia Cantolao",    logo:"img/cantolao.png",      pj:36,g:7,e:5,p:24,  gf:21,gc:62,last:"LLDLW",zone:"rel"}
-    ]
-  }
-};
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
-  const view = document.getElementById("viewSelect").value;
-  const year = parseInt(document.getElementById("yearSelect").value);
-  const rows = (DATA[view]?.[year]) || [];
-  rows.sort((a,b) => {
-    const pa = a.g*3+a.e, pb = b.g*3+b.e;
-    if (pb!==pa) return pb-pa;
-    const da = a.gf-a.gc, db = b.gf-b.gc;
-    if (db!==da) return db-da;
-    return b.gf-a.gf;
-  });
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
-  rows.forEach((t,i) => {
-    const pts = t.g*3+t.e;
-    const dg  = t.gf-t.gc;
-    const dgStr   = dg>0?"+"+dg:String(dg);
-    const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-    const last5 = (t.last||"DDDDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = t.zone?"zone-"+t.zone:"";
-    tbody.insertAdjacentHTML("beforeend",`
-      <tr class="${zClass}">
-        <td class="td-pos">${i+1}</td>
-        <td class="td-team"><div class="team-cell"><img src="${t.logo}" class="team-logo"><span class="team-name">${t.name}</span></div></td>
-        <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
-        <td>${t.gf}</td><td>${t.gc}</td>
-        <td class="${dgClass}">${dgStr}</td>
-        <td><span class="pts-val">${pts}</span></td>
-        <td><div class="last5">${last5}</div></td>
-      </tr>`);
-  });
-}
+  const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+  async function render() {
+    const view = document.getElementById("viewSelect").value;
+    const year = parseInt(document.getElementById("yearSelect").value);
+
+    if (view !== "overview") return;
+
+    const tbody = document.getElementById("tbody");
+    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
+
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Liga 1')}&temporada=eq.${year}&select=*&order=g.desc,gf.desc`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const rows = await res.json();
+
+    rows.sort((a, b) => {
+      const pa = a.g*3+a.e, pb = b.g*3+b.e;
+      if (pb !== pa) return pb - pa;
+      const da = a.gf-a.gc, db = b.gf-b.gc;
+      if (db !== da) return db - da;
+      return b.gf - a.gf;
+    });
+
+    const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
+    tbody.innerHTML = "";
+
+    rows.forEach((t, i) => {
+      const pts = t.g*3+t.e;
+      const dg = t.gf-t.gc;
+      const dgStr = dg>0?"+"+dg:String(dg);
+      const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
+      const last5 = t.forma
+        ? t.forma.split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("")
+        : "";
+      const zClass = t.zona ? "zone-"+t.zona : "";
+
+      tbody.insertAdjacentHTML("beforeend", `
+        <tr class="${zClass}">
+          <td class="td-pos">${i+1}</td>
+          <td class="td-team">
+            <div class="team-cell">
+              <img src="img/${t.logo}" class="team-logo" onerror="this.style.display='none'">
+              <span class="team-name">${t.equipo}</span>
+            </div>
+          </td>
+          <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+          <td>${t.gf}</td><td>${t.gc}</td>
+          <td class="${dgClass}">${dgStr}</td>
+          <td><span class="pts-val">${pts}</span></td>
+          <td><div class="last5">${last5}</div></td>
+        </tr>`);
+    });
+  }
 
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN

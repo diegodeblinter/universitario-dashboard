@@ -132,7 +132,7 @@ body { visibility: hidden; }
             <tbody id="tbody"></tbody>
           </table>
           <div class="legend">
-            <div class="legend-item-pos"><div class="legend-pip" style="background:var(--play-bar)"></div>Play-offs por Campeonato</div>
+            <div class="legend-item-pos"><div class="legend-pip" style="background:var(--cl-bar)"></div>Play-offs por Campeonato</div>
             <div class="legend-item-pos"><div class="legend-pip" style="background:var(--rel-bar)"></div>Play-offs por Descenso o Descenso Directo</div>
           </div>
         </div>
@@ -515,102 +515,57 @@ const ROWS_PER_PAGE = 14;
 let paginaActual = 1;
 let partidosFiltrados = [];  // todos los partidos del filtro actual
 
-// ── DATOS POSICIONES ──
-const DATA = {
-  overview: {
-
-2026: [
-  {name:"Universitario",         logo:"img/universitario.png",   pj:10,  g:9, e:1, p:0, gf:55, gc:4,  last:"WWDWW", zone:""},
-  {name:"Atlético Andahuaylas",  logo:"img/andahuaylas.png",     pj:10,  g:8, e:1, p:1, gf:14, gc:8,  last:"WWDWW", zone:""},
-  {name:"Sporting Cristal",      logo:"img/cristal.png",         pj:10, g:7, e:0, p:3, gf:30, gc:9,  last:"LWWWL", zone:""},
-  {name:"Alianza Lima",          logo:"img/alianzalima.png",     pj:10,  g:6, e:2, p:2, gf:26, gc:7,  last:"LDLWD", zone:""},
-  {name:"FBC Melgar",            logo:"img/melgar.png",          pj:10,  g:4, e:2, p:4, gf:15, gc:14, last:"WDLDD", zone:""},
-  {name:"CD Yanapuma",           logo:"img/yanapuma.png",        pj:10,  g:5, e:1, p:4, gf:15,  gc:21, last:"WLWLW", zone:""},
-
-  {name:"Flamengo FBC",          logo:"img/flamengofbc.png",     pj:10,  g:3, e:2, p:5, gf:16, gc:21, last:"LWDDW", zone:""},
-  {name:"Defensores del Ilucán", logo:"img/ilucan.png",          pj:10,  g:2, e:1, p:7, gf:11, gc:29, last:"LWLLL", zone:""},
-  {name:"FC Killas",             logo:"img/killas.png",          pj:10,  g:1, e:2, p:7, gf:14, gc:26, last:"DLWLL", zone:""},
-  {name:"Club UNSAAC",           logo:"img/unsaac.png",          pj:10,  g:1, e:3, p:6, gf:7,  gc:25, last:"LLLDL", zone:""},
-  {name:"Carlos Mannucci",       logo:"img/mannucci.png",        pj:10,  g:1, e:1, p:8, gf:4,  gc:43, last:"LLLDL", zone:"rel"},
-  {name:"Biavo FC",              logo:"img/biavo.png",          pj:0,  g:0, e:0, p:0, gf:0,  gc:0,  last:"", zone:"rel"}
-
-],
-
-
-2025: [
-  {name:"Universitario",       logo:"img/universitario.png",   pj:22, g:19, e:1, p:2,  gf:89, gc:8,  last:"WLWWL", zone:""},
-  {name:"Alianza Lima",        logo:"img/alianzalima.png",     pj:22, g:19, e:1, p:2,  gf:88, gc:10, last:"WWWLW", zone:""},
-  {name:"Sporting Cristal",    logo:"img/cristal.png",         pj:22, g:15, e:4, p:3,  gf:76, gc:16, last:"WWWLW", zone:""},
-  {name:"Carlos Mannucci",     logo:"img/mannucci.png",        pj:22, g:10, e:5, p:7,  gf:42, gc:33, last:"LWWWW", zone:""},
-  {name:"FBC Melgar",          logo:"img/melgar.png",          pj:22, g:9,  e:7, p:6,  gf:31, gc:34, last:"WLWDW", zone:""},
-  {name:"Flamengo FBC",        logo:"img/flamengofbc.png",     pj:22, g:8,  e:3, p:11, gf:32, gc:42, last:"WDLWL", zone:""},
-  {name:"UNSAAC",              logo:"img/unsaac.png",          pj:22, g:7,  e:4, p:11, gf:34, gc:40, last:"WDWWL", zone:""},
-  {name:"Biavo FC",            logo:"img/biavo.png",           pj:22, g:6,  e:5, p:11, gf:33, gc:52, last:"LWLLW", zone:""},
-  {name:"Def. del Ilucán",     logo:"img/ilucan.png",          pj:22, g:5,  e:5, p:12, gf:27, gc:68, last:"LWLLL", zone:""},
-  {name:"FC Killas",           logo:"img/killas.png",          pj:22, g:5,  e:4, p:13, gf:21, gc:58, last:"LLLDL", zone:""},
-  {name:"Real Áncash FC",      logo:"img/realancash.png",      pj:22, g:5,  e:0, p:17, gf:30, gc:78, last:"LLLLW", zone:"rel"},
-  {name:"Club UCV",            logo:"img/vallejo.png",         pj:22, g:2,  e:5, p:15, gf:11, gc:75, last:"LLLWL", zone:"rel"}
-],
-2024: [
-  {name:"Alianza Lima",        logo:"img/alianzalima.png",   pj:12, g:11, e:1, p:0,  gf:59, gc:4,  last:"WWWWW", zone:"play"},
-  {name:"Universitario",       logo:"img/universitario.png", pj:12, g:11, e:1, p:0,  gf:49, gc:8,  last:"WWWWW", zone:"play"},
-  {name:"Sporting Cristal",    logo:"img/cristal.png",       pj:12, g:8,  e:1, p:3,  gf:26, gc:9,  last:"WLWWL", zone:"play"},
-  {name:"FBC Melgar",          logo:"img/melgar.png",        pj:12, g:7,  e:2, p:3,  gf:20, gc:8,  last:"WLDWW", zone:"play"},
-  {name:"Carlos Mannucci",     logo:"img/mannucci.png",      pj:12, g:7,  e:1, p:4,  gf:22, gc:11, last:"WDLDW", zone:"play"},
-  {name:"Def. del Ilucán",     logo:"img/ilucan.png",        pj:12, g:5,  e:3, p:5,  gf:16, gc:19, last:"LWDWL", zone:"play"},
-  {name:"Deportivo Municipal", logo:"img/municipal.png",     pj:12, g:5,  e:2, p:5,  gf:11, gc:20, last:"DWWWD", zone:"rel"},
-  {name:"FC Killas",           logo:"img/killas.png",        pj:12, g:4,  e:1, p:7,  gf:11, gc:28, last:"DLLLW", zone:"rel"},
-  {name:"Club UCV",            logo:"img/vallejo.png",       pj:12, g:3,  e:3, p:6,  gf:12, gc:18, last:"WDLDL", zone:"rel"},
-  {name:"Biavo FC",            logo:"img/biavo.png",         pj:12, g:3,  e:3, p:6,  gf:18, gc:32, last:"DWLLD", zone:"rel"},
-  {name:"UNSAAC",              logo:"img/unsaac.png",        pj:12, g:3,  e:1, p:8,  gf:13, gc:38, last:"LLWWD", zone:"rel"},
-  {name:"Ayacucho FC",         logo:"img/ayacucho.png",      pj:12, g:1,  e:0, p:11, gf:7,  gc:45, last:"LLLLL", zone:"rel"},
-  {name:"Academia Cantolao",   logo:"img/cantolao.png",      pj:12, g:0,  e:2, p:10, gf:5,  gc:30, last:"DLLLL", zone:"rel"}
-],
-2023: [
-  {name:"Universitario",       logo:"img/universitario.png",  pj:13, g:13, e:0, p:0,  gf:62, gc:4,  last:"WWWWW", zone:"play"},
-  {name:"Alianza Lima",        logo:"img/alianzalima.png",    pj:13, g:11, e:1, p:1,  gf:54, gc:3,  last:"WDWWW", zone:"play"},
-  {name:"Carlos Mannucci",     logo:"img/mannucci.png",       pj:13, g:10, e:0, p:3,  gf:29, gc:14, last:"WWWLW", zone:"play"},
-  {name:"Sporting Cristal",    logo:"img/cristal.png",        pj:13, g:7,  e:3, p:3,  gf:27, gc:12, last:"DWDWD", zone:"play"},
-  {name:"Deportivo Municipal", logo:"img/municipal.png",      pj:13, g:7,  e:1, p:5,  gf:23, gc:24, last:"WLWWL", zone:"play"},
-  {name:"Academia Cantolao",   logo:"img/cantolao.png",       pj:13, g:6,  e:3, p:4,  gf:16, gc:11, last:"DWDWD", zone:"play"},
-  {name:"Def. del Ilucán",     logo:"img/ilucan.png",         pj:13, g:6,  e:2, p:5,  gf:19, gc:24, last:"WWDWW", zone:"rel"},
-  {name:"FBC Melgar",          logo:"img/melgar.png",         pj:13, g:5,  e:2, p:6,  gf:19, gc:37, last:"DLWLW", zone:"rel"},
-  {name:"Sporting Victoria",   logo:"img/sportvictoria.png",  pj:13, g:4,  e:1, p:8,  gf:18, gc:20, last:"DLLLL", zone:"rel"},
-  {name:"Ayacucho FC",         logo:"img/ayacucho.png",       pj:13, g:4,  e:1, p:8,  gf:18, gc:20, last:"LDLWW", zone:"rel"},
-  {name:"Atlético Trujillo",   logo:"img/atleticotrujillo.png",pj:13, g:4, e:0, p:9,  gf:20, gc:45, last:"LLLLL", zone:"rel"},
-  {name:"FC Killas",           logo:"img/killas.png",         pj:13, g:2,  e:3, p:8,  gf:14, gc:28, last:"LWLLL", zone:"rel"},
-  {name:"Club UCV",            logo:"img/vallejo.png",        pj:13, g:1,  e:3, p:9,  gf:11, gc:30, last:"LLDLL", zone:"rel"},
-  {name:"Club USMP",           logo:"img/sanmartin.png",      pj:13, g:0,  e:1, p:12, gf:5,  gc:51, last:"LLLLL", zone:"rel"}
-]
-  }
-};
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+async function render() {
   const view = document.getElementById("viewSelect").value;
   const year = parseInt(document.getElementById("yearSelect").value);
-  const rows = (DATA[view]?.[year]) || [];
-  rows.sort((a,b) => {
-    const pa = a.g*3+a.e, pb = b.g*3+b.e;
-    if (pb!==pa) return pb-pa;
-    const da = a.gf-a.gc, db = b.gf-b.gc;
-    if (db!==da) return db-da;
-    return b.gf-a.gf;
-  });
+
+  if (view !== "overview") return;
+
   const tbody = document.getElementById("tbody");
+  tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Liga Femenina FPF')}&temporada=eq.${year}&select=*&order=g.desc,gf.desc`,
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+  );
+  const rows = await res.json();
+
+  rows.sort((a, b) => {
+    const pa = a.g*3+a.e, pb = b.g*3+b.e;
+    if (pb !== pa) return pb - pa;
+    const da = a.gf-a.gc, db = b.gf-b.gc;
+    if (db !== da) return db - da;
+    return b.gf - a.gf;
+  });
+
+  const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
   tbody.innerHTML = "";
-  rows.forEach((t,i) => {
+
+  rows.forEach((t, i) => {
     const pts = t.g*3+t.e;
-    const dg  = t.gf-t.gc;
-    const dgStr   = dg>0?"+"+dg:String(dg);
+    const dg = t.gf-t.gc;
+    const dgStr = dg>0?"+"+dg:String(dg);
     const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-    const last5 = (t.last||"DDDDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = t.zone?"zone-"+t.zone:"";
-    tbody.insertAdjacentHTML("beforeend",`
+    const last5 = t.forma
+      ? t.forma.split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("")
+      : "";
+    const zClass = t.zona ? "zone-"+t.zona : "";
+
+    tbody.insertAdjacentHTML("beforeend", `
       <tr class="${zClass}">
         <td class="td-pos">${i+1}</td>
-        <td class="td-team"><div class="team-cell"><img src="${t.logo}" class="team-logo"><span class="team-name">${t.name}</span></div></td>
+        <td class="td-team">
+          <div class="team-cell">
+            <img src="img/${t.logo}" class="team-logo" onerror="this.style.display='none'">
+            <span class="team-name">${t.equipo}</span>
+          </div>
+        </td>
         <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
         <td>${t.gf}</td><td>${t.gc}</td>
         <td class="${dgClass}">${dgStr}</td>
@@ -619,7 +574,6 @@ function render() {
       </tr>`);
   });
 }
-
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN
 // ══════════════════════════════════════

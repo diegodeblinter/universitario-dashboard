@@ -272,180 +272,113 @@ let partidosFiltrados = [];  // todos los partidos del filtro actual
 
 // ── DATOS POSICIONES ──
 // ── DATOS GRUPOS COPA DEL MUNDO ──
-const GRUPOS_MUNDIAL = {
-  2026: {
-    "A": [
-      {name:"México",      logo:"img/mexico.png",      pj:1, g:1, e:0, p:0, gf:2, gc:0, last:"W", zone:"el"},
-      {name:"Sudáfrica",   logo:"img/sudafrica.png",   pj:1, g:0, e:0, p:1, gf:0, gc:2, last:"L", zone:"el"},
-      {name:"Corea del Sur",logo:"img/korea.png",      pj:1, g:1, e:0, p:0, gf:2, gc:1, last:"W", zone:"el"},
-      {name:"Chequia",     logo:"img/chequia.png",     pj:1, g:0, e:0, p:1, gf:1, gc:2, last:"L", zone:"el"},
-    ],
-    "B": [
-      {name:"Canadá",      logo:"img/canada.png",      pj:1, g:0, e:1, p:0, gf:1, gc:1, last:"D", zone:"el"},
-      {name:"Bosnia",      logo:"img/bosnia.png",      pj:1, g:0, e:1, p:0, gf:1, gc:1, last:"D", zone:"el"},
-      {name:"Qatar",       logo:"img/qatar.png",       pj:1, g:0, e:1, p:0, gf:1, gc:1, last:"D", zone:"el"},
-      {name:"Suiza",       logo:"img/suiza.png",       pj:1, g:0, e:1, p:0, gf:1, gc:1, last:"D", zone:"el"},
-    ],
-    "C": [
-      {name:"Brasil",      logo:"img/brasil.png",      pj:1, g:0, e:1, p:0, gf:1, gc:1, last:"D", zone:"el"},
-      {name:"Marruecos",   logo:"img/marruecos.png",   pj:1, g:0, e:1, p:0, gf:1, gc:1, last:"D", zone:"el"},
-      {name:"Haití",       logo:"img/haiti.png",       pj:1, g:0, e:0, p:1, gf:0, gc:1, last:"L", zone:"el"},
-      {name:"Escocia",     logo:"img/escocia.png",     pj:1, g:1, e:0, p:0, gf:1, gc:0, last:"W", zone:"el"},
-    ],
-    "D": [
-      {name:"Estados Unidos",logo:"img/usa.png",       pj:1, g:1, e:0, p:0, gf:4, gc:1, last:"W", zone:"el"},
-      {name:"Paraguay",    logo:"img/paraguay.png",    pj:1, g:0, e:0, p:1, gf:1, gc:4, last:"L", zone:"el"},
-      {name:"Australia",   logo:"img/australia.png",   pj:1, g:1, e:0, p:0, gf:2, gc:0, last:"W", zone:"el"},
-      {name:"Turquía",     logo:"img/turquia.png",     pj:1, g:0, e:0, p:1, gf:0, gc:2, last:"L", zone:"el"},
-    ],
-    "E": [
-      {name:"Alemania",    logo:"img/alemania.png",    pj:1, g:1, e:0, p:0, gf:7, gc:1, last:"W", zone:"el"},
-      {name:"Curazao",     logo:"img/curazao.png",     pj:1, g:0, e:0, p:1, gf:1, gc:7, last:"L", zone:"el"},
-      {name:"Costa de Marfil",logo:"img/costademarfil.png",   pj:1, g:1, e:0, p:0, gf:1, gc:0, last:"W", zone:"el"},
-      {name:"Ecuador",     logo:"img/ecuador.png",     pj:1, g:1, e:0, p:0, gf:0, gc:1, last:"L", zone:"el"},
-    ],
-    "F": [
-      {name:"Países Bajos",logo:"img/paisesbajos.png", pj:1, g:0, e:1, p:0, gf:2, gc:2, last:"D", zone:"el"},
-      {name:"Japón",       logo:"img/japon.png",       pj:1, g:0, e:1, p:0, gf:2, gc:2, last:"D", zone:"el"},
-      {name:"Suecia",      logo:"img/suecia.png",      pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Túnez",       logo:"img/tunez.png",       pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    "G": [
-      {name:"Bélgica",       logo:"img/belgica.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Egipto",        logo:"img/Egipto.png",      pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Irán",          logo:"img/iran.png",        pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Nueva Zelanda", logo:"img/nuevazelanda.png", pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    "H": [
-      {name:"España",         logo:"img/españa.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Cabo Verde",     logo:"img/caboverde.png",  pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Arabia Saudita", logo:"img/arabia.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Uruguay",        logo:"img/uruguay.png",    pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    "I": [
-      {name:"Francia",       logo:"img/francia.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Senegal",       logo:"img/senegal.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Irak",          logo:"img/irak.png",        pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Noruega",       logo:"img/noruega.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    "J": [
-      {name:"Argentina",       logo:"img/argentina.png",    pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Argelia",       logo:"img/argelia.png",        pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Austria",          logo:"img/austria.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Jordania",       logo:"img/jordania.png",      pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    "K": [
-      {name:"Portugal",logo:"img/paisesbajos.png",        pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"RD Congo",       logo:"img/congo.png",       pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Uzbekistán",      logo:"img/uzbekistan.png", pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Colombia",       logo:"img/colombia.png",    pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    "L": [
-      {name:"Inglaterra",logo:"img/inglaterra.png",     pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Croacia",       logo:"img/croacia.png",    pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Ghana",      logo:"img/ghana.png",         pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-      {name:"Panamá",       logo:"img/panama.png",      pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"el"},
-    ],
-    // Agrega los grupos G, H, I, J, K, L que te faltan...
-  }
-};
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
-  const view = document.getElementById("viewSelect").value;
+const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+async function render() {
   const year = parseInt(document.getElementById("yearSelect").value);
+  const view = document.getElementById("viewSelect").value;
   const container = document.getElementById("gruposContainer");
   if (!container) return;
-
   if (view !== "overview") { container.innerHTML = ""; return; }
 
-  const grupos = GRUPOS_MUNDIAL[year] || {};
-  const letras = Object.keys(grupos);
+  container.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:20px;">Cargando...</div>`;
 
-  if (!letras.length) {
-    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:20px;">Sin datos</div>`;
-    return;
-  }
+const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Copa del Mundo')}&temporada=eq.${year}&select=*&order=grupo.asc`,
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+  );
+  const data = await res.json();
+console.log("Supabase data:", data);
+
+
+  // Agrupar por grupo
+  const grupos = {};
+  data.forEach(r => {
+    if (!grupos[r.grupo]) grupos[r.grupo] = [];
+    grupos[r.grupo].push(r);
+  });
 
   container.innerHTML = "";
 
-  letras.forEach(letra => {
-    const rows = [...grupos[letra]].sort((a,b) => {
+  Object.keys(grupos).sort().forEach(letra => {
+    const rows = [...grupos[letra]].sort((a, b) => {
       const pa = a.g*3+a.e, pb = b.g*3+b.e;
-      if (pb!==pa) return pb-pa;
+      if (pb !== pa) return pb - pa;
       const da = a.gf-a.gc, db = b.gf-b.gc;
-      if (db!==da) return db-da;
-      return b.gf-a.gf;
+      if (db !== da) return db - da;
+      return b.gf - a.gf;
     });
 
-    // Construir filas
-const filasHTML = rows.map((t, i) => {
-  const pts = t.g*3+t.e;
-  const dg  = t.gf-t.gc;
-  const dgStr   = dg>0?"+"+dg:String(dg);
-  const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-  const last5 = (t.last||"DDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}" style="width:10px;height:10px;"></div>`).join("");
+    const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-  // Color barra lateral según posición en el grupo
-  const barColor = i === 0 ? "#3b82f6"   // 1ro — azul (clasificado directo)
-                 : i === 1 ? "#3b82f6"   // 2do — azul (clasificado)
-                 : i === 2 ? "#3b82f6" 
-                 : "#e2e8f0";            // 3ro y 4to — gris (eliminado)
+    const filasHTML = rows.map((t, i) => {
+      const pts = t.g*3+t.e;
+      const dg = t.gf-t.gc;
+      const dgStr = dg>0?"+"+dg:String(dg);
+      const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
+      const last5 = t.forma
+        ? `<div class="dot ${dotClass[t.forma]||'dot-d'}" style="width:10px;height:10px;"></div>`
+        : "";
+      const barColor = (t.zona === "clasificado") ? "#3b82f6" : "#e2e8f0";
 
-  return `
-    <tr style="border-bottom:1px solid var(--border); position:relative;">
-      <td style="padding:0;width:3px;">
-        <div style="width:3px;height:100%;min-height:36px;background:${barColor};border-radius:2px;"></div>
-      </td>
-      <td style="text-align:center;font-size:11px;font-weight:600;padding:6px 3px;color:var(--text-muted);">${i+1}</td>
-      <td style="padding:6px 4px;">
-        <div style="display:flex;align-items:center;gap:5px;">
-          <img src="${t.logo}" style="width:18px;height:18px;object-fit:contain;flex-shrink:0;">
-          <span style="font-size:11px;font-weight:600;color:var(--text-primary);">${t.name}</span>
+      return `
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0;width:3px;">
+            <div style="width:3px;height:100%;min-height:36px;background:${barColor};border-radius:2px;"></div>
+          </td>
+          <td style="text-align:center;font-size:11px;font-weight:600;padding:6px 3px;color:var(--text-muted);">${i+1}</td>
+          <td style="padding:6px 4px;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <img src="img/${t.logo}" style="width:18px;height:18px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'">
+              <span style="font-size:11px;font-weight:600;color:var(--text-primary);">${t.equipo}</span>
+            </div>
+          </td>
+          <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.pj}</td>
+          <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.g}</td>
+          <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.e}</td>
+          <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.p}</td>
+          <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.gf}</td>
+          <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.gc}</td>
+          <td style="text-align:center;font-size:11px;padding:6px 3px;" class="${dgClass}">${dgStr}</td>
+          <td style="text-align:center;padding:6px 3px;"><span class="pts-val" style="font-size:11px;">${pts}</span></td>
+          <td style="padding:6px 3px;"><div class="last5" style="justify-content:center;gap:2px;">${last5}</div></td>
+        </tr>`;
+    }).join("");
+
+    container.insertAdjacentHTML("beforeend", `
+      <div class="grupo-block">
+        <div class="grupo-header-label">Grupo ${letra}</div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);">
+                <th style="width:3px;padding:0;"></th>
+                <th style="width:20px;text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;">POS</th>
+                <th style="text-align:left;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 4px;">EQUIPO</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:26px;">PJ</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:22px;">G</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:22px;">E</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:22px;">P</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:26px;">GF</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:26px;">GC</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:30px;">DG</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:28px;">PTS</th>
+                <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:60px;">ÚLT.5</th>
+              </tr>
+            </thead>
+            <tbody>${filasHTML}</tbody>
+          </table>
         </div>
-      </td>
-      <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.pj}</td>
-      <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.g}</td>
-      <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.e}</td>
-      <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.p}</td>
-      <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.gf}</td>
-      <td style="text-align:center;font-size:11px;color:var(--text-secondary);padding:6px 3px;">${t.gc}</td>
-      <td style="text-align:center;font-size:11px;padding:6px 3px;" class="${dgClass}">${dgStr}</td>
-      <td style="text-align:center;padding:6px 3px;"><span class="pts-val" style="font-size:11px;">${pts}</span></td>
-      <td style="padding:6px 3px;"><div class="last5" style="justify-content:center;gap:2px;">${last5}</div></td>
-    </tr>`;
-}).join("");
-
-const grupoDivHTML = `
-  <div class="grupo-block">
-    <div class="grupo-header-label">Grupo ${letra}</div>
-    <div style="overflow-x:auto;">
-      <table style="width:100%;border-collapse:collapse;">
-        <thead>
-          <tr style="border-bottom:1px solid var(--border);">
-            <th style="width:3px;padding:0;"></th> 
-            <th style="width:20px;text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;">POS</th>
-            <th style="text-align:left;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 4px;">EQUIPO</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:26px;">PJ</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:22px;">G</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:22px;">E</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:22px;">P</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:26px;">GF</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:26px;">GC</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:30px;">DG</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:28px;">PTS</th>
-            <th style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:6px 3px;width:60px;">ÚLT.5</th>
-          </tr>
-        </thead>
-        <tbody>${filasHTML}</tbody>
-      </table>
-    </div>
-  </div>`;
-
-    container.insertAdjacentHTML("beforeend", grupoDivHTML);
+      </div>`);
   });
 }
+
+
+
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN
 // ══════════════════════════════════════
@@ -928,32 +861,6 @@ window.renderPaginaPartidos = function(){
     tr.onclick = ()=>abrirModalPartido(p);
   });
 }
-
-// ── Inicializar KPI y gráfico cuando el sidebar ya está cargado ──
-document.addEventListener("DOMContentLoaded",()=>{
-  renderTeamKPIs();
-  // El gráfico espera a que Chart.js esté disponible
-  const waitChart=setInterval(()=>{
-    if(typeof Chart!=="undefined"){clearInterval(waitChart);renderGraficoJornadas();}
-  },100);
-});
-document.getElementById("viewSelect")?.addEventListener("change",renderGraficoJornadas);
-document.getElementById("yearSelect")?.addEventListener("change",()=>{
-  renderGraficoJornadas();
-  renderTeamKPIs();
-  // Sincronizar selector de jugadores con el año elegido
-  const year = document.getElementById("yearSelect").value;
-  const filtroPlayer = document.getElementById("filtroAnioPlayer");
-  if (filtroPlayer && filtroPlayer.value !== year) {
-    filtroPlayer.value = year;
-    const selectedYear = parseInt(year);
-    const fp = players.filter(p => p.year === selectedYear)
-      .sort((a,b) => parseFloat(b.rat)-parseFloat(a.rat) || parseInt(b.pj)-parseInt(a.pj));
-    renderPlayers(fp);
-    renderFormation(fp, formation_1_5_3_2);
-  }
-});
-document.getElementById("filtroAnioPlayer")?.addEventListener("change",renderTeamKPIs);
 
 
 // ── DARK MODE ──

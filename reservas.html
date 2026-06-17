@@ -513,57 +513,66 @@ const ROWS_PER_PAGE = 14;
 let paginaActual = 1;
 let partidosFiltrados = [];  // todos los partidos del filtro actual
 
-// ── DATOS POSICIONES ──
-const DATA = {
-  overview: {
-2024: [
-  {name:"Universitario",       logo:"img/universitario.png",     pj:16, g:12, e:2, p:2,  gf:44, gc:16, last:"LDWWW", zone:"cl"},
-  {name:"César Vallejo",       logo:"img/vallejo.png",           pj:16, g:11, e:1, p:4,  gf:33, gc:16, last:"WWLLW", zone:"cl"},
-  {name:"Carlos Mannucci",     logo:"img/mannucci.png",          pj:16, g:9,  e:2, p:5,  gf:36, gc:22, last:"WWLWW", zone:"el"},
-  {name:"Sport Boys",          logo:"img/sportboys.png",         pj:16, g:9,  e:2, p:5,  gf:28, gc:21, last:"WDWLL", zone:"el"},
-  {name:"Atlético Grau",       logo:"img/grau.png",              pj:16, g:8,  e:2, p:6,  gf:26, gc:18, last:"LWLWL", zone:"el"},
-  {name:"Unión Comercio",      logo:"img/unioncomercio.png",     pj:16, g:6,  e:2, p:8,  gf:30, gc:29, last:"LWLWW", zone:"el"},
-  {name:"UTC",                 logo:"img/utc.png",               pj:16, g:4,  e:3, p:9,  gf:19, gc:28, last:"DLLLL", zone:""},
-  {name:"Comerciantes Unidos", logo:"img/comerciantesunidos.png",pj:16, g:4,  e:1, p:11, gf:19, gc:46, last:"LWWLL", zone:""},
-  {name:"Alianza Atlético",    logo:"img/sullana.png",           pj:16, g:1,  e:1, p:14, gf:15, gc:54, last:"LLLLW", zone:""}
-]
-  }
-};
+
 
 const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-function render() {
-  const view = document.getElementById("viewSelect").value;
-  const year = parseInt(document.getElementById("yearSelect").value);
-  const rows = (DATA[view]?.[year]) || [];
-  rows.sort((a,b) => {
-    const pa = a.g*3+a.e, pb = b.g*3+b.e;
-    if (pb!==pa) return pb-pa;
-    const da = a.gf-a.gc, db = b.gf-b.gc;
-    if (db!==da) return db-da;
-    return b.gf-a.gf;
-  });
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
-  rows.forEach((t,i) => {
-    const pts = t.g*3+t.e;
-    const dg  = t.gf-t.gc;
-    const dgStr   = dg>0?"+"+dg:String(dg);
-    const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-    const last5 = (t.last||"DDDDD").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = t.zone?"zone-"+t.zone:"";
-    tbody.insertAdjacentHTML("beforeend",`
-      <tr class="${zClass}">
-        <td class="td-pos">${i+1}</td>
-        <td class="td-team"><div class="team-cell"><img src="${t.logo}" class="team-logo"><span class="team-name">${t.name}</span></div></td>
-        <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
-        <td>${t.gf}</td><td>${t.gc}</td>
-        <td class="${dgClass}">${dgStr}</td>
-        <td><span class="pts-val">${pts}</span></td>
-        <td><div class="last5">${last5}</div></td>
-      </tr>`);
-  });
-}
+  const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
+
+  async function render() {
+    const view = document.getElementById("viewSelect").value;
+    const year = parseInt(document.getElementById("yearSelect").value);
+
+    if (view !== "overview") return;
+
+    const tbody = document.getElementById("tbody");
+    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
+
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Torneo de Reservas')}&temporada=eq.${year}&select=*&order=g.desc,gf.desc`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const rows = await res.json();
+
+    rows.sort((a, b) => {
+      const pa = a.g*3+a.e, pb = b.g*3+b.e;
+      if (pb !== pa) return pb - pa;
+      const da = a.gf-a.gc, db = b.gf-b.gc;
+      if (db !== da) return db - da;
+      return b.gf - a.gf;
+    });
+
+    const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
+    tbody.innerHTML = "";
+
+    rows.forEach((t, i) => {
+      const pts = t.g*3+t.e;
+      const dg = t.gf-t.gc;
+      const dgStr = dg>0?"+"+dg:String(dg);
+      const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
+      const last5 = t.forma
+        ? t.forma.split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("")
+        : "";
+      const zClass = t.zona ? "zone-"+t.zona : "";
+
+      tbody.insertAdjacentHTML("beforeend", `
+        <tr class="${zClass}">
+          <td class="td-pos">${i+1}</td>
+          <td class="td-team">
+            <div class="team-cell">
+              <img src="img/${t.logo}" class="team-logo" onerror="this.style.display='none'">
+              <span class="team-name">${t.equipo}</span>
+            </div>
+          </td>
+          <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+          <td>${t.gf}</td><td>${t.gc}</td>
+          <td class="${dgClass}">${dgStr}</td>
+          <td><span class="pts-val">${pts}</span></td>
+          <td><div class="last5">${last5}</div></td>
+        </tr>`);
+    });
+  }
 
 // ══════════════════════════════════════
 // TABLA DE PARTIDOS + PAGINACIÓN

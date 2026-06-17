@@ -402,13 +402,11 @@ async function inicializarPartidos() {
   try {
     const dataLocal = JSON.parse(localStorage.getItem("partidos")) || [];
     
-    // Si ya hay datos en localStorage, no pisar con Supabase
     if (dataLocal.length > 0) {
       console.log(`✅ ${dataLocal.length} partidos desde localStorage`);
       return;
     }
 
-    // Solo cargar de Supabase si localStorage está vacío
     const res = await fetch(`${SUPABASE_URL}/rest/v1/partidos?select=*&order=fecha.asc`, {
       headers: {
         "apikey": SUPABASE_KEY,
@@ -417,6 +415,21 @@ async function inicializarPartidos() {
     });
     if (!res.ok) throw new Error("Error Supabase");
     const data = await res.json();
+
+    // ── FIX: marcar como finalizado los partidos cuya fecha/hora ya pasó ──
+    const ahoraLima = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Lima" }));
+    data.forEach(p => {
+      if (p.estado?.toLowerCase() === "pendiente" && p.fecha) {
+        const horaPartido = p.hora || "23:59";
+        const fechaHoraPartido = new Date(`${p.fecha}T${horaPartido}:00`);
+        // Si ya pasaron más de 130 minutos desde el inicio, marcarlo finalizado
+        const minutos = (ahoraLima - fechaHoraPartido) / 60000;
+        if (minutos > 130) {
+          p.estado = "finalizado";
+        }
+      }
+    });
+
     localStorage.setItem("partidos", JSON.stringify(data));
     console.log(`✅ ${data.length} partidos cargados desde Supabase`);
   } catch (e) {
@@ -873,7 +886,35 @@ async function actualizarPartidosEnVivo() {
   );
 
   if (!pendientesHoy.length) {
-    if (cambios) { localStorage.setItem("partidos", JSON.stringify(partidos)); cargarUltimos4Cards(); renderCalendario(); }
+    if (cambios) {
+  localStorage.setItem("partidos", JSON.stringify(partidos));
+  cargarUltimos4Cards();
+  renderCalendario();
+
+  // ── Sincronizar finalizados a Supabase ──
+  const finalizados = partidos.filter(p =>
+    p.estado === "finalizado" && p.resultado && p.id
+  );
+  finalizados.forEach(async p => {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${p.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          estado: "finalizado",
+          resultado: p.resultado
+        })
+      });
+      console.log(`[Supabase] ✅ Partido actualizado: ${p.equipo1} vs ${p.equipo2} → ${p.resultado}`);
+    } catch (e) {
+      console.error(`[Supabase] ❌ Error actualizando partido ${p.id}:`, e);
+    }
+  });
+}
     console.log("[EnVivo] Ningún partido dentro de ventana ahora. No se consulta la API.");
     actualizarIndicadorDebug("sin partidos en ventana (" + new Date().toLocaleTimeString("es-PE") + ")");
     return;
@@ -945,7 +986,35 @@ async function actualizarPartidosEnVivo() {
     localStorage.setItem("ultimaConsultaAPI", Date.now().toString());
     actualizarIndicadorDebug(`${new Date().toLocaleTimeString("es-PE")} · ${encontrados}/${pendientesHoy.length} en vivo`);
 
-    if (cambios) { localStorage.setItem("partidos", JSON.stringify(partidos)); cargarUltimos4Cards(); renderCalendario(); }
+    if (cambios) {
+  localStorage.setItem("partidos", JSON.stringify(partidos));
+  cargarUltimos4Cards();
+  renderCalendario();
+
+  // ── Sincronizar finalizados a Supabase ──
+  const finalizados = partidos.filter(p =>
+    p.estado === "finalizado" && p.resultado && p.id
+  );
+  finalizados.forEach(async p => {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${p.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          estado: "finalizado",
+          resultado: p.resultado
+        })
+      });
+      console.log(`[Supabase] ✅ ${p.equipo1} vs ${p.equipo2} → ${p.resultado}`);
+    } catch (e) {
+      console.error(`[Supabase] ❌ Error partido ${p.id}:`, e);
+    }
+  });
+}
   } catch (err) {
     console.error("[EnVivo] Error:", err);
     actualizarIndicadorDebug("ERROR: " + err.message);

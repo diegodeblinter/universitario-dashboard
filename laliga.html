@@ -749,8 +749,16 @@ function actualizarPartidos() {
     p.genero === "Basquet" &&
     p.liga === liga &&
     (!p.fecha || p.fecha.startsWith(anio))
-  );
-  paginaActual = 1;  // siempre empezar desde la página 1 al cambiar filtro
+  ).sort((a, b) => {
+    const fechaValida = f => f && f !== "YY-MM-DD" && /^\d{4}-\d{2}-\d{2}/.test(f);
+    const aValida = fechaValida(a.fecha);
+    const bValida = fechaValida(b.fecha);
+    if (aValida && bValida) return new Date(a.fecha) - new Date(b.fecha); // ambas válidas: orden cronológico
+    if (aValida) return -1;  // a tiene fecha, va primero
+    if (bValida) return 1;   // b tiene fecha, va primero
+    return 0;                // ambas sin fecha: igual
+  });
+  paginaActual = 1;
   renderPaginaPartidos();
 }
 

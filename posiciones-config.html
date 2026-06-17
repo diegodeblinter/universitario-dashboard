@@ -508,9 +508,15 @@ function renderTabla(data) {
 const zonaMap = { cl:'zona-clasificado', el:'zona-eliminado', rel:'zona-descenso', normal:'zona-normal' };
 const zonaClass = zonaMap[r.zona] || 'zona-normal';
 const zonaLabel = { cl:'Libertadores', el:'Sudamericana', rel:'Descenso', normal:'—' };
-    const formaHTML = r.forma
-      ? `<div class="forma-dot dot-${r.forma}">${r.forma === 'W' ? 'V' : r.forma === 'L' ? 'D' : 'E'}</div>`
-      : '—';
+const formaHTML = r.forma
+  ? `<div style="display:flex;gap:3px;justify-content:center;">${
+      r.forma.split('').map(f => {
+        const clase = f === 'W' ? 'dot-W' : f === 'L' ? 'dot-L' : 'dot-D';
+        const letra = f === 'W' ? 'V' : f === 'L' ? 'D' : 'E';
+        return `<div class="forma-dot ${clase}">${letra}</div>`;
+      }).join('')
+    }</div>`
+  : '—';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `

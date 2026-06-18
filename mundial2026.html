@@ -320,9 +320,11 @@ console.log("Supabase data:", data);
       const dg = t.gf-t.gc;
       const dgStr = dg>0?"+"+dg:String(dg);
       const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-      const last5 = t.forma
-        ? `<div class="dot ${dotClass[t.forma]||'dot-d'}" style="width:10px;height:10px;"></div>`
-        : "";
+const last5 = t.forma
+  ? t.forma.split("").slice(-5).map(r =>
+      `<div class="dot ${dotClass[r]||'dot-d'}" style="width:10px;height:10px;"></div>`
+    ).join("")
+  : "";
       const barColor = (t.zona === "clasificado") ? "#3b82f6" : "#e2e8f0";
 
       return `

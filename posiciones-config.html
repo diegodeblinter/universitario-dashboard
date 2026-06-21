@@ -198,7 +198,7 @@ td img { width:22px; height:22px; object-fit:contain; }
               <option value="el">Eliminatoria</option>       
               <option value="el">Fase Final</option>        
               <option value="eliminado">Eliminado</option>
-              <option value="descenso">Descenso</option>
+              <option value="rel">Descenso</option>
               <option value="normal">Normal</option>
             </select>
           </div>
@@ -505,9 +505,26 @@ function renderTabla(data) {
   data.forEach(r => {
     const dg = r.gf - r.gc;
     const pts = r.g * 3 + r.e;
-const zonaMap = { cl:'zona-clasificado', el:'zona-eliminado', rel:'zona-descenso', normal:'zona-normal' };
+const zonaMap = {
+  clasificado: 'zona-clasificado',
+  cl:          'zona-clasificado',
+  el:          'zona-eliminado',
+  eliminado:   'zona-eliminado',
+  rel:         'zona-descenso',
+  descenso:    'zona-descenso',   // por si hay registros viejos
+  normal:      'zona-normal'
+};
+
 const zonaClass = zonaMap[r.zona] || 'zona-normal';
-const zonaLabel = { cl:'Libertadores', el:'Sudamericana', rel:'Descenso', normal:'—' };
+const zonaLabel = {
+  clasificado: 'Clasificado',
+  cl:          'Libertadores',
+  el:          'Sudamericana',
+  eliminado:   'Eliminado',
+  rel:         'REL',
+  descenso:    'REL',
+  normal:      '—'
+};
 const formaHTML = r.forma
   ? `<div style="display:flex;gap:3px;justify-content:center;">${
       r.forma.split('').map(f => {

@@ -84,6 +84,7 @@ body { visibility: hidden; }
           <select id="viewSelect">
             <option value="overview" selected>Overview</option>
             <option value="Copa del Mundo">Copa del Mundo</option>
+            <option value="Play-Off">Play-Off</option>
           </select>
         </div>
         <div class="select-wrap">
@@ -131,6 +132,13 @@ body { visibility: hidden; }
           </div>
         </div>
       </div>
+
+      <!-- Tabla play off -->
+     <div class="table-playoff" id="tablaPlayoff">
+        <div class="bracket-wrap">
+         <div class="bracket" id="bracketContainer"></div>
+        </div>
+     </div>
 
     </div><!-- /card grande -->
 
@@ -525,10 +533,17 @@ function actualizarTablas() {
   if (liga === "overview") {
     tablaPosiciones.style.display = "block";
     tablaPartidos.style.display   = "none";
+    document.getElementById("tablaPlayoff").style.display = "none";
     render();
+  } else if (liga === "Play-Off") {               // ← nuevo
+    tablaPosiciones.style.display = "none";
+    tablaPartidos.style.display   = "none";
+    document.getElementById("tablaPlayoff").style.display = "block";
+    buildBracket();
   } else {
     tablaPosiciones.style.display = "none";
     tablaPartidos.style.display   = "block";
+    document.getElementById("tablaPlayoff").style.display = "none";
     actualizarPartidos();
   }
 }
@@ -881,6 +896,257 @@ function toggleTheme() {
   }
 })();
 
+
+
+
+
+
+const BRACKET = {
+  "16avos": [
+    { e1: "Alemania", logo1: "alemania.png", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "Estados Unidos", logo1: "usa.png", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "México", logo1: "mexico.png", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "Inlgaterra", logo1: "inglaterra.png", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "Argentina", logo1: "argentina.png", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+  ],
+  "octavos": [
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+  ],
+  "cuartos": [
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+  ],
+  "semis": [
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+  ],
+  "final": [
+    { e1: "", logo1: "", g1: null, e2: "", logo2: "", g2: null },
+  ],
+  "campeon": { nombre: "", logo: "" }
+};
+
+
+const RONDA_LABELS = {
+  "16avos":  "16avos de Final",
+  "octavos": "Octavos de Final",
+  "cuartos": "Cuartos de Final",
+  "semis":   "Semifinal",
+  "final":   "Final",
+};
+const RONDA_KEYS = ["16avos","octavos","cuartos","semis","final"];
+const MATCH_H = 70;
+
+function renderMatchBracket(p) {
+  const played = p.g1 !== null && p.g2 !== null;
+  const w1 = played && p.g1 > p.g2;
+  const w2 = played && p.g2 > p.g1;
+  const n1 = p.e1 || "Por definir";
+  const n2 = p.e2 || "Por definir";
+  const logo = (src) => src
+    ? `<img src="img/${src}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><div class="logo-placeholder" style="display:none"></div>`
+    : `<div class="logo-placeholder"></div>`;
+  return `<div class="match">
+    <div class="match-team ${w1?'winner':''} ${!p.e1?'empty':''}">
+      ${logo(p.logo1)}<span class="team-name">${n1}</span>
+      <span class="team-score">${played ? p.g1 : ''}</span>
+    </div>
+    <div class="match-team ${w2?'winner':''} ${!p.e2?'empty':''}">
+      ${logo(p.logo2)}<span class="team-name">${n2}</span>
+      <span class="team-score">${played ? p.g2 : ''}</span>
+    </div>
+  </div>`;
+}
+
+
+
+function buildBracket() {
+  const container = document.getElementById("bracketContainer");
+  if (!container) return;
+  container.innerHTML = "";
+
+  // Calcular ancho disponible del card
+  const cardAncho = container.closest(".card")?.clientWidth || 1100;
+const CAMPEON_W = 150;
+const CONN_W    = 14;
+  const NUM_RONDAS = RONDA_KEYS.length; // 5
+  const NUM_CONN   = NUM_RONDAS - 1;    // 4
+  // Ancho de cada match = espacio disponible dividido entre rondas
+  const MATCH_W = Math.floor((cardAncho - CAMPEON_W - NUM_CONN * CONN_W - 70) / NUM_RONDAS);
+
+  const MATCH_H = 68;
+  const GAP_16  = 16;
+  const total16 = 16;
+  const totalH  = total16 * MATCH_H + (total16 - 1) * GAP_16;
+
+  RONDA_KEYS.forEach((key, rIdx) => {
+    const matches = BRACKET[key];
+    const count   = matches.length;
+    const segH    = totalH / count;
+
+    const col = document.createElement("div");
+    col.style.cssText = `flex-shrink:0; display:flex; flex-direction:column;`;
+
+    const lbl = document.createElement("div");
+    lbl.className = "ronda-label";
+    lbl.textContent = RONDA_LABELS[key];
+    lbl.style.cssText = `
+      height:28px; width:${MATCH_W}px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:9px; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--text-muted);
+    `;
+    col.appendChild(lbl);
+
+    const area = document.createElement("div");
+    area.style.cssText = `position:relative; width:${MATCH_W}px; height:${totalH}px;`;
+
+    matches.forEach((p, mIdx) => {
+      const centerY = segH * mIdx + segH / 2;
+      const top     = Math.round(centerY - MATCH_H / 2);
+      const mw      = document.createElement("div");
+      mw.style.cssText = `position:absolute; top:${top}px; left:0; right:0;`;
+      // Pasar MATCH_W al render
+      mw.innerHTML = renderMatchBracketW(p, MATCH_W);
+      area.appendChild(mw);
+    });
+
+    col.appendChild(area);
+    container.appendChild(col);
+
+    // Conector SVG
+    if (rIdx < RONDA_KEYS.length - 1) {
+      const nextCount = BRACKET[RONDA_KEYS[rIdx + 1]].length;
+      const segCur    = totalH / count;
+      const segNext   = totalH / nextCount;
+
+      const svgWrap = document.createElement("div");
+      svgWrap.style.cssText = `flex-shrink:0; display:flex; flex-direction:column;`;
+
+      const sp = document.createElement("div");
+      sp.style.height = "28px";
+      svgWrap.appendChild(sp);
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width",  CONN_W);
+      svg.setAttribute("height", totalH);
+      svg.style.display = "block";
+
+      for (let i = 0; i < count; i += 2) {
+        const pi  = Math.floor(i / 2);
+        const y1  = segCur  * i       + segCur  / 2;
+        const y2  = segCur  * (i + 1) + segCur  / 2;
+        const yOut= segNext * pi + segNext / 2;
+        const xM  = CONN_W / 2;
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+        path.setAttribute("d", `
+          M 0 ${y1} H ${xM}
+          M 0 ${y2} H ${xM}
+          M ${xM} ${y1} V ${y2}
+          M ${xM} ${yOut} H ${CONN_W}
+        `);
+        path.setAttribute("fill","none");
+        path.setAttribute("stroke","#475569");
+        path.setAttribute("stroke-width","1.5");
+        path.setAttribute("stroke-linecap","square");
+        svg.appendChild(path);
+      }
+
+      svgWrap.appendChild(svg);
+      container.appendChild(svgWrap);
+    }
+  });
+
+  // Campeón
+  const c = BRACKET.campeon;
+  const cWrap = document.createElement("div");
+  cWrap.style.cssText = `flex-shrink:0; display:flex; flex-direction:column;`;
+
+  const cSp = document.createElement("div");
+  cSp.style.height = "28px";
+  cWrap.appendChild(cSp);
+
+  const cInner = document.createElement("div");
+  cInner.style.cssText = `
+    height:${totalH}px; display:flex; align-items:center; padding:0 16px;
+  `;
+  cInner.innerHTML = `
+    <div style="text-align:center;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Campeón</div>
+      <div class="campeon-box" style="width:${CAMPEON_W - 32}px;">
+        <div class="campeon-trophy">🏆</div>
+        ${c.logo ? `<img class="campeon-img" src="img/${c.logo}">` : ''}
+        <div class="campeon-nombre">${c.nombre || "Por definir"}</div>
+        <div class="campeon-sub">FIFA World Cup 2026</div>
+      </div>
+    </div>`;
+  cWrap.appendChild(cInner);
+  container.appendChild(cWrap);
+}
+
+
+function renderMatchBracketW(p, w) {
+  const played = p.g1 !== null && p.g2 !== null;
+  const w1 = played && p.g1 > p.g2;
+  const w2 = played && p.g2 > p.g1;
+  const n1 = p.e1 || "Por definir";
+  const n2 = p.e2 || "Por definir";
+  const logo = (src) => src
+    ? `<img src="img/${src}" style="width:22px;height:16px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'">`
+    : `<div style="width:16px;height:16px;border-radius:50%;background:var(--border);flex-shrink:0;"></div>`;
+  return `
+    <div style="
+      background:var(--bg-white,#1c2434);
+      border:1px solid var(--border,#2d3748);
+      border-radius:7px;
+      overflow:hidden;
+      width:${w}px;
+    ">
+      <div style="
+        display:flex;align-items:center;gap:6px;padding:6px 8px;
+        font-size:11px;font-weight:${w1?700:500};
+        color:var(--text-primary,#e2e8f0);
+        min-height:34px;border-bottom:1px solid var(--border,#2d3748);
+        background:${w1?'rgba(59,130,246,0.1)':'transparent'};
+      ">
+        ${logo(p.logo1)}
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${n1}</span>
+        <span style="font-size:11px;font-weight:800;min-width:16px;text-align:right;color:${w1?'#3b82f6':'var(--text-primary)'};">${played ? p.g1 : ''}</span>
+      </div>
+      <div style="
+        display:flex;align-items:center;gap:6px;padding:6px 8px;
+        font-size:11px;font-weight:${w2?700:500};
+        color:var(--text-primary,#e2e8f0);
+        min-height:34px;
+        background:${w2?'rgba(59,130,246,0.1)':'transparent'};
+      ">
+        ${logo(p.logo2)}
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${n2}</span>
+        <span style="font-size:11px;font-weight:800;min-width:16px;text-align:right;color:${w2?'#3b82f6':'var(--text-primary)'};">${played ? p.g2 : ''}</span>
+      </div>
+    </div>`;
+}
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 

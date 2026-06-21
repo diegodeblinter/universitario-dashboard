@@ -208,6 +208,7 @@ body { visibility: hidden; }
 
 
 <script>
+
 // ── NAV ──
 // ── MENU ──
 function toggleMenu(id, parentEl) {
@@ -244,42 +245,28 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-
-
 // ── SIDEBAR
- fetch('sidebar.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('sidebar-container').innerHTML = html;
-
-      // Marcar automáticamente el item activo según la página actual
-      const pagina = window.location.pathname.split('/').pop();
-      document.querySelectorAll('.nav-sub-item a').forEach(a => {
-        if (a.getAttribute('href') === pagina) {
-          a.closest('.nav-sub-item').classList.add('active');
-
-          // Abrir el submenu padre automáticamente
-          const sub = a.closest('.nav-sub');
-          if (sub) {
-            sub.classList.add('open');
-            const id = sub.id.replace('sub-', '');
-            const arrow = document.getElementById('arrow-' + id);
-            if (arrow) arrow.classList.add('open');
-            const parentItem = sub.previousElementSibling;
-            if (parentItem) parentItem.classList.add('active');
-          }
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('sidebar-container').innerHTML = html;
+    const pagina = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-sub-item a').forEach(a => {
+      if (a.getAttribute('href') === pagina) {
+        a.closest('.nav-sub-item').classList.add('active');
+        const sub = a.closest('.nav-sub');
+        if (sub) {
+          sub.classList.add('open');
+          const id = sub.id.replace('sub-', '');
+          const arrow = document.getElementById('arrow-' + id);
+          if (arrow) arrow.classList.add('open');
+          const parentItem = sub.previousElementSibling;
+          if (parentItem) parentItem.classList.add('active');
         }
-      });
-      document.body.style.visibility = 'visible';
+      }
     });
-
-
+    document.body.style.visibility = 'visible';
+  });
 
 // ── DARK MODE ──
 function toggleTheme() {
@@ -297,13 +284,7 @@ function toggleTheme() {
   }
 })();
 
-
-
-
-
-
 // -----------------------------------------------------------
-
 
 function getLigaLogo(nombreLiga) {
   const mapa = {
@@ -330,15 +311,14 @@ function getLigaLogo(nombreLiga) {
   };
   return mapa[nombreLiga] || "amistosos.png";
 }
+
 function renderTeamKPIs() {
   let partidos = [];
   try { partidos = JSON.parse(localStorage.getItem("partidos")) || []; } catch{}
-  
   const liga1 = partidos.filter(p =>
-    p.liga === "La Liga Division II" && 
+    p.liga === "La Liga Division II" &&
     p.estado?.toLowerCase() === "finalizado"
   );
-  
   let sg=0, sp=0, wins=0, draws=0, losses=0;
   liga1.forEach(p => {
     if (!p.resultado?.includes("-")) return;
@@ -348,10 +328,8 @@ function renderTeamKPIs() {
     sg+=gU; sp+=gR;
     if (gU>gR) wins++; else if (gU===gR) draws++; else losses++;
   });
-  
   const pj = wins+draws+losses;
   const pct = pj>0 ? Math.round(wins/pj*100) : 0;
-  
   const cron = [...liga1].sort((a,b) => new Date(b.fecha)-new Date(a.fecha));
   let rChar="—", rLen=0;
   if (cron.length) {
@@ -368,32 +346,19 @@ function renderTeamKPIs() {
       if (c===rChar) rLen++; else break;
     }
   }
-  
   const $ = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  $("kpi-gf", sg);
-  $("kpi-gc", sp);
-  $("kpi-win", pct+"%");
-  $("kpi-racha", rLen ? rChar+" ×"+rLen : "—");
+  $("kpi-gf", sg); $("kpi-gc", sp); $("kpi-win", pct+"%"); $("kpi-racha", rLen ? rChar+" ×"+rLen : "—");
   $("kpi-gf-sub", "En "+pj+" partidos");
-  
   const gcS = document.getElementById("kpi-gc-sub");
-  if(gcS) {
-    gcS.textContent = sg>=sp ? "Saldo +"+(sg-sp) : "Saldo "+(sg-sp);
-    gcS.className = "stat-badge "+(sg>=sp?"up":"down");
-  }
+  if(gcS) { gcS.textContent = sg>=sp ? "Saldo +"+(sg-sp) : "Saldo "+(sg-sp); gcS.className = "stat-badge "+(sg>=sp?"up":"down"); }
   $("kpi-win-sub", wins+"V  "+draws+"E  "+losses+"D");
-  
   const rS = document.getElementById("kpi-racha-sub");
   if(rS) {
     const c = rChar==="V"?"#10b981" : rChar==="D"?"#ef4444" : "#94a3b8";
     rS.textContent = rChar==="V" ? "Racha ganadora 🔥" : rChar==="D" ? "Racha perdedora" : "En empates";
-    rS.style.background = c+"22";
-    rS.style.color = c;
+    rS.style.background = c+"22"; rS.style.color = c;
   }
 }
-
-
-
 
 const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
 const SUPABASE_KEY = "sb_publishable_vzu0ZJiMUxyN53l5lQzS-A_ScHmoJ1o";
@@ -401,35 +366,24 @@ const SUPABASE_KEY = "sb_publishable_vzu0ZJiMUxyN53l5lQzS-A_ScHmoJ1o";
 async function inicializarPartidos() {
   try {
     const dataLocal = JSON.parse(localStorage.getItem("partidos")) || [];
-    
     if (dataLocal.length > 0) {
       console.log(`✅ ${dataLocal.length} partidos desde localStorage`);
       return;
     }
-
     const res = await fetch(`${SUPABASE_URL}/rest/v1/partidos?select=*&order=fecha.asc`, {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${SUPABASE_KEY}`
-      }
+      headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
     });
     if (!res.ok) throw new Error("Error Supabase");
     const data = await res.json();
-
-    // ── FIX: marcar como finalizado los partidos cuya fecha/hora ya pasó ──
     const ahoraLima = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Lima" }));
     data.forEach(p => {
       if (p.estado?.toLowerCase() === "pendiente" && p.fecha) {
         const horaPartido = p.hora || "23:59";
         const fechaHoraPartido = new Date(`${p.fecha}T${horaPartido}:00`);
-        // Si ya pasaron más de 130 minutos desde el inicio, marcarlo finalizado
         const minutos = (ahoraLima - fechaHoraPartido) / 60000;
-        if (minutos > 130) {
-          p.estado = "finalizado";
-        }
+        if (minutos > 130) p.estado = "finalizado";
       }
     });
-
     localStorage.setItem("partidos", JSON.stringify(data));
     console.log(`✅ ${data.length} partidos cargados desde Supabase`);
   } catch (e) {
@@ -439,97 +393,59 @@ async function inicializarPartidos() {
 
 function cargarUltimos4Cards() {
   let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
-
-  // Todos los pendientes con fecha, de cualquier liga
-let pendientes = partidos.filter(p =>
-  (p.estado?.toLowerCase() === "pendiente" || p.estado?.toLowerCase() === "en vivo") &&
-  p.fecha && p.fecha.trim() !== ""
-);
-
-  // Ordenar por fecha más próxima primero
+  let pendientes = partidos.filter(p =>
+    (p.estado?.toLowerCase() === "pendiente" || p.estado?.toLowerCase() === "en vivo") &&
+    p.fecha && p.fecha.trim() !== ""
+  );
   pendientes.sort((a, b) => {
-  const da = new Date((a.fecha || "9999-12-31") + "T" + (a.hora || "23:59"));
-  const db = new Date((b.fecha || "9999-12-31") + "T" + (b.hora || "23:59"));
-  return da - db;
-});
-  
-  // Solo los que son hoy o después
+    const da = new Date((a.fecha || "9999-12-31") + "T" + (a.hora || "23:59"));
+    const db = new Date((b.fecha || "9999-12-31") + "T" + (b.hora || "23:59"));
+    return da - db;
+  });
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
-  
-const proximos = pendientes
-  .filter(p => {
+  const proximos = pendientes.filter(p => {
     const [y, m, d] = p.fecha.split("-").map(Number);
-    const fechaPartido = new Date(y, m - 1, d); // sin UTC, fecha local
-    return fechaPartido >= hoy;
-  })
-  .slice(0, 4);
+    return new Date(y, m - 1, d) >= hoy;
+  }).slice(0, 4);
 
   const cont = document.getElementById("ultimos4Cards");
   if (!cont) return;
   cont.innerHTML = "";
-
   if (!proximos.length) {
     cont.innerHTML = `<div style="grid-column:1/-1;text-align:center;font-size:12px;color:var(--text-muted);padding:20px 0;">Sin partidos pendientes próximos</div>`;
     return;
   }
-
-
-
-proximos.forEach(p => {
-  const ligaLogo = getLigaLogo(p.liga);
-  const enVivo = p.estado?.toLowerCase() === "en vivo";
-  const card = document.createElement("div");
- card.style.cssText = `
-  background: var(--bg-white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  box-shadow: var(--shadow);
-`;
-
-  card.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
-      <img src="img/ligas/${ligaLogo}" style="width:22px;height:22px;object-fit:contain;" title="${p.liga}">
-      ${enVivo
-        ? `<span class="live-badge"><span class="live-dot"></span>EN VIVO</span>`
-        : `<span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Próximo Partido</span>`}
-      <div style="width:18px;"></div>
-    </div>
-
-    ${enVivo
-      ? `<div class="live-minute">${p.minuto ? p.minuto + "'" : "EN VIVO"}</div>`
-      : `<div style="text-align:center;font-size:11px;font-weight:500;color:var(--text-muted);background:var(--bg);border-radius:6px;padding:4px 0;margin-bottom:14px;">${p.fecha}${p.hora ? " · " + p.hora : ""}</div>`}
-
-    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:14px;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <img src="img/${p.logo1}" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));" onerror="this.style.display='none'">
-        <span style="font-size:12px;font-weight:600;color:var(--text-primary);text-align:center;line-height:1.3;">${p.equipo1}</span>
+  proximos.forEach(p => {
+    const ligaLogo = getLigaLogo(p.liga);
+    const enVivo = p.estado?.toLowerCase() === "en vivo";
+    const card = document.createElement("div");
+    card.style.cssText = `background:var(--bg-white);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:0;box-shadow:var(--shadow);`;
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+        <img src="img/ligas/${ligaLogo}" style="width:22px;height:22px;object-fit:contain;" title="${p.liga}">
+        ${enVivo ? `<span class="live-badge"><span class="live-dot"></span>EN VIVO</span>` : `<span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Próximo Partido</span>`}
+        <div style="width:18px;"></div>
       </div>
-      ${enVivo
-        ? `<div class="live-score">${p.resultado || "0 - 0"}</div>`
-        : `<div style="font-size:11px;font-weight:800;letter-spacing:2px;color:#fff;background:#000;padding:7px 11px;border-radius:999px;border:1.5px solid #000;">VS</div>`}
-      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <img src="img/${p.logo2}" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));" onerror="this.style.display='none'">
-        <span style="font-size:12px;font-weight:600;color:var(--text-primary);text-align:center;line-height:1.3;">${p.equipo2}</span>
+      ${enVivo ? `<div class="live-minute">${p.minuto ? p.minuto + "'" : "EN VIVO"}</div>` : `<div style="text-align:center;font-size:11px;font-weight:500;color:var(--text-muted);background:var(--bg);border-radius:6px;padding:4px 0;margin-bottom:14px;">${p.fecha}${p.hora ? " · " + p.hora : ""}</div>`}
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <img src="img/${p.logo1}" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));" onerror="this.style.display='none'">
+          <span style="font-size:12px;font-weight:600;color:var(--text-primary);text-align:center;line-height:1.3;">${p.equipo1}</span>
+        </div>
+        ${enVivo ? `<div class="live-score">${p.resultado || "0 - 0"}</div>` : `<div style="font-size:11px;font-weight:800;letter-spacing:2px;color:#fff;background:#000;padding:7px 11px;border-radius:999px;border:1.5px solid #000;">VS</div>`}
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <img src="img/${p.logo2}" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));" onerror="this.style.display='none'">
+          <span style="font-size:12px;font-weight:600;color:var(--text-primary);text-align:center;line-height:1.3;">${p.equipo2}</span>
+        </div>
       </div>
-    </div>
-
-    <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--text-secondary);padding-top:12px;border-top:1px solid var(--border);line-height:1.5;">
-      <span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--text-primary);">${p.liga}</span>
-      <span style="display:inline-flex;align-items:center;gap:3px;color:var(--text-muted);font-size:10.5px;">🏟 ${p.estadio || "Por definir"}</span>
-    </div>
-  `;
-
-  cont.appendChild(card);
-});
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--text-secondary);padding-top:12px;border-top:1px solid var(--border);line-height:1.5;">
+        <span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--text-primary);">${p.liga}</span>
+        <span style="display:inline-flex;align-items:center;gap:3px;color:var(--text-muted);font-size:10.5px;">🏟 ${p.estadio || "Por definir"}</span>
+      </div>`;
+    cont.appendChild(card);
+  });
 }
-
-
-
 
 // ══════════════════════════════════════
 // CALENDARIO
@@ -545,122 +461,61 @@ function renderCalendario() {
   const partidos = JSON.parse(localStorage.getItem("partidos")) || [];
   const anio = calFecha.getFullYear();
   const mes  = calFecha.getMonth();
-
   const nombreMes = calFecha.toLocaleString("es-PE", { month: "long", year: "numeric" });
-  document.getElementById("calMesAnio").textContent =
-    nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
-
+  document.getElementById("calMesAnio").textContent = nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
   const primerDia = new Date(anio, mes, 1).getDay();
   const diasEnMes = new Date(anio, mes + 1, 0).getDate();
-
   const partidosMes = partidos.filter(p => {
     if (!p.fecha) return false;
     const [y, m] = p.fecha.split("-").map(Number);
-    const esUni = p.equipo1?.toLowerCase().includes("universitario") ||
-                  p.equipo2?.toLowerCase().includes("universitario");
+    const esUni = p.equipo1?.toLowerCase().includes("universitario") || p.equipo2?.toLowerCase().includes("universitario");
     return y === anio && (m - 1) === mes && esUni;
   });
-
   const mapaPartidos = {};
   partidosMes.forEach(p => {
     const dia = parseInt(p.fecha.split("-")[2]);
     if (!mapaPartidos[dia]) mapaPartidos[dia] = [];
     mapaPartidos[dia].push(p);
   });
-
   const dias = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
-
-  // Cabecera días
-let html = `
-  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;">
-    ${dias.map(d => `
-      <div style="text-align:center;font-size:10px;font-weight:600;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">
-        ${d}
-      </div>`).join("")}
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
-`;
-
-  // Vacíos iniciales
-for (let i = 0; i < primerDia; i++) {
-  html += `<div style="aspect-ratio:4/4.5;"></div>`;
-}
-
+  let html = `
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;">
+      ${dias.map(d => `<div style="text-align:center;font-size:10px;font-weight:600;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--border);">${d}</div>`).join("")}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">`;
+  for (let i = 0; i < primerDia; i++) html += `<div style="aspect-ratio:4/4.5;"></div>`;
   const hoyReal = new Date();
-
   for (let dia = 1; dia <= diasEnMes; dia++) {
     const partidos_dia = mapaPartidos[dia] || [];
-    const esHoy = dia === hoyReal.getDate() &&
-                  mes === hoyReal.getMonth() &&
-                  anio === hoyReal.getFullYear();
-
+    const esHoy = dia === hoyReal.getDate() && mes === hoyReal.getMonth() && anio === hoyReal.getFullYear();
     let contenidoPartidos = "";
-
-partidos_dia.forEach(p => {
-  const esLocal = p.equipo1?.toLowerCase().includes("universitario");
-  const logoRival = esLocal ? p.logo2 : p.logo1;
-  const bgCard = esLocal ? "#e5e8ec" : "#1f232a";
-  const finalizado = p.estado?.toLowerCase() === "finalizado";
-
-  if (finalizado && p.resultado?.includes("-")) {
-    const [r1, r2] = p.resultado.split("-").map(Number);
-    const gU = esLocal ? r1 : r2;
-    const gR = esLocal ? r2 : r1;
-    const bgScore = gU > gR ? "#22C55E" : gU === gR ? "#94A3B8" : "#F43F5E";
-
-    contenidoPartidos += `
-      <div style="position:absolute;inset:0;background:${bgCard};border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding-bottom:4px;">
-        <img class="cal-liga-badge" src="img/ligas/${getLigaLogo(p.liga)}">
-        <img class="cal-rival-logo" src="img/${logoRival}" onerror="this.style.display='none'">
-        <div class="cal-score-badge" style="background:${bgScore};">
-          <span>${p.resultado}</span>
-        </div>
-      </div>`;
-  } else {
-    contenidoPartidos += `
-      <div style="position:absolute;inset:0;background:${bgCard};border-radius:8px;display:flex;align-items:center;justify-content:center;">
-        <img class="cal-liga-badge" src="img/ligas/${getLigaLogo(p.liga)}">
-        <img class="cal-rival-logo-sm" src="img/${logoRival}" onerror="this.style.display='none'">
-      </div>`;
+    partidos_dia.forEach(p => {
+      const esLocal = p.equipo1?.toLowerCase().includes("universitario");
+      const logoRival = esLocal ? p.logo2 : p.logo1;
+      const bgCard = esLocal ? "#e5e8ec" : "#1f232a";
+      const finalizado = p.estado?.toLowerCase() === "finalizado";
+      if (finalizado && p.resultado?.includes("-")) {
+        const [r1, r2] = p.resultado.split("-").map(Number);
+        const gU = esLocal ? r1 : r2, gR = esLocal ? r2 : r1;
+        const bgScore = gU > gR ? "#22C55E" : gU === gR ? "#94A3B8" : "#F43F5E";
+        contenidoPartidos += `<div style="position:absolute;inset:0;background:${bgCard};border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding-bottom:4px;"><img class="cal-liga-badge" src="img/ligas/${getLigaLogo(p.liga)}"><img class="cal-rival-logo" src="img/${logoRival}" onerror="this.style.display='none'"><div class="cal-score-badge" style="background:${bgScore};"><span>${p.resultado}</span></div></div>`;
+      } else {
+        contenidoPartidos += `<div style="position:absolute;inset:0;background:${bgCard};border-radius:8px;display:flex;align-items:center;justify-content:center;"><img class="cal-liga-badge" src="img/ligas/${getLigaLogo(p.liga)}"><img class="cal-rival-logo-sm" src="img/${logoRival}" onerror="this.style.display='none'"></div>`;
+      }
+    });
+    html += `<div style="aspect-ratio:4/4.5;border-radius:8px;padding:5px;display:flex;flex-direction:column;background:${esHoy?"rgba(51,97,255,0.05)":"transparent"};border:${esHoy?"1.5px solid rgba(51,97,255,0.25)":"1px solid var(--border)"};overflow:hidden;position:relative;"><div style="font-size:10px;font-weight:${esHoy?"700":"500"};color:${esHoy?"var(--blue)":"var(--text-muted)"};position:absolute;top:4px;left:6px;z-index:2;">${dia}</div>${contenidoPartidos}</div>`;
   }
-});
-
-html += `
-  <div style="
-    aspect-ratio: 4/4.5;
-    border-radius:8px;
-    padding:5px;
-    display:flex;
-    flex-direction:column;
-    background:${esHoy ? "rgba(51,97,255,0.05)" : "transparent"};
-    border:${esHoy ? "1.5px solid rgba(51,97,255,0.25)" : "1px solid var(--border)"};
-    overflow:hidden;
-    position:relative;
-  ">
-    <div style="font-size:10px;font-weight:${esHoy?"700":"500"};color:${esHoy?"var(--blue)":"var(--text-muted)"};position:absolute;top:4px;left:6px;z-index:2;">
-      ${dia}
-    </div>
-    ${contenidoPartidos}
-  </div>`;
-  }
-
   html += `</div>`;
   document.getElementById("calendarioGrid").innerHTML = html;
 }
 
-
-
-
-// Llamar al cargar
+// ── Carga inicial ──
 fetch('sidebar.html')
   .then(res => res.text())
   .then(async html => {
     document.getElementById('sidebar-container').innerHTML = html;
-
     await inicializarPartidos();
-
     const pagina = window.location.pathname.split('/').pop();
-
     document.querySelectorAll('.nav-sub-item a').forEach(a => {
       if (a.getAttribute('href') === pagina) {
         a.closest('.nav-sub-item').classList.add('active');
@@ -682,20 +537,15 @@ fetch('sidebar.html')
     renderFormaReciente();
   });
 
-
-
 function esUniversitario(nombre) {
   const n = nombre?.trim().toLowerCase();
   return n === "universitario" || n === "universitario ii";
 }
 
-
 function dentroDeVentanaPartido(p) {
   if (!p.hora) return true;
   const [h, m] = p.hora.split(":").map(Number);
-  const ahoraStr = new Date().toLocaleString("en-US", {
-    timeZone: "America/Lima", hour: "2-digit", minute: "2-digit", hour12: false
-  });
+  const ahoraStr = new Date().toLocaleString("en-US", { timeZone: "America/Lima", hour: "2-digit", minute: "2-digit", hour12: false });
   const [hh, mm] = ahoraStr.split(":").map(Number);
   const transcurrido = (hh*60+mm) - (h*60+m);
   const dentro = transcurrido >= -10 && transcurrido <= 100;
@@ -714,57 +564,40 @@ function actualizarIndicadorDebug(texto) {
   el.textContent = "🔴 EN VIVO: " + texto;
 }
 
-
-
-
-
-
 function renderFormaReciente() {
   let partidos = [];
   try { partidos = JSON.parse(localStorage.getItem("partidos")) || []; } catch {}
-
   const finalizados = partidos.filter(p =>
     (esUniversitario(p.equipo1) || esUniversitario(p.equipo2)) &&
     p.estado?.toLowerCase() === "finalizado" &&
-    p.resultado?.includes("-") &&
-    p.fecha
+    p.resultado?.includes("-") && p.fecha
   );
-
   finalizados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-  const ultimos5 = finalizados.slice(0, 5).reverse(); // del más antiguo al más reciente
-
+  const ultimos5 = finalizados.slice(0, 5).reverse();
   const row = document.getElementById("formaRecienteRow");
   const stats = document.getElementById("formaStats");
   if (!row) return;
-
   if (!ultimos5.length) {
     row.innerHTML = `<div style="text-align:center;font-size:12px;color:var(--text-muted);width:100%;">Sin partidos recientes</div>`;
     if (stats) stats.innerHTML = "";
     return;
   }
-
   let g = 0, e = 0, p_ = 0;
   const resultados = [];
-
   row.innerHTML = ultimos5.map(p => {
     const esLocal = esUniversitario(p.equipo1);
     const rival = esLocal ? p.equipo2 : p.equipo1;
     const logoUni = esLocal ? p.logo1 : p.logo2;
     const logoRival = esLocal ? p.logo2 : p.logo1;
     const [r1, r2] = p.resultado.split("-").map(Number);
-    const gU = esLocal ? r1 : r2;
-    const gR = esLocal ? r2 : r1;
-
+    const gU = esLocal ? r1 : r2, gR = esLocal ? r2 : r1;
     let letra, color;
     if (gU > gR)        { letra = "V"; color = "#22C55E"; g++; }
     else if (gU === gR) { letra = "E"; color = "#94A3B8"; e++; }
     else                { letra = "D"; color = "#F43F5E"; p_++; }
     resultados.push(letra);
-
     const rivalCorto = rival.length > 11 ? rival.slice(0, 10) + "…" : rival;
-    const fechaFmt = new Date(p.fecha + "T00:00:00")
-      .toLocaleDateString("es-PE", { day: "2-digit", month: "short" });
-
+    const fechaFmt = new Date(p.fecha + "T00:00:00").toLocaleDateString("es-PE", { day: "2-digit", month: "short" });
     return `
       <div class="forma-item">
         <div class="forma-crest-wrap">
@@ -778,22 +611,14 @@ function renderFormaReciente() {
         <div class="forma-rival">${esLocal ? '🏠' : '✈️'} ${rivalCorto}</div>
         <div class="forma-tooltip">
           <div class="forma-tooltip-teams">
-            <div class="forma-tooltip-team">
-              <img src="img/${logoUni}" onerror="this.style.display='none'">
-              <span>Universitario</span>
-            </div>
+            <div class="forma-tooltip-team"><img src="img/${logoUni}" onerror="this.style.display='none'"><span>Universitario</span></div>
             <div class="forma-tooltip-score" style="color:${color};">${gU} - ${gR}</div>
-            <div class="forma-tooltip-team">
-              <img src="img/${logoRival}" onerror="this.style.display='none'">
-              <span>${rival}</span>
-            </div>
+            <div class="forma-tooltip-team"><img src="img/${logoRival}" onerror="this.style.display='none'"><span>${rival}</span></div>
           </div>
           <div class="forma-tooltip-meta">${fechaFmt} · ${p.liga}</div>
         </div>
       </div>`;
   }).join("");
-
-  // Racha actual (desde el resultado más reciente hacia atrás)
   let racha = 1;
   for (let i = resultados.length - 1; i > 0; i--) {
     if (resultados[i] === resultados[i - 1]) racha++; else break;
@@ -802,33 +627,60 @@ function renderFormaReciente() {
   let rachaTexto, rachaClass;
   if (ultimaLetra === "V")      { rachaTexto = `🔥 Racha de ${racha} victoria${racha>1?'s':''}`; rachaClass = ""; }
   else if (ultimaLetra === "D") { rachaTexto = `📉 ${racha} derrota${racha>1?'s':''} seguida${racha>1?'s':''}`; rachaClass = "loss"; }
-  else                            { rachaTexto = `${racha} empate${racha>1?'s':''} seguido${racha>1?'s':''}`; rachaClass = "draw"; }
-
+  else                          { rachaTexto = `${racha} empate${racha>1?'s':''} seguido${racha>1?'s':''}`; rachaClass = "draw"; }
   if (stats) {
     const total = g + e + p_;
-    const gPct = total ? (g/total*100) : 0;
-    const ePct = total ? (e/total*100) : 0;
-    const pPct = total ? (p_/total*100) : 0;
     stats.innerHTML = `
       <div class="forma-stats-bar">
-        <div class="forma-stats-seg win"  style="width:${gPct}%"></div>
-        <div class="forma-stats-seg draw" style="width:${ePct}%"></div>
-        <div class="forma-stats-seg loss" style="width:${pPct}%"></div>
+        <div class="forma-stats-seg win"  style="width:${total?(g/total*100):0}%"></div>
+        <div class="forma-stats-seg draw" style="width:${total?(e/total*100):0}%"></div>
+        <div class="forma-stats-seg loss" style="width:${total?(p_/total*100):0}%"></div>
       </div>
       <div class="forma-stats-labels">
         <span><b style="color:#22C55E">${g}</b> Ganados &nbsp; <b style="color:#94A3B8">${e}</b> Empates &nbsp; <b style="color:#F43F5E">${p_}</b> Perdidos</span>
         ${racha > 1 ? `<span class="forma-streak ${rachaClass}">${rachaTexto}</span>` : ""}
-      </div>
-    `;
+      </div>`;
   }
 }
 
-
+// ══════════════════════════════════════
+// SYNC SUPABASE — con protección anti-sobreescritura
+// ══════════════════════════════════════
+async function sincronizarFinalizadosASupabase(partidos) {
+  const finalizados = partidos.filter(p =>
+    p.estado === "finalizado" &&
+    p.resultado &&
+    p.resultado.includes("-") &&
+    p.id
+  );
+  for (const p of finalizados) {
+    try {
+      const check = await fetch(
+        `${SUPABASE_URL}/rest/v1/partidos?id=eq.${p.id}&select=estado,resultado`,
+        { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+      );
+      const [actual] = await check.json();
+      // Si Supabase ya tiene resultado finalizado → NO tocar nunca
+      if (actual?.estado === "finalizado" && actual?.resultado) {
+        console.log(`[Supabase] ⏭ Saltando ${p.equipo1} vs ${p.equipo2} — ya tiene resultado`);
+        continue;
+      }
+      await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${p.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` },
+        body: JSON.stringify({ estado: "finalizado", resultado: p.resultado })
+      });
+      console.log(`[Supabase] ✅ ${p.equipo1} vs ${p.equipo2} → ${p.resultado}`);
+    } catch (e) {
+      console.error(`[Supabase] ❌ Error partido ${p.id}:`, e);
+    }
+  }
+}
 
 // ══════════════════════════════════════
-// PARTIDOS EN VIVO (API-Football directo)
+// PARTIDOS EN VIVO
 // ══════════════════════════════════════
-const API_FOOTBALL_KEY = "a862b534260c69db07e887b7e21812a7"; // <-- VERIFICA que sea tu clave real, no este placeholder
+const API_FOOTBALL_KEY = "a862b534260c69db07e887b7e21812a7";
 
 const NOMBRES_EQUIPOS_EN_ES = {
   "Belgium":"Bélgica","Egypt":"Egipto","Iran":"Irán","New Zealand":"Nueva Zelanda",
@@ -839,12 +691,12 @@ const NOMBRES_EQUIPOS_EN_ES = {
   "Morocco":"Marruecos","Croatia":"Croacia","Senegal":"Senegal","Canada":"Canadá",
   "Australia":"Australia","Switzerland":"Suiza","Denmark":"Dinamarca","Poland":"Polonia",
   "Serbia":"Serbia","Cameroon":"Camerún","Ecuador":"Ecuador","Tunisia":"Túnez",
-  "Ghana":"Ghana","Wales":"Gales","Qatar":"Qatar", "Norway": "Noruega","Iraq": "Irak",
-  "Algeria":"Argelia", "Jordan":"Jordania", "Austria":"Austria",   "DR Congo":"RD Congo",
-  "Congo DR":"RD Congo","Democratic Republic of Congo":"RD Congo", "South Korea":"Corea del Sur",  "Colombia":"Colombia",
- "Panama":"Panamá", "Ivory Coast":"Costa de Marfil","South Africa":"Sudáfrica","Turkey":"turquia","Uzbekistan":"Uzbekistán",
- "Czechia":"Chequia","Scotland":"Escocia", "Sweden":"Suecia", "Paraguay":"Paraguay", "Haiti":"Haití", "Türkiye":"Turquía","Curacao":"Curazao",
- "Bosnia and Herzegovina": "Bosnia"
+  "Ghana":"Ghana","Wales":"Gales","Qatar":"Qatar","Norway":"Noruega","Iraq":"Irak",
+  "Algeria":"Argelia","Jordan":"Jordania","Austria":"Austria","DR Congo":"RD Congo",
+  "Congo DR":"RD Congo","Democratic Republic of Congo":"RD Congo","South Korea":"Corea del Sur","Colombia":"Colombia",
+  "Panama":"Panamá","Ivory Coast":"Costa de Marfil","South Africa":"Sudáfrica","Turkey":"turquia","Uzbekistan":"Uzbekistán",
+  "Czechia":"Chequia","Scotland":"Escocia","Sweden":"Suecia","Paraguay":"Paraguay","Haiti":"Haití","Türkiye":"Turquía","Curacao":"Curazao",
+  "Bosnia and Herzegovina":"Bosnia"
 };
 
 function mapEstadoAPI(short) {
@@ -860,14 +712,11 @@ function minutosTranscurridos(hora) {
   return (hh*60+mm) - (h*60+m);
 }
 
-
-
 async function actualizarPartidosEnVivo() {
   let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
   const hoy = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Lima" });
   const partidosMundialHoy = partidos.filter(p => p.liga === "Copa del Mundo" && p.fecha === hoy);
 
-  // Sin gastar API: si ya pasaron 120+ min y sigue "pendiente", darlo por terminado
   let cambios = false;
   partidosMundialHoy.forEach(p => {
     if (!p.hora) return;
@@ -888,40 +737,16 @@ async function actualizarPartidosEnVivo() {
 
   if (!pendientesHoy.length) {
     if (cambios) {
-  localStorage.setItem("partidos", JSON.stringify(partidos));
-  cargarUltimos4Cards();
-  renderCalendario();
-
-  // ── Sincronizar finalizados a Supabase ──
-  const finalizados = partidos.filter(p =>
-    p.estado === "finalizado" && p.resultado && p.id
-  );
-  finalizados.forEach(async p => {
-    try {
-      await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${p.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${SUPABASE_KEY}`
-        },
-        body: JSON.stringify({
-          estado: "finalizado",
-          resultado: p.resultado
-        })
-      });
-      console.log(`[Supabase] ✅ Partido actualizado: ${p.equipo1} vs ${p.equipo2} → ${p.resultado}`);
-    } catch (e) {
-      console.error(`[Supabase] ❌ Error actualizando partido ${p.id}:`, e);
+      localStorage.setItem("partidos", JSON.stringify(partidos));
+      cargarUltimos4Cards();
+      renderCalendario();
+      await sincronizarFinalizadosASupabase(partidos); // ← reemplaza bloque viejo
     }
-  });
-}
     console.log("[EnVivo] Ningún partido dentro de ventana ahora. No se consulta la API.");
     actualizarIndicadorDebug("sin partidos en ventana (" + new Date().toLocaleTimeString("es-PE") + ")");
     return;
   }
 
-  // ✅ NUEVO: saltar API si ya se consultó hace menos de 5 min
   const ultimaConsulta = parseInt(localStorage.getItem("ultimaConsultaAPI") || "0");
   const minDesdeUltima = (Date.now() - ultimaConsulta) / 60000;
   if (minDesdeUltima < 5) {
@@ -948,85 +773,40 @@ async function actualizarPartidosEnVivo() {
         const away = NOMBRES_EQUIPOS_EN_ES[f.teams.away.name] || f.teams.away.name;
         return (home === p.equipo1 && away === p.equipo2) || (home === p.equipo2 && away === p.equipo1);
       });
-
       if (!match) {
-        if (p.estado === "en vivo") {
-          p.estado = "finalizado"; cambios = true;
-          console.log(`[EnVivo] ${p.equipo1} vs ${p.equipo2}: ya no está en vivo -> finalizado`);
-        } else {
-          console.log(`[EnVivo] Sin coincidencia para ${p.equipo1} vs ${p.equipo2}`);
-        }
+        if (p.estado === "en vivo") { p.estado = "finalizado"; cambios = true; console.log(`[EnVivo] ${p.equipo1} vs ${p.equipo2}: ya no está en vivo -> finalizado`); }
+        else { console.log(`[EnVivo] Sin coincidencia para ${p.equipo1} vs ${p.equipo2}`); }
         return;
       }
-
       encontrados++;
       const nuevoResultado = `${match.goals.home ?? 0} - ${match.goals.away ?? 0}`;
       const nuevoEstado = mapEstadoAPI(match.fixture.status.short);
       const elapsed = match.fixture.status.elapsed;
-
-      p.minutoBase = elapsed;
-      p.minutoTimestamp = Date.now();
-      p.estadoCorto = match.fixture.status.short;
-
+      p.minutoBase = elapsed; p.minutoTimestamp = Date.now(); p.estadoCorto = match.fixture.status.short;
       console.log(`[EnVivo] -> ${p.equipo1} vs ${p.equipo2} = ${nuevoResultado} (${match.fixture.status.short} / min ${elapsed})`);
-
-      // Detectar gol ANTES de actualizar
-      if (p.resultado && p.resultado !== nuevoResultado) {
-        mostrarToastGol(p, nuevoResultado, elapsed);
-      }
-
+      if (p.resultado && p.resultado !== nuevoResultado) mostrarToastGol(p, nuevoResultado, elapsed);
       if (p.resultado !== nuevoResultado || p.estado !== nuevoEstado || p.minuto !== elapsed) {
-        p.resultado = nuevoResultado;
-        p.estado = nuevoEstado;
-        p.minuto = elapsed;
-        cambios = true;
+        p.resultado = nuevoResultado; p.estado = nuevoEstado; p.minuto = elapsed; cambios = true;
       }
     });
 
-    // ✅ NUEVO: guardar timestamp de última consulta exitosa
     localStorage.setItem("ultimaConsultaAPI", Date.now().toString());
     actualizarIndicadorDebug(`${new Date().toLocaleTimeString("es-PE")} · ${encontrados}/${pendientesHoy.length} en vivo`);
 
     if (cambios) {
-  localStorage.setItem("partidos", JSON.stringify(partidos));
-  cargarUltimos4Cards();
-  renderCalendario();
-
-  // ── Sincronizar finalizados a Supabase ──
-  const finalizados = partidos.filter(p =>
-    p.estado === "finalizado" && p.resultado && p.id
-  );
-  finalizados.forEach(async p => {
-    try {
-      await fetch(`${SUPABASE_URL}/rest/v1/partidos?id=eq.${p.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${SUPABASE_KEY}`
-        },
-        body: JSON.stringify({
-          estado: "finalizado",
-          resultado: p.resultado
-        })
-      });
-      console.log(`[Supabase] ✅ ${p.equipo1} vs ${p.equipo2} → ${p.resultado}`);
-    } catch (e) {
-      console.error(`[Supabase] ❌ Error partido ${p.id}:`, e);
+      localStorage.setItem("partidos", JSON.stringify(partidos));
+      cargarUltimos4Cards();
+      renderCalendario();
+      await sincronizarFinalizadosASupabase(partidos); // ← reemplaza bloque viejo
     }
-  });
-}
   } catch (err) {
     console.error("[EnVivo] Error:", err);
     actualizarIndicadorDebug("ERROR: " + err.message);
   }
 }
 
-
 actualizarPartidosEnVivo();
 setInterval(actualizarPartidosEnVivo, 7 * 60 * 1000);
-
-
 
 function tickMinutosEnVivo() {
   console.log("[Tick] " + new Date().toLocaleTimeString("es-PE"));
@@ -1037,17 +817,12 @@ function tickMinutosEnVivo() {
     if (p.estadoCorto === "HT") return;
     const minsPasados = Math.floor((Date.now() - p.minutoTimestamp) / 60000);
     const minutoVisual = p.minutoBase + minsPasados;
-    console.log(`[Tick] ${p.equipo1} vs ${p.equipo2}: minutoBase=${p.minutoBase} + ${minsPasados}min = ${minutoVisual}`);
     if (p.minuto !== minutoVisual) { p.minuto = minutoVisual; cambios = true; }
   });
-
   if (cambios) { localStorage.setItem("partidos", JSON.stringify(partidos)); cargarUltimos4Cards(); }
 }
 
 setInterval(tickMinutosEnVivo, 60 * 1000);
-
-
-
 
 let toastGolTimer = null;
 
@@ -1066,19 +841,14 @@ function mostrarToastGol(p, nuevoResultado, minuto) {
       <div class="tg-min" id="tgMin"></div>`;
     document.body.appendChild(el);
   }
-
   document.getElementById("tgScore").textContent = `${p.equipo1} ${nuevoResultado} ${p.equipo2}`;
   document.getElementById("tgMeta").textContent = `${p.liga} · ${p.estadio || ""}`;
   document.getElementById("tgMin").textContent = minuto ? minuto + "'" : "EN VIVO";
-
   el.classList.remove("show");
-  el.offsetHeight; // fuerza reflow para reiniciar animación
+  el.offsetHeight;
   el.classList.add("show");
-
-  // Flash en la card correspondiente
   document.querySelectorAll("#ultimos4Cards > div").forEach(card => {
-    const nombres = card.querySelectorAll("span");
-    const textos = [...nombres].map(s => s.textContent.trim());
+    const textos = [...card.querySelectorAll("span")].map(s => s.textContent.trim());
     if (textos.includes(p.equipo1) || textos.includes(p.equipo2)) {
       card.classList.remove("card-gol-flash");
       card.offsetHeight;
@@ -1086,7 +856,6 @@ function mostrarToastGol(p, nuevoResultado, minuto) {
       setTimeout(() => card.classList.remove("card-gol-flash"), 900);
     }
   });
-
   if (toastGolTimer) clearTimeout(toastGolTimer);
   toastGolTimer = setTimeout(() => el.classList.remove("show"), 6000);
 }

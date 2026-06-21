@@ -554,7 +554,7 @@ async function render() {
       const t = map[r.equipo];
       t.pj += r.pj; t.g += r.g; t.e += r.e; t.p += r.p;
       t.gf += r.gf; t.gc += r.gc;
-      t.last = (t.last + (r.forma || "")).substring(0, 8);
+      t.last = (t.last + (r.forma || "")).slice(-5);
     });
     rows = Object.values(map);
 
@@ -593,7 +593,7 @@ async function render() {
     const dg = t.gf-t.gc;
     const dgStr = dg>0?"+"+dg:String(dg);
     const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
-    const last5 = (t.last||"").split("").map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
+    const last5 = (t.last||"").split("").slice(-5).map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
     const zClass = (view === "acumulado" && t.zone) ? "zone-"+t.zone : "";
 
     tbody.insertAdjacentHTML("beforeend", `

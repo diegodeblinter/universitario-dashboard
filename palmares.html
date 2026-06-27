@@ -67,29 +67,47 @@ body { visibility: hidden; }
   </div>
 
 
-  <!-- ══ PRIMER EQUIPO ══ -->
-  <div class="title-section">
-
-   
-<!-- PRIMER EQUIPO -->
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Primer Equipo</span>
-  </div>
+<div class="discipline-tabs">
+  <button class="disc-tab active" onclick="setDisc('masculino',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Masculino
+  </button>
+  <button class="disc-tab" onclick="setDisc('femenino',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Femenino
+  </button>
+  <button class="disc-tab" onclick="setDisc('reserva',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Reserva
+  </button>
+  <button class="disc-tab" onclick="setDisc('futsal',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Futsal
+  </button>
+  <button class="disc-tab" onclick="setDisc('voley',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Voley
+  </button>
 </div>
 
 
+  <!-- ══ PRIMER EQUIPO ══ -->
+  <div class="title-section" id="disc-masculino">
+
+  
      <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEOS NACIONALES (29)
-    </div>
-     <!-- ══ LIGA 1 ══ -->
+<div class="section-heading3">
+  <div class="section-heading3-num">29</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Nacionales</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-         🏆 Primera División del Perú
+      Primera División del Perú
       <span class="record-tag">RÉCORD NACIONAL</span>
     </div>
-    <div class="cups-grid">
+  </div>
+</div>
+<div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -307,15 +325,25 @@ body { visibility: hidden; }
 
 
      <!-- ══ TORNEO CORTOS  ══ -->
-    <div class="section-heading3">
-       TORNEO CORTOS (13)
-    </div>
-   <!-- ══ TORNEO APERTURA ══ -->
+<div class="section-heading3">
+  <div class="section-heading3-num">13</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Cortos</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-       Torneo Apertura  (9)
+      
       <span class="record-tag">RÉCORD NACIONAL</span>
     </div>
-    <div class="cups-grid">
+  </div>
+</div>
+
+   <!-- ══ TORNEO APERTURA ══ -->
+<!-- Primer subtítulo -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo Apertura</span>
+  <span class="section-subheading-count">9</span>
+</div>
+<div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -384,13 +412,14 @@ body { visibility: hidden; }
       </div>
 
 
-    </div>
-     <br></br>
+</div>
+    
      <!-- ══ TORNEO clausura ══ -->
-    <div class="section-heading">
-       TTorneo Clausura (4)
-    </div>
-    <div class="cups-grid">
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo Clausura</span>
+  <span class="section-subheading-count">4</span>
+</div>
+<div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -425,20 +454,29 @@ body { visibility: hidden; }
      <br></br> <br></br>
 
 
-
      <!-- ══ TORNEO CORTOS  ══ -->
-    <div class="section-heading3">
-       TORNEOS DE LA LIGA (12)
-    </div>
-     <!-- ══ Campeonato Regional del Perú ══ -->
+<div class="section-heading3">
+  <div class="section-heading3-num">12</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos de la Liga</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Campeonato Regional del Perú (4)
+      
       <span class="record-tag">RÉCORD NACIONAL</span>
     </div>
-    <div class="cups-grid">
+  </div>
+</div>
+
+
+
+    <!-- ══ Campeonato Regional del Perú ══ -->
+  <div class="section-subheading">
+  <span class="section-subheading-text">Campeonato Regional del Perú</span>
+  <span class="section-subheading-count">4</span>
+  </div>
+  <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
-
       <div class="cup-card">
         <div class="cup-img-wrap"><img src="img/copas/z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
         <div class="cup-year">1985</div>
@@ -467,14 +505,15 @@ body { visibility: hidden; }
         <div class="img-hint">Campeonato Regional del Perú</div>
         <div class="img-hint2"><img src="img/universitario.png" ></div>
       </div>
-    </div>
-    <br></br>  
+  </div>
+
+
      <!-- ══ Torneo Regional - Zona Metropolitana ══ -->
-    <div class="section-heading">
-      🏆 Torneo Regional - Zona Metropolitana (6)
-      <span class="record-tag">RÉCORD NACIONAL</span>
-    </div>
-    <div class="cups-grid">
+  <div class="section-subheading">
+  <span class="section-subheading-text">Torneo Regional - Zona Metropolitana</span>
+  <span class="section-subheading-count">6</span>
+  </div>
+  <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -521,16 +560,18 @@ body { visibility: hidden; }
         <div class="img-hint">T. Regional Metropolitana</div>
         <div class="img-hint2"><img src="img/universitario.png" ></div>
       </div>
-    </div>
-    <br></br> 
+  </div>
+  
+
      <!-- ══ Torneo Descentralizado══ -->
-    <div class="section-heading">
-      🏆 Torneo Descentralizado (1)
-    </div>
-    <div class="cups-grid">
+  <div class="section-subheading">
+  <span class="section-subheading-text">Torneo Descentralizado</span>
+  <span class="section-subheading-count">1</span>
+  </div>
+  <div class="cups-grid">
+
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
-
       <div class="cup-card">
         <div class="cup-img-wrap"><img src="img/copas/z.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
         <div class="cup-year">1985</div>
@@ -538,13 +579,15 @@ body { visibility: hidden; }
         <div class="img-hint2"><img src="img/universitario.png" ></div>
       </div>
 
-    </div>
-    <br></br> 
-     <!-- ══ Torneo Descentralizado══ -->
-    <div class="section-heading">
-      🏆 Torneo de Primeros Equipos (1)
-    </div>
-    <div class="cups-grid">
+  </div>
+   
+
+  <!-- ══ Torneo de Primeros Equipos══ -->
+  <div class="section-subheading">
+  <span class="section-subheading-text">Torneo de Primeros Equipos</span>
+  <span class="section-subheading-count">1</span>
+  </div>
+  <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -555,19 +598,24 @@ body { visibility: hidden; }
         <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>1</span></span><img src="img/alianzalima.png"></div>
 
       </div>
-    </div>
+  </div>
+
+
     <br></br> <br></br>
 
 
-     <!-- ══ TORNEO CORTOS  ══ -->
-    <div class="section-heading3">
-      COPAS NACIONALES (1)
-    </div>
-     <!-- ══ TORNEO regionales metropolitana══ -->
+  <!-- ══ COPAS NACIONALES══ -->
+  <div class="section-heading3">
+  <div class="section-heading3-num">01</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">COPAS NACIONALES</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Copas Nacionales
+      Copas Nacionales
     </div>
-    <div class="cups-grid">
+  </div>
+  </div> 
+  <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -579,33 +627,38 @@ body { visibility: hidden; }
       </div>
 
 
-    </div>
-    <br></br>
+  </div>
+  <br></br>
+
+  
 
 
   </div>
+
+
+
+
+
+
+
+
+
 
   <!-- ══ EQUIPO FEMENINO══ -->
-  <div class="title-section">
+  <div class="title-section" id="disc-femenino">
 
-<!-- EQUIPO FEMENINO -->
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#f472b6" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Equipo Femenino</span>
-  </div>
-</div>
 
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEOS NACIONALES (11)
-    </div>
-     <!-- ══ FUTBOL FEMENINO ══ -->
+<div class="section-heading3">
+  <div class="section-heading3-num">11</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Nacionales</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Primera División de Fútbol Femenino Peruano
+      Primera División de Fútbol Femenino Peruano
       <span class="record-tag">RÉCORD NACIONAL</span>
     </div>
-
+  </div>
+</div>
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -702,13 +755,27 @@ body { visibility: hidden; }
     <br></br>  <br></br>
 
          <!-- ══ TORNEO CORTOS  ══ -->
-    <div class="section-heading3">
-      TORNEO CORTOS (2)
-    </div>
-     <!-- ══ TORNEO APERTURA ══ -->
+
+<div class="section-heading3">
+  <div class="section-heading3-num">02</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Cortos</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Torneo Apertura  (1)
+      Torneos
     </div>
+  </div>
+</div>
+
+
+
+
+
+     <!-- ══ TORNEO APERTURA ══ -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo Apertura</span>
+  <span class="section-subheading-count">01</span>
+</div>
 
     <div class="cups-grid">
 
@@ -725,12 +792,11 @@ body { visibility: hidden; }
     </div>
 
 
-    <br></br> 
      <!-- ══ TORNEO clausura ══ -->
-    <div class="section-heading">
-      🏆 Torneo Clausura (1)
-    </div>
-
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo Clausura</span>
+  <span class="section-subheading-count">01</span>
+</div>
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -751,14 +817,31 @@ body { visibility: hidden; }
 
 
 
-     <!-- ══ TORNEO CORTOS  ══ -->
-    <div class="section-heading3">
-      TORNEOS DE LA LIGA (5)
-    </div>
-     <!-- ══ TORNEO regionales del peru ══ -->
+     <!-- ══ TORNEOS DE LA LIGA  ══ -->
+
+
+
+
+<div class="section-heading3">
+  <div class="section-heading3-num">05</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos de la Liga</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Torneo Regional (1)
+      Torneos
     </div>
+  </div>
+</div>
+
+
+
+
+     <!-- ══ TORNEO regionales del peru ══ -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo Regional</span>
+  <span class="section-subheading-count">01</span>
+</div>
+
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -771,11 +854,19 @@ body { visibility: hidden; }
       </div>
     </div>
 
-    <br></br>  
+  
+
      <!-- ══ TORNEO regionales metropolitana══ -->
     <div class="section-heading">
       🏆 Torneos Zona-Metropolitana/Lima (4)
     </div>
+
+
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneos Zona-Metropolitana/Lima</span>
+  <span class="section-subheading-count">04</span>
+</div>
+
 
     <div class="cups-grid">
 
@@ -819,29 +910,28 @@ body { visibility: hidden; }
 
     </div>
 
-  <!-- ══ EQUIPO DE RESERVA -->
-  <div class="title-section">
 
-<!-- EQUIPO DE RESERVA -->
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Equipo de Reserva</span>
+
+
+
+  <!-- ══ EQUIPO DE RESERVA -->
+  <div class="title-section" id="disc-reserva">
+<div class="section-heading3">
+  <div class="section-heading3-num">06</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Nacionales</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
+    <div class="section-heading">
+      Torneo Peruano
+    
+    </div>
   </div>
 </div>
 
-
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEOS NACIONALES (6)
-    </div>
-
-
-     <!-- ══ FUTBOL DE RESERVA ══ -->
-    <div class="section-heading">
-      🏆 Torneo de Promoción y Reserva  (1)
-
-    </div>
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo de Promoción y Reserva</span>
+  <span class="section-subheading-count">1</span>
+</div>
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -858,14 +948,13 @@ body { visibility: hidden; }
 
 
     </div>
-<br></br> 
 
 
-     <!-- ══ FUTBOL DE RESERVA ══ -->
-    <div class="section-heading">
-      🏆 Torneo del Inca de Reservas  (2)
 
-    </div>
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo del Inca de Reservas</span>
+  <span class="section-subheading-count">2</span>
+</div>
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -891,13 +980,10 @@ body { visibility: hidden; }
 
   
 
-
-
-    <br></br> 
-     <!-- ══ TORNEO regionales del peru ══ -->
-    <div class="section-heading">
-      🏆 Torneo de Reservas (3)
-    </div>
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo de Reservas</span>
+  <span class="section-subheading-count">3</span>
+</div>
 
     <div class="cups-grid">
 
@@ -931,15 +1017,19 @@ body { visibility: hidden; }
     
 <br></br><br></br>
 
-
-    <div class="section-heading3">
-      TORNEOS INTERNACIONALES (1)
-    </div>
-
-     <!-- ══ TORNEO INTERNACIONAL ══ -->
+ <!-- ══ TORNEO INTERNACIONAL ══ -->
+<div class="section-heading3">
+  <div class="section-heading3-num">01</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Internacionales</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Torneos internacionales 
+      Copa Libertadores
+    
     </div>
+  </div>
+</div>
+
 
     <div class="cups-grid">
 
@@ -958,27 +1048,20 @@ body { visibility: hidden; }
     </div>
 
   <!-- ══ EQUIPO DE FUTSAL -->
-  <div class="title-section">
+  <div class="title-section" id="disc-futsal">
 
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#fb923c" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Equipo de Futsal</span>
+
+<div class="section-heading3">
+  <div class="section-heading3-num">03</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Nacionales</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
+    <div class="section-heading">
+      Primera División de Fútbol Sala
+    
+    </div>
   </div>
 </div>
-
-
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEOS NACIONALES (3)
-    </div>
-
-
-     <!-- ══ FUTBOL DE FUTSAL ══ -->
-    <div class="section-heading">
-      🏆 Primera División de Fútbol Sala
-      
-    </div>
 
     <div class="cups-grid">
 
@@ -1014,16 +1097,26 @@ body { visibility: hidden; }
     </div>
 
 
-    <br></br>  <br></br>
+    <br></br>  
 
      <!-- ══ TORNEO CORTOS  ══ -->
-    <div class="section-heading3">
-       TORNEO CORTOS (1)
-    </div>
 
+<div class="section-heading3">
+  <div class="section-heading3-num">01</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Cortos</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Torneo Clausura
+  Torneos
+    
     </div>
+  </div>
+</div>
+
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneo Clausura</span>
+  <span class="section-subheading-count">01</span>
+</div>
 
     <div class="cups-grid">
 
@@ -1041,17 +1134,21 @@ body { visibility: hidden; }
     </div>
 
 
-<br></br><br></br>
+<br></br>
 
-    
     <div class="section-heading3">
-      TORNEOS DE LA LIGA (1)
-    </div>
-
-     <!-- ══ TORNEO DE VERNANO ══ -->
+  <div class="section-heading3-num">01</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos de la Liga</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Copas & Torneos Locales 
+  Copas & Torneos Locales 
+    
     </div>
+  </div>
+</div>
+
+
 
     <div class="cups-grid">
 
@@ -1073,26 +1170,22 @@ body { visibility: hidden; }
     </div>
 
     <!-- ══ EQUIPO DE VOLEY -->
-  <div class="title-section">
+  <div class="title-section" id="disc-voley">
 
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#f4381b" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Equipo de Voley</span>
+
+    <div class="section-heading3">
+  <div class="section-heading3-num">01</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Locales</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
+    <div class="section-heading">
+  Liga Peruana de Vóley 
+    
+    </div>
   </div>
 </div>
 
 
-
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEO LOCALES (1)
-    </div>
-     <!-- ══ FUTBOL DE REVALIDACION ══ -->
-    <div class="section-heading">
-      🏆 Liga Peruana de Vóley
-      
-    </div>
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -1110,17 +1203,23 @@ body { visibility: hidden; }
     </div>
 
 
- <br></br>  <br></br>
+ <br></br>  
 
      <!-- ══ TORNEO NACIONALES ══ -->
+
     <div class="section-heading3">
-      TORNEO NACIONAL DE REVALIDACION (2)
-    </div>
-     <!-- ══ FUTBOL DE REVALIDACION ══ -->
+  <div class="section-heading3-num">02</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">TORNEO NACIONAL DE REVALIDACION</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
     <div class="section-heading">
-      🏆 Campeonato Promocional 
-      
+  Campeonato Promocional 
+    
     </div>
+  </div>
+</div>
+
+
     <div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
@@ -1263,6 +1362,24 @@ function toggleTheme() {
     if(m) m.style.display="none";
   }
 })();
+
+
+function setDisc(id, btn) {
+  document.querySelectorAll('.disc-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['masculino','femenino','reserva','futsal','voley'].forEach(k => {
+    const el = document.getElementById('disc-' + k);
+    if (el) el.style.display = k === id ? 'block' : 'none';
+  });
+}
+
+// Ocultar todas menos masculino al cargar
+document.addEventListener('DOMContentLoaded', () => {
+  ['femenino','reserva','futsal','voley'].forEach(k => {
+    const el = document.getElementById('disc-' + k);
+    if (el) el.style.display = 'none';
+  });
+});
 </script>
 </body>
 </html>

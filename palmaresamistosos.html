@@ -66,29 +66,44 @@ body { visibility: hidden; }
     </div>
   </div>
 
-  <!-- ══ STATS ══ -->
+
+<div class="discipline-tabs">
+  <button class="disc-tab active" onclick="setDisc('masculino',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Masculino
+  </button>
+  <button class="disc-tab" onclick="setDisc('reserva',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Reserva
+  </button>
+  <button class="disc-tab" onclick="setDisc('voley',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Voley
+  </button>
+</div>
 
   <!-- ══ PRIMER EQUIPO ══ -->
-  <div class="title-section">
+  <div class="title-section" id="disc-masculino">
 
-<!-- PRIMER EQUIPO -->
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Primer Equipo</span>
+     <!-- ══ TORNEO NACIONALES ══ -->
+<div class="section-heading3">
+  <div class="section-heading3-num">43</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Amistosos</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
+    <div class="section-heading">
+      Torneos  / Copas
+      
+    </div>
   </div>
 </div>
 
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEO AMISTOSOS (43)
-    </div>
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading">
-      🏆 Torneos nacionales (4)
-    </div>
-
-    <div class="cups-grid">
+<!-- Primer subtítulo -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneos nacionales </span>
+  <span class="section-subheading-count">4</span>
+</div>
+<div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -124,16 +139,14 @@ body { visibility: hidden; }
 
 
 
-    </div>
+</div>
 
-
-    <br></br>  
-     <!-- ══ TORNEO INTERNACIONALES ══ -->
-    <div class="section-heading">
-      🏆 Torneos internacionales  (7)
-    </div>
-
-    <div class="cups-grid">
+<!-- segundo subtítulo -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneos internacionales</span>
+  <span class="section-subheading-count">7</span>
+</div>
+<div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -193,16 +206,15 @@ body { visibility: hidden; }
 
 
 
-    </div>
+</div>
 
 
-    <br></br> 
-     <!-- ══ TORNEO clausura ══ -->
-    <div class="section-heading">
-      🏆 Otros trofeos (32)
-    </div>
-
-    <div class="cups-grid">
+<!-- tercer subtítulo -->
+<div class="section-subheading">
+  <span class="section-subheading-text"> Otros Trofeos</span>
+  <span class="section-subheading-count">32</span>
+</div>
+<div class="cups-grid">
 
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
 
@@ -457,116 +469,81 @@ body { visibility: hidden; }
  
 
 
-    </div>
+</div>
 
 <br></br>
 
-
-    
-
   </div>
 
 
-  <!-- ══ EQUIPO DE RESERVA -->
-  <div class="title-section">
-
-<!-- EQUIPO DE RESERVA -->
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Equipo de Reserva</span>
+  <!-- ══ EQUIPOS DE RESERVA ══ -->
+<div class="title-section" id="disc-reserva"> 
+<div class="section-heading3">
+  <div class="section-heading3-num">2</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Amistosos</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
+    <div class="section-heading">
+      Torneos  / Copas
+      
+    </div>
   </div>
 </div>
 
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEO AMISTOSOS (2)
-    </div>
-
-
-     <!-- ══ FUTBOL DE RESERVA ══ -->
-    <div class="section-heading">
-      🏆 Torneos nacionales  (1)
-      
-    </div>
-
-    <div class="cups-grid">
-
+<!-- Primer subtítulo -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneos nacionales </span>
+  <span class="section-subheading-count">1</span>
+</div>
+<div class="cups-grid">
       <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
-
       <div class="cup-card">
         <div class="cup-img-wrap"><img src="img/copas/peruchamps.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
         <div class="cup-year">2024</div>
         <div class="img-hint">Perú CHAMPS</div>
         <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>1(4)</span><span class="dash">-</span><span>1(3)</span></span><img src="img/cristal.png"></div>
 
-      </div>
+       </div>
+</div>
 
-
-
-    </div>
-
-
-    <br></br>  
-     <!-- ══ TORNEO INTERNACIONAL ══ -->
-    <div class="section-heading">
-      🏆 Torneos internacionales  (1)
-    </div>
-
-    <div class="cups-grid">
-
-      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
-
+<!-- Segundo subtítulo -->
+<div class="section-subheading">
+  <span class="section-subheading-text">Torneos internacionales </span>
+  <span class="section-subheading-count">1</span>
+</div>
+<div class="cups-grid">
       <div class="cup-card">
         <div class="cup-img-wrap"><img src="img/copas/adidascup.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
         <div class="cup-year">2025</div>
         <div class="img-hint">Copa Plata Adidas Cup</div>
         <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>2</span><span class="dash">-</span><span>0</span></span><img src="img/cruzazul.png"></div>
-
       </div>
+</div>
 
-
-    </div>
-
-
-
-      
-    
 
 <br></br>
+</div>
 
 
+ <!-- ══ VOLEY EQUIPO ══ -->
+<div class="title-section" id="disc-voley">
 
+<div class="section-heading3">
+  <div class="section-heading3-num">1</div>
+  <div class="section-heading3-info">
+    <span class="section-heading3-cat">Torneos Amistosos</span>
+    <!-- SUBTÍTULO directamente aquí abajo -->
+    <div class="section-heading">
+      Copas
     </div>
-
-    
-  <!-- ══ EQUIPO DE VOLEY -->
-  <div class="title-section">
-
-<!-- EQUIPO DE VOLEY -->
-<div class="section-heading2">
-  <div class="sec-pill">
-    <svg width="14" height="14" fill="none" stroke="#f4381b" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    <span>Equipo de Voley</span>
   </div>
 </div>
 
-     <!-- ══ TORNEO NACIONALES ══ -->
-    <div class="section-heading3">
-      TORNEO AMISTOSOS (1)
-    </div>
-
-
-     <!-- ══ FUTBOL DE RESERVA ══ -->
-    <div class="section-heading">
-      🏆 Otros trofeos
-      
-    </div>
-
-    <div class="cups-grid">
-
-      <!-- Para cada tarjeta: cambia src="fotos/liga-AÑO.jpg" por tu archivo real -->
-
+<div class="section-subheading">
+  <span class="section-subheading-text">Otros Trofeos </span>
+  <span class="section-subheading-count">1</span>
+</div>
+<div class="cups-grid">
       <div class="cup-card">
         <div class="cup-img-wrap"><img src="img/copas/cenepa.png" alt="1929" onerror="this.style.display='none';this.parentNode.innerHTML='🏆';" /></div>
         <div class="cup-year">2025</div>
@@ -574,35 +551,12 @@ body { visibility: hidden; }
         <div class="img-hint2"><img src="img/universitario.png"><span class="score"><span>3</span><span class="dash">-</span><span>1</span></span><img src="img/atenea.png"></div>
 
       </div>
-
-
-
- 
-
-
-
-
-
-
-    </div>
-
-
-
-      
-    
-
+</div>
 <br></br>
+</div>
 
 
-
-    </div>
-
-
-
-
-  </div>
-
-
+</div>
 
 
 
@@ -612,12 +566,10 @@ body { visibility: hidden; }
   </footer>
 
 </div>
-
-
-
-   </div>
+</div>
 
 </div><!-- /main -->
+
 
 </div><!-- /app -->
 
@@ -703,6 +655,26 @@ function toggleTheme() {
     if(m) m.style.display="none";
   }
 })();
+
+
+
+
+function setDisc(id, btn) {
+  document.querySelectorAll('.disc-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['masculino','femenino','reserva','futsal','voley'].forEach(k => {
+    const el = document.getElementById('disc-' + k);
+    if (el) el.style.display = k === id ? 'block' : 'none';
+  });
+}
+
+// Ocultar todas menos masculino al cargar
+document.addEventListener('DOMContentLoaded', () => {
+  ['femenino','reserva','futsal','voley'].forEach(k => {
+    const el = document.getElementById('disc-' + k);
+    if (el) el.style.display = 'none';
+  });
+});
 </script>
 </body>
 </html>

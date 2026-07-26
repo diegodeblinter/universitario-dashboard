@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Palmarés — Programa Oficial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EAD9;
+    --paper-deep:#E7DCC2;
+    --ink:#1C1815;
+    --ink-soft:#6B6153;
+    --red:#A31F1F;
+    --red-deep:#7A1616;
+    --gold:#D9A62B;
+    --line:#C9BC9C;
+  }
+
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(var(--line) 0.7px, transparent 0.7px);
+    background-size:14px 14px;
+    background-position:-7px -7px;
+  }
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  /* MASTHEAD */
+  .masthead{
+    background:var(--red);
+    background-image:
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 2px, transparent 2px, transparent 14px);
+    color:var(--paper);
+    padding:20px 8vw 0;
+    position:relative;
+  }
+  .masthead-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:16px;
+    border-bottom:2px solid rgba(241,234,217,0.35);
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .masthead-top .crest-mini{
+    display:flex;align-items:center;gap:10px;
+  }
+  .crest-circle{
+    width:30px;height:30px;border-radius:50%;
+    background:var(--paper);
+    color:var(--red-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .masthead-main{
+    padding:36px 0 30px;
+    text-align:center;
+  }
+  .masthead-main .kicker{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    opacity:.85;
+    margin-bottom:10px;
+  }
+  .masthead-main h1{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    font-size:clamp(56px,11vw,140px);
+    line-height:.86;
+    letter-spacing:.01em;
+    text-transform:uppercase;
+  }
+  .masthead-sub{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    margin-top:14px;
+    opacity:.9;
+    max-width:480px;
+    margin-left:auto;margin-right:auto;
+  }
+  
+  .ticket-strip{
+    display:flex;
+    justify-content:center;
+    gap:0;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+  .ts-cell{
+    font-family:'Space Mono',monospace;
+    text-align:center;
+    padding:14px 32px;
+    border-left:1px dashed rgba(241,234,217,0.4);
+  }
+  .ts-cell:first-child{border-left:none;}
+  .ts-num{font-size:30px;font-weight:700;}
+  .ts-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin-top:2px;}
+
+  .perf-edge{
+    height:16px;
+    background:
+      radial-gradient(circle at 10px 0, var(--paper) 8px, transparent 8.5px) repeat-x;
+    background-size:20px 16px;
+    background-color:var(--red);
+  }
+
+  /* FILTERS */
+  .filters{
+    display:flex;
+    gap:0;
+    padding:0 8vw;
+    background:var(--paper-deep);
+    border-bottom:2px solid var(--ink);
+    overflow-x:auto;
+  }
+  .filter-btn{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:14px 22px;
+    border:none;
+    border-right:1px dashed var(--line);
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .filter-btn:hover{color:var(--ink);}
+  .filter-btn.active{
+    background:var(--ink);
+    color:var(--paper);
+  }
+
+
+
+
+
+
+
+
+
+
+  /* PROGRAM BODY */
+  .program{
+    padding:56px 8vw 120px;
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .era-block{margin-bottom:56px;}
+  .era-strip{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .era-tag{
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+    letter-spacing:.02em;
+    background:var(--ink);
+    color:var(--paper);
+    padding:8px 16px;
+    text-transform:uppercase;
+  }
+  .era-strip .era-name{
+    font-family:'Anton',sans-serif;
+    font-size:26px;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+  }
+  .era-strip .era-meta{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-left:auto;
+  }
+
+  .ticket-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:16px;
+  }
+  .ticket{
+    position:relative;
+    display:grid;
+    grid-template-columns:88px 1fr;
+    background:var(--paper);
+    border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .ticket:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .ticket-stub{
+    background:var(--red);
+    color:var(--paper);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:14px 6px;
+    position:relative;
+  }
+  .ticket-stub::after{
+    content:"";
+    position:absolute;
+    right:-9px;
+    top:0;bottom:0;
+    width:18px;
+    background-image:radial-gradient(circle at 0 10px, var(--paper) 9px, transparent 9.5px);
+    background-repeat:repeat-y;
+    background-size:18px 20px;
+  }
+  .stub-year{
+    font-family:'Anton',sans-serif;
+    font-size:26px;
+    line-height:1;
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    transform:rotate(180deg);
+    letter-spacing:.02em;
+  }
+  .ticket-body{
+    padding:16px 20px 16px 26px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:4px;
+    min-height:88px;
+  }
+  .tb-comp{
+    font-size:14.5px;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .tb-tag{
+    font-family:'Space Mono',monospace;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .tb-score{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    margin-top:4px;
+    color:var(--red-deep);
+    font-weight:700;
+  }
+
+  .stamp{
+    position:absolute;
+    top:8px;
+    right:10px;
+    width:52px;height:52px;
+    border:2.5px solid var(--gold);
+    border-radius:50%;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:'Anton',sans-serif;
+    font-size:8px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    line-height:1.15;
+    transform:rotate(12deg);
+    background:rgba(217,166,43,0.06);
+    mix-blend-mode:multiply;
+  }
+
+  @media (max-width:640px){
+    .masthead{padding:16px 6vw 0;}
+    .filters{padding:0 6vw;}
+    .program{padding:44px 6vw 80px;}
+    .ticket-strip{gap:0;}
+    .ts-cell{padding:12px 18px;}
+  }
+
+  footer{
+    padding:28px 8vw 56px;
+    border-top:2px solid var(--ink);
+    color:var(--ink-soft);
+    font-size:11px;
+    font-family:'Space Mono',monospace;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    background:var(--paper-deep);
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-top">
+    <div class="crest-mini"><div class="crest-circle">U</div> Club Universitario de Deportes</div>
+    <div>Lima, Perú · Est. 1924</div>
+  </div>
+  <div class="masthead-main">
+    <div class="kicker">Programa Oficial · Edición histórica</div>
+    <h1>Palmarés</h1>
+    <p class="masthead-sub">Cada título nacional conquistado por la "U", presentado como el archivo de un programa de partido: entrada por entrada, era por era.</p>
+    <div class="ticket-strip">
+      <div class="ts-cell"><div class="ts-num">29</div><div class="ts-label">Títulos</div></div>
+      <div class="ts-cell"><div class="ts-num">1929</div><div class="ts-label">Primer título</div></div>
+      <div class="ts-cell"><div class="ts-num">2025</div><div class="ts-label">Último título</div></div>
+      <div class="ts-cell"><div class="ts-num">3×</div><div class="ts-label">Tricampeón vigente</div></div>
+    </div>
+  </div>
+</div>
+<div class="perf-edge"></div>
+
+<div class="filters">
+  <button class="filter-btn active">Masculino</button>
+  <button class="filter-btn">Femenino</button>
+  <button class="filter-btn">Reserva</button>
+  <button class="filter-btn">Futsal</button>
+  <button class="filter-btn">Vóley</button>
+</div>
+
+<section class="program">
+
+  <div class="era-block">
+    <div class="era-strip"><span class="era-tag">01</span><span class="era-name">Los cimientos</span><span class="era-meta">1929–1949 · 7 títulos</span></div>
+    <div class="ticket-grid">
+      <div class="ticket"><div class="stamp">Primer<br>título</div><div class="ticket-stub"><div class="stub-year">1929</div></div><div class="ticket-body"><div class="tb-comp">Liga Provincial de Football</div><div class="tb-tag">Torneo regional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1934</div></div><div class="ticket-body"><div class="tb-comp">Liga Provincial de Football</div><div class="tb-tag">Torneo regional</div><div class="tb-score">U 2 — 1</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1939</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1941</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1945</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1946</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1949</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+    </div>
+  </div>
+
+  <div class="era-block">
+    <div class="era-strip"><span class="era-tag">02</span><span class="era-name">La era dorada</span><span class="era-meta">1959–1974 · 8 títulos</span></div>
+    <div class="ticket-grid">
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1959</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1960</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1964</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1966</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1967</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1969</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1971</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1974</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+    </div>
+  </div>
+
+  <div class="era-block">
+    <div class="era-strip"><span class="era-tag">03</span><span class="era-name">Los 80 y 90</span><span class="era-meta">1982–1998 · 7 títulos</span></div>
+    <div class="ticket-grid">
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1982</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1985</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1987</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div><div class="tb-score">U 1 — 0</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1990</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div><div class="tb-score">U 4 — 2</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1992</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1993</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1998</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Definición por penales</div><div class="tb-score">3(4) — 3(2)</div></div></div>
+    </div>
+  </div>
+
+  <div class="era-block">
+    <div class="era-strip"><span class="era-tag">04</span><span class="era-name">Nuevo milenio</span><span class="era-meta">1999–2013 · 4 títulos</span></div>
+    <div class="ticket-grid">
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1999</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">2000</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">2009</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+      <div class="ticket"><div class="ticket-stub"><div class="stub-year">2013</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
+    </div>
+  </div>
+
+  <div class="era-block">
+    <div class="era-strip"><span class="era-tag">05</span><span class="era-name">Era Liga 1</span><span class="era-meta">2023–2025 · 3 títulos consecutivos</span></div>
+    <div class="ticket-grid">
+      <div class="ticket"><div class="stamp">Récord<br>nacional</div><div class="ticket-stub"><div class="stub-year">2023</div></div><div class="ticket-body"><div class="tb-comp">Fútbol Profesional Liga 1</div><div class="tb-tag">Tricampeonato — parte 1</div></div></div>
+      <div class="ticket"><div class="stamp">Récord<br>nacional</div><div class="ticket-stub"><div class="stub-year">2024</div></div><div class="ticket-body"><div class="tb-comp">Fútbol Profesional Liga 1</div><div class="tb-tag">Tricampeonato — parte 2</div></div></div>
+      <div class="ticket"><div class="stamp">Récord<br>nacional</div><div class="ticket-stub"><div class="stub-year">2025</div></div><div class="ticket-body"><div class="tb-comp">Fútbol Profesional Liga 1</div><div class="tb-tag">Tricampeonato — parte 3</div></div></div>
+    </div>
+  </div>
+
+</section>
+
+
+<footer>
+  <span>Club Universitario de Deportes — Programa de Palmarés</span>
+  <span>Estilo 03 · Programa de Partido</span>
+</footer>
+
+</body>
+</html>

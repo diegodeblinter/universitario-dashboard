@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TailAdmin — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="sidebar.css">
 <style>
 
 html, body { height: 100%; overflow: hidden; }
@@ -14,27 +12,16 @@ html, body { height: 100%; overflow: hidden; }
 .content { flex: 1; overflow-y: auto; }
 body { visibility: hidden; }
 
-
-
-
-
-
-
-
-
 </style>
 </head>
 <body>
 <div class="app">
-
-  
 
 <!-- ══ MENU ══ -->
 <div id="sidebar-container"></div>
 
 <!-- ══ MAIN ══ -->
 <div class="main">
-
   <div class="topbar">
     <div class="topbar-search">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -59,113 +46,70 @@ body { visibility: hidden; }
     </div>
   </div>
 
-<div class="masthead">
 
-  <div class="masthead-main">
-    <div class="kicker">Programa Oficial · Edición histórica</div>
-    <br></br>
-    <h1>Palmarés</h1>
-    <p class="masthead-sub">Cada título nacional conquistado por la "U", presentado como el archivo de un programa de partido: entrada por entrada, era por era.</p>
-    <div class="ticket-strip">
-      <div class="ts-cell"><div class="ts-num">29</div><div class="ts-label">Títulos</div></div>
-      <div class="ts-cell"><div class="ts-num">1929</div><div class="ts-label">Primer título</div></div>
-      <div class="ts-cell"><div class="ts-num">2025</div><div class="ts-label">Último título</div></div>
-      <div class="ts-cell"><div class="ts-num">3×</div><div class="ts-label">Tricampeón vigente</div></div>
+<div class="container">
+<div class="content palmares-page">
+
+<div class="container">
+  <!-- ══ HEADER ══ -->
+    <div class="team-header">
+    <div class="team-crest"><img src="img/universitario.png" ></div>
+    <div>
+      <div class="team-name">Club Universitario de Deportes</div>
+      <div class="team-sub">Fundado el 7 de agosto de 1924 · Lima, Perú</div>
+      <div class="sub-tags">
+        <span class="sub-tag">🏆 Máximo campeón del Perú</span>
+        <span class="sub-tag">📅 100 años de historia</span>
+        <span class="sub-tag">⚽ «La U» · «Los Cremas»</span>
+      </div>
     </div>
-  </div>
+    </div>
+
+<div class="discipline-tabs">
+  <button class="disc-tab active" onclick="setDisc('masculino',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Masculino
+  </button>
+  <button class="disc-tab" onclick="setDisc('femenino',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Femenino
+  </button>
+  <button class="disc-tab" onclick="setDisc('reserva',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Reserva
+  </button>
+  <button class="disc-tab" onclick="setDisc('futsal',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Futsal
+  </button>
+  <button class="disc-tab" onclick="setDisc('voley',this)">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
+    Voley
+  </button>
 </div>
-<div class="perf-edge"></div>
 
-<div class="filters">
-  <button class="filter-btn active">Masculino</button>
-  <button class="filter-btn">Femenino</button>
-  <button class="filter-btn">Reserva</button>
-  <button class="filter-btn">Futsal</button>
-  <button class="filter-btn">Vóley</button>
+
+
+
+
+
 </div>
 
 
 
 
+  <footer>
+    Palmarés actualizado · Datos basados en fuentes oficiales del club.<br>
+    El título 2026 está sujeto a confirmación final de temporada.
+  </footer>
+
+</div>
 
 
 
-<div class="content"> 
-
-<section class="program">
-  <div class="era-block">
-    <div class="era-strip"><span class="era-tag">01</span><span class="era-name">Los cimientos</span><span class="era-meta">1929–1949 · 7 títulos</span></div>
-    <div class="ticket-grid">
-      <div class="ticket"><div class="stamp">Primer<br>título</div><div class="ticket-stub"><div class="stub-year">1929</div></div><div class="ticket-body"><div class="tb-comp">Liga Provincial de Football</div><div class="tb-tag">Torneo regional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1934</div></div><div class="ticket-body"><div class="tb-comp">Liga Provincial de Football</div><div class="tb-tag">Torneo regional</div><div class="tb-score">U 2 — 1</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1939</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1941</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1945</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1946</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1949</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-    </div>
-  </div>
-
-  <div class="era-block">
-    <div class="era-strip"><span class="era-tag">02</span><span class="era-name">La era dorada</span><span class="era-meta">1959–1974 · 8 títulos</span></div>
-    <div class="ticket-grid">
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1959</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1960</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1964</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Peruano</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1966</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1967</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1969</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1971</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1974</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-    </div>
-  </div>
-
-  <div class="era-block">
-    <div class="era-strip"><span class="era-tag">03</span><span class="era-name">Los 80 y 90</span><span class="era-meta">1982–1998 · 7 títulos</span></div>
-    <div class="ticket-grid">
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1982</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1985</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1987</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div><div class="tb-score">U 1 — 0</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1990</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div><div class="tb-score">U 4 — 2</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1992</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1993</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1998</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Definición por penales</div><div class="tb-score">3(4) — 3(2)</div></div></div>
-    </div>
-  </div>
-
-  <div class="era-block">
-    <div class="era-strip"><span class="era-tag">04</span><span class="era-name">Nuevo milenio</span><span class="era-meta">1999–2013 · 4 títulos</span></div>
-    <div class="ticket-grid">
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">1999</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">2000</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">2009</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-      <div class="ticket"><div class="ticket-stub"><div class="stub-year">2013</div></div><div class="ticket-body"><div class="tb-comp">Campeonato Descentralizado</div><div class="tb-tag">Torneo nacional</div></div></div>
-    </div>
-  </div>
-
-  <div class="era-block">
-    <div class="era-strip"><span class="era-tag">05</span><span class="era-name">Era Liga 1</span><span class="era-meta">2023–2025 · 3 títulos consecutivos</span></div>
-    <div class="ticket-grid">
-      <div class="ticket"><div class="stamp">Récord<br>nacional</div><div class="ticket-stub"><div class="stub-year">2023</div></div><div class="ticket-body"><div class="tb-comp">Fútbol Profesional Liga 1</div><div class="tb-tag">Tricampeonato — parte 1</div></div></div>
-      <div class="ticket"><div class="stamp">Récord<br>nacional</div><div class="ticket-stub"><div class="stub-year">2024</div></div><div class="ticket-body"><div class="tb-comp">Fútbol Profesional Liga 1</div><div class="tb-tag">Tricampeonato — parte 2</div></div></div>
-      <div class="ticket"><div class="stamp">Récord<br>nacional</div><div class="ticket-stub"><div class="stub-year">2025</div></div><div class="ticket-body"><div class="tb-comp">Fútbol Profesional Liga 1</div><div class="tb-tag">Tricampeonato — parte 3</div></div></div>
-    </div>
-  </div>
-
-</section>
+</div>
 
 
-  </div> 
-
-
-
-
-
-
-
-  
-
-</div><!-- /main -->
 
 </div><!-- /app -->
 
@@ -209,7 +153,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 // ── SIDEBAR
- fetch('sidebar_new.html')
+ fetch('sidebar.html')
     .then(res => res.text())
     .then(html => {
       document.getElementById('sidebar-container').innerHTML = html;
@@ -269,6 +213,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) el.style.display = 'none';
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

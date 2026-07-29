@@ -941,9 +941,9 @@ const BRACKET = {
     { e1: "Inlgaterra", logo1: "inglaterra.png", g1: 1, e2: "Argentina", logo2: "argentina.png", g2: 2 },
   ],
   "final": [
-    { e1: "España", logo1: "españa.png", g1: null, e2: "Argentina", logo2: "argentina.png", g2: null },
+    { e1: "España", logo1: "españa.png", g1: 1, e2: "Argentina", logo2: "argentina.png", g2: 0 },
   ],
-  "campeon": { nombre: "", logo: "" }
+  "campeon": { nombre: "España", logo: "españa.png" }
 };
 
 
@@ -1087,16 +1087,16 @@ const CONN_W    = 14;
   cSp.style.height = "28px";
   cWrap.appendChild(cSp);
 
-  const cInner = document.createElement("div");
-  cInner.style.cssText = `
-    height:${totalH}px; display:flex; align-items:center; padding:0 16px;
+const cInner = document.createElement("div");
+cInner.style.cssText = `
+    height:${totalH}px; display:flex; align-items:flex-start; padding:490px 16px 0 36px;
   `;
-  cInner.innerHTML = `
+cInner.innerHTML = `
     <div style="text-align:center;">
-      <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Campeón</div>
-      <div class="campeon-box" style="width:${CAMPEON_W - 32}px;">
-        <div class="campeon-trophy">🏆</div>
-        ${c.logo ? `<img class="campeon-img" src="img/${c.logo}">` : ''}
+      <div class="campeon-box" style="width:${CAMPEON_W - 20}px;">
+        <div class="campeon-label">Campeón</div>
+        <img class="campeon-trofeo" src="img/copadelmundo.png">
+        ${c.logo ? `<img class="campeon-escudo" src="img/${c.logo}">` : ''}
         <div class="campeon-nombre">${c.nombre || "Por definir"}</div>
         <div class="campeon-sub">FIFA World Cup 2026</div>
       </div>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palmarés — Sports App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0e12;
+  --panel:#151820;
+  --panel-hi:#1b1f28;
+  --line:#262b34;
+  --line-hi:#333a46;
+  --text:#f5f6f8;
+  --text-dim:#8b93a1;
+  --text-faint:#565d6b;
+  --accent:#e8112c;
+  --accent-dim:rgba(232,17,44,.14);
+  --win:#12c771;
+  --radius:12px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
+  padding:36px 20px 80px;
+}
+.wrap{max-width:1080px;margin:0 auto;}
+
+/* header */
+.page-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:22px;}
+.page-head h1{
+  font-family:'Barlow Condensed';font-weight:800;font-size:30px;text-transform:uppercase;
+  letter-spacing:.5px;margin:0;
+}
+.page-head p{margin:4px 0 0;color:var(--text-dim);font-size:13px;}
+.live-pill{
+  display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);
+  padding:6px 12px;border-radius:20px;font-size:11.5px;color:var(--text-dim);font-weight:600;
+}
+.live-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--win);box-shadow:0 0 6px var(--win);}
+
+/* tabs — segmented control */
+.tabs{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:4px;margin-bottom:26px;overflow-x:auto;}
+.tab{
+  font-family:'Barlow Condensed';font-weight:700;font-size:14.5px;text-transform:uppercase;letter-spacing:.4px;
+  padding:9px 18px;border-radius:7px;color:var(--text-dim);cursor:pointer;white-space:nowrap;transition:.15s;
+}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--accent);color:#fff;}
+
+/* stat bar */
+.stat-bar{
+  display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 22px;margin-bottom:24px;flex-wrap:wrap;
+}
+.stat-num{
+  font-family:'Barlow Condensed';font-weight:800;font-size:44px;color:var(--accent);line-height:1;
+  min-width:60px;
+}
+.stat-info{flex:1;min-width:180px;}
+.stat-eyebrow{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-faint);font-weight:700;}
+.stat-title{font-family:'Barlow Condensed';font-weight:700;font-size:19px;text-transform:uppercase;letter-spacing:.3px;margin-top:2px;}
+.record-badge{
+  font-family:'IBM Plex Mono';font-size:10.5px;font-weight:700;letter-spacing:.4px;
+  background:var(--accent-dim);color:var(--accent);border:1px solid rgba(232,17,44,.35);
+  padding:5px 11px;border-radius:6px;
+}
+
+/* decade divider */
+.decade-div{
+  display:flex;align-items:center;gap:12px;margin:26px 0 14px;
+}
+.decade-div .lbl{
+  font-family:'IBM Plex Mono';font-size:11px;font-weight:600;color:var(--text-faint);letter-spacing:1px;white-space:nowrap;
+}
+.decade-div .ln{height:1px;background:var(--line);flex:1;}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 12px 12px;transition:.15s;position:relative;overflow:hidden;
+}
+.card:hover{border-color:var(--line-hi);background:var(--panel-hi);transform:translateY(-2px);}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:.15s;
+}
+.card:hover::before{opacity:1;}
+
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.card-yr{font-family:'Barlow Condensed';font-weight:800;font-size:22px;letter-spacing:.2px;}
+.trophy-ico{width:20px;height:20px;color:var(--accent);opacity:.9;}
+.card-comp{
+  font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.4px;
+  line-height:1.35;min-height:28px;margin-bottom:10px;font-weight:600;
+}
+
+.matchup{display:flex;align-items:center;gap:6px;}
+.club{
+  width:22px;height:22px;border-radius:50%;background:#fff;color:var(--accent);
+  display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;
+  font-family:'Inter';flex:0 0 22px;
+}
+.score{
+  font-family:'IBM Plex Mono';font-weight:700;font-size:12px;color:var(--text);
+  display:flex;align-items:center;gap:3px;flex:1;justify-content:center;
+}
+.score .dash{color:var(--text-faint);font-weight:500;}
+.opp{
+  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:800;color:#fff;flex:0 0 22px;
+}
+.no-opp{
+  font-family:'IBM Plex Mono';font-size:10.5px;color:var(--text-faint);text-align:center;width:100%;
+}
+
+</style>
+</head>
+<body>
+
+  
+<div class="wrap">
+
+  <div class="page-head">
+    <div>
+      <h1>Palmarés · Universitario</h1>
+      <p>Historial de títulos oficiales del primer equipo</p>
+    </div>
+    <div class="live-pill"><span class="dot"></span> 29 títulos — récord nacional</div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div id="content"></div>
+
+</div>
+
+<script>
+function y(year, comp, opp, score){ return {year:String(year), comp, opp, score}; }
+
+const TEAMS = {
+  "Alianza Lima":{i:"ALI",c:"#0c3f8a"},
+  "Sporting Cristal":{i:"CRI",c:"#0e8fd6"},
+  "Sport Boys":{i:"SB",c:"#d94aa0"},
+  "Cusco FC":{i:"CUS",c:"#c9a227"},
+  "Melgar":{i:"MEL",c:"#8a2233"},
+  "Boca Juniors":{i:"BOC",c:"#0b3a7a"},
+};
+
+const DATA = {
+  masculino:[
+    {num:29, cat:"Torneos Nacionales", title:"Primera División del Perú", record:true, decades:true,
+      items:[
+        y(1929,"Liga Provincial de Football"),
+        y(1934,"Liga Provincial de Football","Alianza Lima","2-1"),
+        y(1939,"Campeonato Peruano"),
+        y(1941,"Campeonato Peruano"),
+        y(1945,"Campeonato Peruano"),
+        y(1946,"Campeonato Peruano"),
+        y(1949,"Campeonato Peruano"),
+        y(1959,"Campeonato Peruano"),
+        y(1960,"Campeonato Peruano"),
+        y(1964,"Campeonato Peruano"),
+        y(1966,"Campeonato Descentralizado"),
+        y(1967,"Campeonato Descentralizado"),
+        y(1969,"Campeonato Descentralizado"),
+        y(1971,"Campeonato Descentralizado"),
+        y(1974,"Campeonato Descentralizado"),
+        y(1982,"Campeonato Descentralizado"),
+        y(1985,"Campeonato Descentralizado"),
+        y(1987,"Campeonato Descentralizado","Alianza Lima","1-0"),
+        y(1990,"Campeonato Descentralizado","Sport Boys","4-2"),
+        y(1992,"Campeonato Descentralizado"),
+        y(1993,"Campeonato Descentralizado"),
+        y(1998,"Campeonato Descentralizado","Sporting Cristal","3(4)-3(2)"),
+        y(1999,"Campeonato Descentralizado","Alianza Lima","3-1"),
+        y(2000,"Campeonato Descentralizado"),
+        y(2009,"Campeonato Descentralizado","Alianza Lima","2-0"),
+        y(2013,"Campeonato Descentralizado","Cusco FC","1(5)-1(4)"),
+        y(2023,"Fútbol Profesional Liga 1","Alianza Lima","2-0"),
+        y(2024,"Fútbol Profesional Liga 1"),
+        y(2025,"Fútbol Profesional Liga 1"),
+      ]},
+    {num:13, cat:"Torneos Cortos", record:true,
+      groups:[
+        {name:"Torneo Apertura", items:[y(1998,"Torneo Apertura"),y(1999,"Torneo Apertura"),y(2000,"Torneo Apertura"),y(2002,"Torneo Apertura","Alianza Lima","1-0"),y(2008,"Torneo Apertura"),y(2016,"Torneo Apertura"),y(2020,"Torneo Apertura"),y(2024,"Torneo Apertura"),y(2025,"Torneo Apertura")]},
+        {name:"Torneo Clausura", items:[y(2000,"Torneo Clausura"),y(2023,"Torneo Clausura"),y(2024,"Torneo Clausura"),y(2025,"Torneo Clausura")]},
+      ]},
+    {num:12, cat:"Torneos de la Liga",
+      groups:[
+        {name:"Campeonato Regional del Perú", items:[y(1985,"Camp. Regional del Perú","","3-1"),y(1987,"Camp. Regional del Perú","","2-0"),y(1988,"Camp. Regional del Perú"),y("1990-II","Camp. Regional del Perú")]},
+        {name:"Torneo Regional · Zona Metropolitana", items:[y(1984,"T. Regional Metropolitana"),y(1987,"T. Regional Metropolitana","","2-0"),y(1988,"T. Regional Metropolitana"),y("1989-II","T. Regional Metropolitana"),y("1990-I","T. Regional Metropolitana"),y("1991-II","T. Regional Metropolitana")]},
+        {name:"Torneo Descentralizado", items:[y(1985,"Torneo Descentralizado")]},
+        {name:"Torneo de Primeros Equipos", items:[y(1934,"Torneo de Primeros Equipos","Alianza Lima","2-1")]},
+      ]},
+    {num:1, cat:"Copas Nacionales", title:"Copas Nacionales",
+      items:[y(1970,"Copa Presidente de la República","Melgar","4-0")]},
+  ],
+  femenino:[
+    {num:11, cat:"Torneos Nacionales", title:"Primera División Femenina", record:true, decades:true,
+      items:[
+        y(1996,"Campeonato Femenino"),y("1997-I","Campeonato Femenino"),y("1997-II","Campeonato Femenino","Sporting Cristal","2-1"),
+        y(2001,"Campeonato Femenino","Sport Boys","?-?"),y(2002,"Campeonato Femenino","Sport Boys","3-2"),y(2003,"Campeonato Femenino","Sport Boys","2-1"),
+        y(2014,"Campeonato Femenino"),y(2015,"Campeonato Femenino"),y(2016,"Campeonato Femenino"),
+        y(2019,"Copa Perú Femenina"),y(2023,"Liga Femenina FPF","Alianza Lima","2-1"),
+      ]},
+  ],
+  reserva:[
+    {num:6, cat:"Torneos Nacionales", title:"Torneo Peruano",
+      groups:[
+        {name:"Promoción y Reserva", items:[y(2024,"T. de Promoción y Reserva","Melgar","2-1")]},
+        {name:"Torneo del Inca de Reservas", items:[y(2014,"Torneo del Inca de Reservas","Sporting Cristal","0(6)-0(5)"),y(2015,"Torneo del Inca de Reservas")]},
+        {name:"Torneo de Reservas", items:[y(1930,"Torneo de Reservas","Alianza Lima","3-1"),y(1931,"Torneo de Reservas"),y(1932,"Torneo de Reservas")]},
+      ]},
+    {num:1, cat:"Internacional", title:"Copa Libertadores",
+      items:[y(2011,"Copa Libertadores Sub-20","Boca Juniors","1(4)-1(2)")]},
+  ],
+  futsal:[
+    {num:3, cat:"Torneos Nacionales", title:"Primera División Fútbol Sala",
+      items:[y(2005,"Liga Futsal Pro"),y(2019,"Liga Futsal Pro"),y(2024,"Liga Futsal Pro")]},
+  ],
+  voley:[
+    {num:2, cat:"Torneo Nacional", title:"Campeonato Promocional",
+      items:[y(2009,"Copa Perú","","3-0"),y(2023,"Liga Nacional Intermedia","","3-0")]},
+  ],
+};
+
+
+
+const LABELS = {masculino:"Masculino",femenino:"Femenino",reserva:"Reserva",futsal:"Futsal",voley:"Vóley"};
+const TROPHY_SVG = '<svg class="trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg>';
+
+function opponentHTML(item){
+  if(!item.opp && !item.score){
+    return `<div class="matchup"><span class="no-opp">— sin rival registrado —</span></div>`;
+  }
+  const meta = TEAMS[item.opp] || {i:(item.opp||'???').slice(0,3).toUpperCase(), c:"#555b66"};
+  const parts = (item.score||'').split('-');
+  return `
+    <div class="matchup">
+      <div class="club">U</div>
+      <div class="score">${parts[0]||''}<span class="dash">–</span>${parts[1]||''}</div>
+      <div class="opp" style="background:${meta.c}">${meta.i}</div>
+    </div>`;
+}
+
+function cardHTML(item){
+  return `
+    <div class="card">
+      <div class="card-top"><div class="card-yr">${item.year}</div>${TROPHY_SVG}</div>
+      <div class="card-comp">${item.comp}</div>
+      ${opponentHTML(item)}
+    </div>`;
+}
+function gridHTML(items){ return `<div class="grid">${items.map(cardHTML).join('')}</div>`; }
+
+function decadeGrids(items){
+  const by = {};
+  items.forEach(it=>{ const d = Math.floor(parseInt(it.year)/10)*10; (by[d]=by[d]||[]).push(it); });
+  return Object.keys(by).sort((a,b)=>a-b).map(d=>`
+    <div class="decade-div"><span class="lbl">AÑOS ${d}</span><span class="ln"></span></div>
+    ${gridHTML(by[d])}
+  `).join('');
+}
+
+function blockHTML(b){
+  let body;
+  if(b.groups){
+    body = b.groups.map(g=>`
+      <div class="decade-div"><span class="lbl">${g.name.toUpperCase()}</span><span class="ln"></span></div>
+      ${gridHTML(g.items)}`).join('');
+  } else if(b.decades){
+    body = decadeGrids(b.items);
+  } else {
+    body = gridHTML(b.items);
+  }
+  return `
+    <div class="stat-bar">
+      <div class="stat-num">${b.num}</div>
+      <div class="stat-info">
+        <div class="stat-eyebrow">${b.cat}</div>
+        <div class="stat-title">${b.title || b.cat}</div>
+      </div>
+      ${b.record ? '<div class="record-badge">RÉCORD NACIONAL</div>' : ''}
+    </div>
+    ${body}
+  `;
+}
+
+
+
+
+
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+Object.keys(DATA).forEach((key,i)=>{
+  const t = document.createElement('div');
+  t.className = 'tab' + (i===0?' active':'');
+  t.textContent = LABELS[key];
+  t.onclick = ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    Object.keys(DATA).forEach(k=>{ document.getElementById('panel-'+k).style.display = (k===key)?'block':'none'; });
+  };
+  tabsEl.appendChild(t);
+
+  const p = document.createElement('div');
+  p.id = 'panel-'+key;
+  p.style.display = i===0 ? 'block':'none';
+  p.innerHTML = DATA[key].map(blockHTML).join('<div style="height:8px"></div>');
+  contentEl.appendChild(p);
+});
+</script>
+</body>
+</html>

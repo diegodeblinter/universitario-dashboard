@@ -1064,21 +1064,74 @@ th.th-first, td.td-pos { width: 26px !important; padding-left: 6px !important; }
 .match-team.winner .team-score { color: #3b82f6; }
 .match-team.empty { opacity: 0.45; font-style: italic; font-weight: 400; }
 .logo-placeholder { width: 16px; height: 16px; border-radius: 50%; background: var(--border, #2d3748); flex-shrink: 0; }
-.campeon-label { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted, #64748b); text-align: center; margin-bottom: 8px; }
-.campeon-box { background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 10px; padding: 14px 18px; text-align: center; width: 130px; }
-.campeon-trophy { font-size: 22px; margin-bottom: 6px; }
-.campeon-img { width: 32px; height: 32px; object-fit: contain; margin: 0 auto 6px; display: block; }
-.campeon-nombre { font-size: 11px; font-weight: 700; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.campeon-sub { font-size: 9px; color: #475569; margin-top: 2px; }
+
+
+
+.campeon-box {
+  position: relative;
+
+  border-radius: 14px;
+  padding: 20px 18px 18px;
+  overflow: hidden;
+}
+
+.campeon-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: #565d6b;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.campeon-trofeo {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  display: block;
+  filter: drop-shadow(0 3px 6px rgba(234,179,8,0.35));
+}
+.campeon-escudo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  display: block;
+
+}
+.campeon-nombre {
+  font-size: 14px;
+  font-weight: 800;
+  color: #f5f6f8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.campeon-sub {
+  font-size: 9px;
+  color: #565d6b;
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+
+
+
+
 
 .discipline-tabs {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin: 20px 0 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid #1e293b;
   padding-bottom: 16px;
+  background: #1e293b;border-radius: 14px;padding: 1.25rem 1.5rem;margin-bottom: 1rem;
 }
+
+
+
+
 .disc-tab {
   display: flex;
   align-items: center;
@@ -1181,6 +1234,112 @@ th.th-first, td.td-pos { width: 26px !important; padding-left: 6px !important; }
   border-radius: 20px;
   padding: 1px 8px;
 }
+
+
+
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════════════════════════
+   PALMARÉS — estilo app deportiva (ESPN / Sofascore), fondo oscuro
+   Todas las clases van prefijadas pm- para no chocar con tu CSS.
+   ═══════════════════════════════════════════════════════════ */
+.palmares-page{
+  --pm-bg-panel:#151820;
+  --pm-bg-panel-hi:#1b1f28;
+  --pm-line:#262b34;
+  --pm-line-hi:#333a46;
+  --pm-text:#f5f6f8;
+  --pm-text-dim:#8b93a1;
+  --pm-text-faint:#565d6b;
+  --pm-accent:#135bc7;
+  --pm-accent-dim:rgba(232,17,44,.14);
+}
+
+.pm-stat-bar{
+  display:flex;align-items:center;
+  border-radius:12px;
+  padding:18px 2px;
+  flex-wrap:wrap;
+}
+
+.pm-stat-num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;
+  color:var(--pm-accent);line-height:1;min-width:56px;
+}
+.pm-stat-info{flex:1;min-width:180px;}
+.pm-stat-eyebrow{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--pm-text-faint);font-weight:700;}
+.pm-stat-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;text-transform:uppercase;letter-spacing:.3px;margin-top:2px;color:var(--pm-text);}
+.pm-record-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.4px;
+  background:rgba(9, 73, 212, 0.493);color:#b7c0ce;;border:1px solid rgba(8, 26, 65, 0.35);
+  padding:5px 11px;border-radius:6px;
+}
+
+
+
+
+.pm-decade-div{display:flex;align-items:center;gap:12px;margin:2px 0 14px;}
+.pm-decade-div .pm-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--pm-text-faint);letter-spacing:2px;white-space:nowrap;}
+.pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.pm-card{
+  background:var(--pm-bg-panel);border:1px solid var(--pm-line);border-radius:12px;
+  padding:14px 12px 12px;transition:.15s;position:relative;overflow:hidden;
+}
+
+
+.pm-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--pm-accent),transparent);opacity:0;transition:.15s;
+}
+.pm-card:hover::before{opacity:1;}
+
+.pm-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pm-card-yr{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;letter-spacing:.2px;color:var(--pm-text);}
+.pm-trophy-ico{width:20px;height:20px;color:var(--pm-accent);opacity:.9;}
+.pm-card-comp{
+  font-size:9px;color:var(--pm-text-dim);text-transform:uppercase;letter-spacing:.4px;
+  line-height:1.35;min-height:28px;margin-bottom:10px;font-weight:600;
+}
+
+.pm-matchup{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  justify-content:flex-start;   /* asegura que todo el bloque quede a la izquierda */
+}
+.pm-club{
+  width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;
+  flex:0 0 22px;
+}
+.pm-score{
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;
+  font-size:8px;
+  color:var(--pm-text);
+  display:flex;
+  align-items:center;
+  gap:3px;
+  /* eliminado: flex:1; justify-content:center; */
+}
+.pm-score .pm-dash{color:var(--pm-text-faint);font-weight:500;}
+.pm-opp{
+  width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:800;color:#fff;flex:0 0 22px;
+}
+.pm-no-opp{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--pm-text-faint);text-align:center;width:100%;}
+
+@media(max-width:880px){
+  .pm-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));}
+}
+
+
+
 </style>
 </head>
 <body>

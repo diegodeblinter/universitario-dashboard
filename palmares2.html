@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TailAdmin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+
+html, body { height: auto; min-height: 100%; overflow-y: auto; overflow-x: hidden; }
+.main { display: flex; flex-direction: column; }
+.content { flex: 1; overflow: visible; }
+.topbar { position: sticky; top: 0; z-index: 30; }
+body { visibility: hidden; }
+
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* evita que el body entero haga scroll */
+}
+
+.sidebar {
+  position: sticky; /* o fixed */
+  top: 0;
+  height: 100vh;
+  overflow-y: auto; /* scroll propio del menú si es muy largo */
+  flex-shrink: 0;
+}
+
+.main {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto; /* el scroll ocurre aquí, no en body */
+}
+
+
+
+.pm-club, .pm-opp {
+ 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;   /* antes: center → ahora alineado a la izquierda */
+}
+
+.pm-club img, .pm-opp img {
+  width: auto;
+  height: auto;
+  max-width: 81%;
+  max-height: 81%;
+  object-fit: contain;           /* evita que se estire/deforme */
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- ══ MENU ══ -->
+<div id="sidebar-container"></div>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <div class="topbar">
+    <div class="topbar-search">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Type to search...">
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-icons">
+      <div class="topbar-icon-btn" style="position:relative;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+    </div>
+    <div class="topbar-user">
+      <div class="topbar-user-info">
+        <div class="topbar-user-name">Diego Rodríguez</div>
+        <div class="topbar-user-role">Ux Designer</div>
+      </div>
+      <div class="topbar-avatar">DR</div>
+    </div>
+  </div>
+
+  <div class="container">
+   <div class="content palmares-page">
+
+       <div class="container">
+  <!-- ══ HEADER ══ -->
+
+  
+         <div class="wrap">
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-cat="masculino">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Masculino
+    </button>
+    <button class="tab" data-cat="femenino">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Femenino
+    </button>
+    <button class="tab" data-cat="reserva">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Reserva
+    </button>
+    <button class="tab" data-cat="futsal">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Futsal
+    </button>
+    <button class="tab" data-cat="voley">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Vóley
+    </button>
+  </nav>
+
+  <main id="content"></main>
+
+ 
+         </div>
+
+
+
+
+  <footer>
+    Palmarés actualizado · Datos basados en fuentes oficiales del club.<br>
+    El título 2026 está sujeto a confirmación final de temporada.
+  </footer>
+
+       </div>
+
+
+
+</div>
+
+
+  </div>
+
+</div>
+
+</div><!-- /app -->
+
+
+
+
+
+
+
+<script>
+  
+// ── MENU ──
+function toggleMenu(id, parentEl) {
+  const sub = document.getElementById('sub-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!sub) return;
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+}
+function setNavActive(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  el.classList.add('active');
+}
+function setSubActive(el) {
+  document.querySelectorAll('.nav-sub-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+ 
+// ── SIDEBAR
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('sidebar-container').innerHTML = html;
+ 
+    // Marcar automáticamente el item activo según la página actual
+    const pagina = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-sub-item a').forEach(a => {
+      if (a.getAttribute('href') === pagina) {
+        a.closest('.nav-sub-item').classList.add('active');
+ 
+        // Abrir el submenu padre automáticamente
+        const sub = a.closest('.nav-sub');
+        if (sub) {
+          sub.classList.add('open');
+          const id = sub.id.replace('sub-', '');
+          const arrow = document.getElementById('arrow-' + id);
+          if (arrow) arrow.classList.add('open');
+          const parentItem = sub.previousElementSibling;
+          if (parentItem) parentItem.classList.add('active');
+        }
+      }
+    });
+    document.body.style.visibility = 'visible';
+  })
+  .catch(err => {
+    console.error('No se pudo cargar sidebar.html:', err);
+    document.body.style.visibility = 'visible'; // mostrar igual aunque falle
+  });
+ 
+ 
+/* ============================================================
+   DATA — un objeto por categoría (masculino, femenino, ...).
+   Cada categoría tiene una o más secciones (torneos nacionales,
+   internacionales, etc). Cada sección puede venir de dos formas:
+     - "titles": lista plana de títulos (formato clásico)
+     - "groups": lista de subgrupos, cada uno con su "label" y su
+       propia lista de "titles" (para separar Apertura/Clausura, etc.)
+   Cada título admite:
+     year, name, trophyImg (opcional), final: { score, rivalImg, rivalAbbr } (opcional)
+   Si trophyImg / rivalImg no existen o fallan al cargar,
+   se reemplazan automáticamente por un ícono de respaldo.
+   ============================================================ */
+const DATA = {
+  masculino: [
+    {
+      count: 29,
+      eyebrow: "Torneos nacionales",
+      title: "Primera División del Perú",
+      record: "Récord nacional",
+      titles: [
+        { year:1929, name:"Liga Provincial de Football", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}  },
+        { year:1934, name:"Liga Provincial de Football", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:1939, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1941, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1945, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1946, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1949, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1959, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1960, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1964, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1966, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1967, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1969, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1971, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1974, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1982, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1985, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
+        { year:1987, name:"Campeonato Descentralizado", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:1990, name:"Campeonato Descentralizado", final:{ score:"4 - 2", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
+        { year:1992, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:1993, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:1998, name:"Campeonato Descentralizado", final:{ score:"3:4 - 3:2", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
+        { year:1999, name:"Campeonato Descentralizado", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2000, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:2009, name:"Campeonato Descentralizado", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2013, name:"Campeonato Descentralizado", final:{ score:"1:5 - 1:4", clubImg:"img/universitario.png", rivalImg:"img/cuscofc.png",}   },
+        { year:2023, name:"Fútbol Profesional Liga 1", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2024, name:"Fútbol Profesional Liga 1", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:2025, name:"Fútbol Profesional Liga 1", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+      ]
+    },
+ 
+    {
+      count: 13,
+      eyebrow: "Torneos cortos",
+      title: "Torneos Cortos",
+      record: "Récord nacional",
+      groups: [
+        {
+          label: "Torneo Apertura",
+          titles: [
+            { year:1998, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+            { year:1999, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+            { year:2000, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+            { year:2002, name:"Torneo Apertura", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+            { year:2008, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2016, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2020, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2024, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2025, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+          ]
+        },
+        {
+          label: "Torneo Clausura",
+          titles: [
+            { year:2000, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2023, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2024, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+            { year:2025, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+          ]
+        }
+      ]
+    },
+
+
+{
+  count: 12,
+  eyebrow: "Torneos de la Liga",
+  title: "Torneos de la Liga",
+  groups: [
+    {
+      label: "Campeonato Regional del Perú",
+      titles: [
+        { year:1985, name:"Camp. Regional del Perú", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/cni.png",}   },
+        { year:1987, name:"Camp. Regional del Perú", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/unionhuaral.png",}   },
+        { year:1988, name:"Camp. Regional del Perú", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
+        { year:"1990 - II", name:"Camp. Regional del Perú", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
+      ]
+    },
+    {
+      label: "Torneo Regional · Zona Metropolitana",
+      titles: [
+        { year:1984, name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
+        { year:1987, name:"T. Regional Metropolitana", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/unionhuaral.png",}   },
+        { year:1988, name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
+        { year:"1989 - II", name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
+        { year:"1990 - I", name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
+        { year:"1991 - II", name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+      ]
+    },
+    {
+      label: "Torneo Descentralizado",
+      titles: [
+        { year:1985, name:"Torneo Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
+      ]
+    },
+    {
+      label: "Torneo de Primeros Equipos",
+      titles: [
+        { year:1934, name:"Torneo de Primeros Equipos", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+      ]
+    }
+  ]
+},
+
+    {
+      count: 1,
+      eyebrow: "Copas Nacionales",
+      title: "Copas Nacionales",
+      titles: [
+        { year:1970, name:"Copa Presidente de la República", final:{ score:"4 - 0", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
+
+  
+
+      ]
+    },
+
+
+
+  ],
+
+
+
+
+  femenino: [
+  {
+    count: 11,
+    eyebrow: "Torneos nacionales",
+    title: "Primera División de Fútbol Femenino Peruano",
+    record: "Récord nacional",
+  
+        titles: [
+          { year:1996, name:"Campeonato Femenino", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+          { year:"1997 - I", name:"Campeonato Femenino", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+          { year:"1997 - II", name:"Campeonato Femenino", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
+          { year:2001, name:"Campeonato Femenino", final:{ score:"? - ?", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
+          { year:2002, name:"Campeonato Femenino", final:{ score:"3 - 2", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
+          { year:2003, name:"Campeonato Femenino", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
+          { year:2014, name:"Campeonato Femenino", final:{ score:"7 - 0", clubImg:"img/universitario.png", rivalImg:"img/vargas.png",}   },
+          { year:2015, name:"Campeonato Femenino", final:{ score:"8 - 0", clubImg:"img/universitario.png", rivalImg:"img/cgtp.png",}   },
+          { year:2016, name:"Campeonato Femenino", final:{ score:"5 - 1", clubImg:"img/universitario.png", rivalImg:"img/villaverde.png",}   },
+          { year:2019, name:"Campeonato Femenino", final:{ score:"6 - 1", clubImg:"img/universitario.png", rivalImg:"img/amazon.png",}   },
+          { year:2023, name:"Liga Femenina FPF", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        ]
+      
+    
+  },
+
+{
+  count: 3,
+  eyebrow: "Torneos Cortos",
+  title: "Torneos Cortos",
+  groups: [
+    {
+      label: "TORNEO APERTURA",
+      titles: [
+        { year:2003, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"img/cni.png",}   },
+        { year:2026, name:"Torneo Apertura", final:{ score:"5 - 3", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   }
+      ]
+    },
+    {
+      label: "TORNEO CLAUSURA",
+      titles: [
+        { year:2025, name:"Torneo Clausura", final:{ score:"1:4 - 1:2", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   }
+
+      ]
+    }
+   
+  ]
+},
+
+
+{
+  count: 5,
+  eyebrow: "Torneos de la Liga",
+  title: "Torneos de la Liga",
+  groups: [
+    {
+      label: "TORNEO REGIONAL",
+      titles: [
+        { year:2019, name:"Campeonato Regional del Perú", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   }
+      ]
+    },
+    {
+      label: "ZONA METROPOLITANA · LIMA",
+      titles: [
+        { year:2014, name:"Torneo Clausura", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
+        { year:2015, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:2016, name:"Torneo Clausura", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/lacantera.png",}   },
+        { year:2019, name:"Torneo Clausura", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   }        
+      ]
+    }
+   
+  ]
+},
+
+],
+
+reserva: [
+  {
+    count: 1,
+    eyebrow: "Torneos internacionales",
+    title: "Copa Libertadores",
+    titles: [
+      { year:2011, name:"Copa Libertadores Sub-20", final:{ score:"1:4 - 1:2", clubImg:"img/universitario.png", rivalImg:"img/boca.png",}   },
+    ]
+  },
+
+  {
+    count: 6,
+    eyebrow: "Torneos nacionales",
+    title: "Torneo Peruano",
+    groups: [
+      {
+        label: "Torneo de Promoción y Reserva",
+        titles: [
+          { year:2024, name:"Torneo de Promoción y Reserva", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
+        ]
+      },
+      {
+        label: "Torneo del Inca de Reservas",
+        titles: [
+          { year:2014, name:"Torneo del Inca de Reservas", final:{ score:"0:6 - 0:5", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
+          { year:2015, name:"Torneo del Inca de Reservas", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        ]
+      },
+      {
+        label: "Torneo de Reservas",
+        titles: [
+          { year:1930, name:"Torneo de Reservas", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+          { year:1931, name:"Torneo de Reservas", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+          { year:1932, name:"Torneo de Reservas", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        ]
+      }
+    ]
+  }
+
+
+],
+
+futsal: [
+  {
+    count: 3,
+    eyebrow: "Torneos nacionales",
+    title: "Primera División de Fútbol Sala",
+    groups: [
+      {
+        label: "Ligas",
+        titles: [
+          { year:2005, name:"Liga Futsal Pro", final:{ score:"6 - 4", clubImg:"img/universitario.png", rivalImg:"img/jap.png",}   },
+          { year:2019, name:"Liga Futsal Pro", final:{ score:"8 - 5", clubImg:"img/universitario.png", rivalImg:"img/overall.png",}   },
+          { year:2024, name:"Liga Futsal Pro", final:{ score:"5 - 4", clubImg:"img/universitario.png", rivalImg:"img/pantawalon.png",}   },
+        ]
+      }
+    ]
+  },
+  {
+    count: 1,
+    eyebrow: "Torneos cortos",
+    title: "Torneos Cortos",
+    groups: [
+      {
+        label: "Torneo Clausura",
+        titles: [
+          { year:2012, name:"Torneo Clausura", 
+            final:{ score:"– –" } },
+        ]
+      }
+    ]
+  },
+  {
+    count: 1,
+    eyebrow: "Torneos de la liga",
+    title: "Copas & Torneos Locales",
+    titles: [
+      { year:2008, name:"Torneo de Verano", 
+        final:{ score:"– –" } },
+    ]
+  }
+],
+
+voley: [
+  {
+    count: 1,
+    eyebrow: "Torneos locales",
+    title: "Liga Peruana de Vóley",
+    groups: [
+      {
+        label: "Ligas",
+        titles: [
+          { year:"2025 - 26", name:"Podio en LNSV - Tercer Lugar", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/geminis.png",}  },
+        ]
+      }
+    ]
+  },
+  {
+    count: 2,
+    eyebrow: "Torneo nacional de revalidación",
+    title: "Campeonato Promocional",
+    groups: [
+      {
+        label: "Campeonato",
+        titles: [
+          { year:2009, name:"Copa Perú", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}  },
+          { year:2023, name:"Liga Nacional Intermedia", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/molivoleibol.png",}  },
+        ]
+      }
+    ]
+  }
+],
+
+};
+ 
+const trophyFallbackSVG = `
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 6H34V16C34 22.6274 29.5228 28 24 28C18.4772 28 14 22.6274 14 16V6Z" fill="currentColor"/>
+  <path d="M14 8H8V12C8 16 11 19 14 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M34 8H40V12C40 16 37 19 34 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="21" y="28" width="6" height="8" fill="currentColor"/>
+  <path d="M15 40H33L31 36H17L15 40Z" fill="currentColor"/>
+  <rect x="12" y="40" width="24" height="3.5" rx="1" fill="currentColor"/>
+</svg>`;
+ 
+const recordIconSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M17 4H7v6a5 5 0 0 0 10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4M17 5h3v2a4 4 0 0 1-3.4 4"/></svg>`;
+ 
+function trophyCell(item){
+  if(item.trophyImg){
+    return `<div class="trophy-mini">
+      <div class="glow"></div>
+      <img src="${item.trophyImg}" alt="Trofeo ${item.year}"
+           onerror="this.outerHTML='${trophyFallbackSVG.replace(/'/g,"\\'")}'; this.parentElement.style.color='var(--gold-bright)';">
+    </div>`;
+  }
+  return `<div class="trophy-mini" style="color:var(--gold-bright)">
+    <div class="glow"></div>
+    ${trophyFallbackSVG}
+  </div>`;
+}
+ 
+function finalRow(item){
+  if(!item.final) return `<div class="final-row"></div>`;
+
+  const club = item.final.clubImg
+    ? `<img class="rival-crest" src="${item.final.clubImg}" alt="">`
+    : "";
+
+  const rival = item.final.rivalImg
+    ? `<img class="rival-crest" src="${item.final.rivalImg}" alt=""
+         onerror="this.outerHTML='<div class=&quot;rival-crest fallback&quot;>${(item.final.rivalAbbr||'??').slice(0,2).toUpperCase()}</div>'">`
+    : (item.final.rivalAbbr ? `<div class="rival-crest fallback">${item.final.rivalAbbr.slice(0,2).toUpperCase()}</div>` : "");
+
+  return `<div class="final-row">${club}<span class="score">${item.final.score}</span>${rival}</div>`;
+}
+
+function cardHTML(item){
+  return `
+    <div class="card1">
+      <div class="card1-top">
+        <div class="year">${item.year}</div>
+        ${trophyCell(item)}
+      </div>
+      <div class="name">${item.name}</div>
+      ${finalRow(item)}
+    </div>
+  `;
+}
+ 
+const content = document.getElementById('content');
+ 
+function render(cat){
+  content.innerHTML = "";
+  const sections = DATA[cat] || [];
+  if(!sections.length){
+    content.innerHTML = `<div class="section show" style="text-align:center; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:13px; padding:60px 20px;">
+      Todavía no hay títulos cargados en esta categoría.
+    </div>`;
+    return;
+  }
+ 
+  sections.forEach(sec => {
+    const section = document.createElement('section');
+    section.className = 'section';
+ 
+    let body = '';
+    if(sec.groups){
+      // Varios subtítulos dentro de la misma sección
+      body = sec.groups.map(g => `
+        <div class="group-label">${g.label}</div>
+        <div class="grid">${g.titles.map(cardHTML).join('')}</div>
+      `).join('');
+    } else {
+      // Formato clásico: una sola grilla
+      body = `<div class="grid">${sec.titles.map(cardHTML).join('')}</div>`;
+    }
+ 
+    section.innerHTML = `
+      <div class="section-head">
+        <div class="tally">
+          <div class="tally-num">${sec.count}</div>
+          <div class="tally-text">
+            <div class="eyebrow">${sec.eyebrow}</div>
+            <div class="title">${sec.title}</div>
+          </div>
+        </div>
+        ${sec.record ? `<div class="record-badge">${recordIconSVG}${sec.record}</div>` : ""}
+      </div>
+      ${body}
+    `;
+    content.appendChild(section);
+  });
+ 
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.section').forEach((el,i) => {
+      setTimeout(() => el.classList.add('show'), i * 90);
+    });
+  });
+}
+ 
+document.getElementById('tabs').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.cat);
+});
+ 
+render('masculino');
+ 
+
+</script>
+
+</body>
+</html>

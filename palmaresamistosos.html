@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TailAdmin — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
 
 html, body { height: auto; min-height: 100%; overflow-y: auto; overflow-x: hidden; }
@@ -60,6 +62,7 @@ body { visibility: hidden; }
 
 <!-- ══ MAIN ══ -->
 <div class="main">
+
   <div class="topbar">
     <div class="topbar-search">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -84,560 +87,35 @@ body { visibility: hidden; }
     </div>
   </div>
 
- <div class="content palmares-page">
+  <div class="container">
+   <div class="content palmares-page">
 
-
-<div class="container">
-
-
+       <div class="container">
   <!-- ══ HEADER ══ -->
 
-
   
-  <!-- ══ SELECCION ══ -->
-<div class="discipline-tabs">
-  <button class="disc-tab active" onclick="setDisc('masculino',this)">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    Masculino
-  </button>
-  <button class="disc-tab" onclick="setDisc('reserva',this)">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    Reserva
-  </button>
-  <button class="disc-tab" onclick="setDisc('voley',this)">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M6 3H5a2 2 0 000 4h1M18 3h1a2 2 0 010 4h-1M6 3v5a6 6 0 0012 0V3M6 3h12"/></svg>
-    Voley
-  </button>
-</div>
+         <div class="wrap">
 
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-cat="masculino">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Masculino
+    </button>
+    <button class="tab" data-cat="reserva">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Reserva
+    </button>
+    <button class="tab" data-cat="voley">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
+      Vóley
+    </button>
+  </nav>
 
- <!-- ══ VOLEY MASCULINO ══ -->
-<div class="title-section" id="disc-masculino">
-      <!-- ══ 1: LIGA ══ -->
-    <div class="pm-stat-bar">
-      <div class="pm-stat-num">43</div>
-      <div class="pm-stat-info">
-        <div class="pm-stat-eyebrow">Torneos Amistosos</div>
-        <div class="pm-stat-title">Torneos : Copas</div>
-      </div>
-    </div>
+  <main id="content"></main>
 
-
-     <!-- ══ trofeos ══ -->
-<div class="pm-decade-div"><span class="pm-lbl">TORNEOS NACIONALES</span><span class="pm-ln"></span></div>
-<div class="pm-grid">
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">1951</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Copa Dorada</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-      </div>
-  </div>
-
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">1960</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Torneo Relámpago</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >MUN</div>
-      </div>
-  </div>
-
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">2005</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Copa de Verano</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-      </div>
-  </div>
-
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">2009</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Aniversario de Lima Cricket FC</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">3<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >MEL</div>
-      </div>
-  </div>
-</div>
-<br> 
-
-<div class="pm-decade-div"><span class="pm-lbl">TORNEOS INTERNACIONALES </span><span class="pm-ln"></span></div>
-<div class="pm-grid">
-
-   <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1934</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Cuadrangular Escudo de Oro</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1937</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Torneo Presidente de la Republica</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">4<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >CRT</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1974</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Inauguración Estadio Alianza Lima</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >NAC</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2000</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa El Gráfico-Perú</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >UCH</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2006</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Aniversario de Sporting Cristal</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2011</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Noche Crema</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >AME</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2020-II</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa San Juan</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >HUR</div>
-      </div>
-    </div>
-    
-
-</div>
-<br> 
-
-<div class="pm-decade-div"><span class="pm-lbl">OTROS TROFEOS</span><span class="pm-ln"></span></div>
-<div class="pm-grid">
-
-   <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1934</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Exteriores de Chile</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">8<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >UCH</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1944</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Efemérides</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">5<span class="pm-dash">–</span>3</div>
-       <div class="pm-opp" >RAC</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1950</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Amistoso - SM. de Tucuman</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">?<span class="pm-dash">–</span>?</div>
-       <div class="pm-opp" >TUC</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1953</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Despedida de Lolo</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">3<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1955</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Evita Perón</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">0<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >HUR</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1955</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Evita Perón</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">3<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >LAN</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1961</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Amistoso Internacional</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >PEÑ</div>
-      </div>
-    </div>
-
-   <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1990</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Clásica</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">3<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>
-
-   <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1992</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Clásica</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>
-    
-   <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1998</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Clásica</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>
-    
-   <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">1999</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Inmigración China</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2009</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Líbero</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >AUR</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2011</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa San Ignacio de Loyola</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">0<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >CNI</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2011</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Submarinos Peruanos</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>  
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2011</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa ISP</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >MEL</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2013</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Pieers</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >AUR</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2013</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa DIAIRE</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >UTC</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2013</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Advance</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >GAL</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2013</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Trinchera Norte</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >LHU</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2014</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Cirugía Peruana</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">0<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >UTC</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2016</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Chavín de Huántar</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >VAL</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2016</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Diario Oficial El Peruano</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">4<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >MUN</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2016</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Mall del Sur</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>  
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2016</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Pionier</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >MUN</div>
-      </div>
-    </div>
-
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2016</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa AOC</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >ALI</div>
-      </div>
-    </div>  
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2016</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa ACCUD</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>2</div>
-       <div class="pm-opp" >CRI</div>
-      </div>
-    </div>  
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2017</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Chavín de Huántar</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">3<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >UTC</div>
-      </div>
-    </div>  
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2019</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Chavín de Huántar</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">4<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >SBO</div>
-      </div>
-    </div>  
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2023</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Noche Poeta</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >VAL</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2024</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Noche Poeta</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >VAL</div>
-      </div>
-    </div>
-    
-    <div class="pm-card">
-      <div class="pm-card-top"><div class="pm-card-yr">2024</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-      <div class="pm-card-comp">Copa Zapping</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">0:4<span class="pm-dash">–</span>0:2</div>
-       <div class="pm-opp" >CIE</div>
-      </div>
-    </div>
-    
  
+         </div>
 
-</div>
-
-
-<br> <br>
-
-</div>
-
-
- <!-- ══ VOLEY RESERVA ══ -->
-<div class="title-section" id="disc-reserva">
-
-      <!-- ══ 1: LIGA ══ -->
-    <div class="pm-stat-bar">
-      <div class="pm-stat-num">02</div>
-      <div class="pm-stat-info">
-        <div class="pm-stat-eyebrow">Torneos Amistosos</div>
-        <div class="pm-stat-title">Torneos : Copas</div>
-      </div>
-    </div>
-     <!-- ══ trofeos ══ -->
-<div class="pm-decade-div"><span class="pm-lbl">TORNEOS NACIONALES</span><span class="pm-ln"></span></div>
-<div class="pm-grid">
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">2024</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Perú CHAMPS</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">1:4<span class="pm-dash">–</span>1:3</div>
-       <div class="pm-opp" >CRI</div>
-      </div>
-  </div>
-
-</div>
-<br>
-
-<div class="pm-decade-div"><span class="pm-lbl">TORNEOS INTERNACIONALES</span><span class="pm-ln"></span></div>
-<div class="pm-grid">
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">2025</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Copa Plata Adidas Cup</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">2<span class="pm-dash">–</span>0</div>
-       <div class="pm-opp" >CAZ</div>
-      </div>
-  </div>
-
-</div>
-<br><br>
-
-</div>
-
-
- <!-- ══ VOLEY EQUIPO ══ -->
-
-<div class="title-section" id="disc-voley">
-
-      <!-- ══ 1: LIGA ══ -->
-    <div class="pm-stat-bar">
-      <div class="pm-stat-num">02</div>
-      <div class="pm-stat-info">
-        <div class="pm-stat-eyebrow">Torneos Amistosos</div>
-        <div class="pm-stat-title">Torneos : Copas</div>
-      </div>
-    </div>
-     <!-- ══ trofeos ══ -->
-<div class="pm-decade-div"><span class="pm-lbl">OTROS TROFEOS</span><span class="pm-ln"></span></div>
-<div class="pm-grid">
-  <div class="pm-card">
-    <div class="pm-card-top"><div class="pm-card-yr">2025</div><svg class="pm-trophy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/><path d="M12 12v4M9 20h6M9 20c0-2 1-2.5 3-2.5s3 .5 3 2.5"/></svg></div>
-    <div class="pm-card-comp">Copa “Gigantes del Cenepa”</div>
-      <div class="pm-matchup">
-       <div class="pm-club">U</div>
-       <div class="pm-score">3<span class="pm-dash">–</span>1</div>
-       <div class="pm-opp" >ATE</div>
-      </div>
-  </div>
-
-</div>
-<br><br>
-
-</div>
-
-
-
-</div>
 
 
 
@@ -646,11 +124,16 @@ body { visibility: hidden; }
     El título 2026 está sujeto a confirmación final de temporada.
   </footer>
 
-</div>
+       </div>
+
+
+
 </div>
 
-</div><!-- /main -->
 
+  </div>
+
+</div>
 
 </div><!-- /app -->
 
@@ -660,7 +143,10 @@ body { visibility: hidden; }
 
 
 
+
+
 <script>
+  
 // ── MENU ──
 function toggleMenu(id, parentEl) {
   const sub = document.getElementById('sub-' + id);
@@ -692,131 +178,276 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
   });
 });
-
+ 
 // ── SIDEBAR
- fetch('sidebar.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('sidebar-container').innerHTML = html;
-
-      // Marcar automáticamente el item activo según la página actual
-      const pagina = window.location.pathname.split('/').pop();
-      document.querySelectorAll('.nav-sub-item a').forEach(a => {
-        if (a.getAttribute('href') === pagina) {
-          a.closest('.nav-sub-item').classList.add('active');
-
-          // Abrir el submenu padre automáticamente
-          const sub = a.closest('.nav-sub');
-          if (sub) {
-            sub.classList.add('open');
-            const id = sub.id.replace('sub-', '');
-            const arrow = document.getElementById('arrow-' + id);
-            if (arrow) arrow.classList.add('open');
-            const parentItem = sub.previousElementSibling;
-            if (parentItem) parentItem.classList.add('active');
-          }
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('sidebar-container').innerHTML = html;
+ 
+    // Marcar automáticamente el item activo según la página actual
+    const pagina = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-sub-item a').forEach(a => {
+      if (a.getAttribute('href') === pagina) {
+        a.closest('.nav-sub-item').classList.add('active');
+ 
+        // Abrir el submenu padre automáticamente
+        const sub = a.closest('.nav-sub');
+        if (sub) {
+          sub.classList.add('open');
+          const id = sub.id.replace('sub-', '');
+          const arrow = document.getElementById('arrow-' + id);
+          if (arrow) arrow.classList.add('open');
+          const parentItem = sub.previousElementSibling;
+          if (parentItem) parentItem.classList.add('active');
         }
-      });
-      document.body.style.visibility = 'visible';
+      }
     });
-
-
-// ── DARK MODE ──
-function toggleTheme() {
-  const isDark = document.body.classList.toggle("dark-mode");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  document.getElementById("iconSun").style.display  = isDark ? "block" : "none";
-  document.getElementById("iconMoon").style.display = isDark ? "none"  : "block";
-}
-(function() {
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
-    const s=document.getElementById("iconSun"), m=document.getElementById("iconMoon");
-    if(s) s.style.display="block";
-    if(m) m.style.display="none";
-  }
-})();
-
-
-function setDisc(id, btn) {
-  document.querySelectorAll('.disc-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  ['masculino','femenino','reserva','futsal','voley'].forEach(k => {
-    const el = document.getElementById('disc-' + k);
-    if (el) el.style.display = k === id ? 'block' : 'none';
+    document.body.style.visibility = 'visible';
+  })
+  .catch(err => {
+    console.error('No se pudo cargar sidebar.html:', err);
+    document.body.style.visibility = 'visible'; // mostrar igual aunque falle
   });
-}
-
-// Ocultar todas menos masculino al cargar
-document.addEventListener('DOMContentLoaded', () => {
-  ['femenino','reserva','futsal','voley'].forEach(k => {
-    const el = document.getElementById('disc-' + k);
-    if (el) el.style.display = 'none';
-  });
-});
-
-
-
-// ── ESCUDOS DE CLUBES ──
-const ESCUDOS = {
-  'U':   'img/universitario.png',
-  'ALI': 'img/alianzalima.png',
-  'CNI': 'img/cni.png',   // ajusta el nombre real
-  'UH':  'img/unionhuaral.png',
-  'MEL': 'img/melgar.png',
-  'CRI': 'img/cristal.png',
-  'LC':  'img/lacantera.png',             // ajusta según corresponda
-  'VAR': 'img/vargas.png',
-  'CUS': 'img/cuscofc.png',        // ajusta el nombre real
-  'VIL': 'img/villaverde.png',       // ajusta el nombre real
-  'CGTP': 'img/cgtp.png',
-  'AMA': 'img/amazon.png',
-  'SBO': 'img/sportboys.png',
-  'BOC': 'img/boca.png',
-  'JAP': 'img/jap.png',
-  'OVR': 'img/overall.png',
-  'PAN': 'img/pantawalon.png',
-  'GEM': 'img/geminis.png',
-  'VAL': 'img/vallejo.png',
-  'MOL': 'img/molivoleibol.png',
-  
-  'LHU': 'img/leondehuanuco.png',
-  'GAL': 'img/galvez.png',
-  'AUR': 'img/aurich.png',
-  'TUC': 'img/tucuman.png',
-  'CRT': 'img/cristobal.png',
-  'UTC': 'img/utc.png',
-  'PEÑ': 'img/peñarol.png',
-  'MUN': 'img/municipal.png',
-  'RAC': 'img/racing.png',
-  'UCH': 'img/universidaddechile.png',
-  'CIE': 'img/cienciano.png',
-  'AME': 'img/cali.png',
-  'NAC': 'img/nacionaluruguay.png',
-  'HUR': 'img/huracan.png',
-  'LAN': 'img/lanus.png',
-  'ATE': 'img/atenea.png',
-  'CAZ': 'img/cruzazul.png'
-
-};
-
-function aplicarEscudos() {
-  document.querySelectorAll('.pm-club, .pm-opp').forEach(el => {
-    const code = el.textContent.trim();
-    if (ESCUDOS[code] && !el.querySelector('img')) {
-      const img = document.createElement('img');
-      img.src = ESCUDOS[code];
-      img.alt = code;
-      img.onerror = function () {
-        // si la imagen no existe, vuelve a mostrar el código de texto
-        el.textContent = code;
-      };
-      el.textContent = '';
-      el.appendChild(img);
+ 
+ 
+/* ============================================================
+   DATA — un objeto por categoría (masculino, femenino, ...).
+   Cada categoría tiene una o más secciones (torneos nacionales,
+   internacionales, etc). Cada sección puede venir de dos formas:
+     - "titles": lista plana de títulos (formato clásico)
+     - "groups": lista de subgrupos, cada uno con su "label" y su
+       propia lista de "titles" (para separar Apertura/Clausura, etc.)
+   Cada título admite:
+     year, name, trophyImg (opcional), final: { score, rivalImg, rivalAbbr } (opcional)
+   Si trophyImg / rivalImg no existen o fallan al cargar,
+   se reemplazan automáticamente por un ícono de respaldo.
+   ============================================================ */
+const DATA = {
+  masculino: [
+{
+  count: 43,
+  eyebrow: "Torneos amistosos",
+  title: "Torneos : Copas",
+  groups: [
+    {
+      label: "Torneos Nacionales",
+      titles: [
+        { year:1951, name:"Copa Dorada", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:1960, name:"Torneo Relámpago", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/municipal.png",}   },
+        { year:2005, name:"Copa de Verano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:2009, name:"Aniversario de Lima Cricket FC", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
+      ]
+    },
+    {
+      label: "Torneos Internacionales",
+      titles: [
+        { year:1934, name:"Cuadrangular Escudo de Oro", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:1937, name:"Torneo Presidente de la República", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/cristobal.png",}   },
+        { year:1974, name:"Inauguración Estadio Alianza Lima", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/nacionaluruguay.png",}   },
+        { year:2000, name:"Copa El Gráfico-Perú", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/universidaddechile.png",}   },
+        { year:2006, name:"Aniversario de Sporting Cristal", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
+        { year:2011, name:"Noche Crema", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/cali.png",}   },
+        { year:"2020-II", name:"Copa San Juan", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/huracan.png",}   },
+      ]
+    },
+    {
+      label: "Otros Trofeos",
+      titles: [
+        { year:1934, name:"Exteriores de Chile", final:{ score:"8 - 0", clubImg:"img/universitario.png", rivalImg:"img/universidaddechile.png",}   },
+        { year:1944, name:"Copa Efemérides", final:{ score:"5 - 3", clubImg:"img/universitario.png", rivalImg:"img/racing.png",}   },
+        { year:1950, name:"Amistoso - SM. de Tucumán", final:{ score:"? - ?", clubImg:"img/universitario.png", rivalImg:"img/tucuman.png",}   },
+        { year:1953, name:"Copa Despedida de Lolo", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:1955, name:"Evita Perón", final:{ score:"0 - 0", clubImg:"img/universitario.png", rivalImg:"img/huracan.png",}   },
+        { year:1955, name:"Evita Perón", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/lanus.png",}   },
+        { year:1961, name:"Amistoso Internacional", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/peñarol.png",}   },
+        { year:1990, name:"Copa Clásica", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:1992, name:"Copa Clásica", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:1998, name:"Copa Clásica", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:1999, name:"Copa Inmigración China", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2009, name:"Copa Líbero", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/aurich.png",}   },
+        { year:2011, name:"Copa San Ignacio de Loyola", final:{ score:"0 - 0", clubImg:"img/universitario.png", rivalImg:"img/cni.png",}   },
+        { year:2011, name:"Copa Submarinos Peruanos", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2011, name:"Copa ISP", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
+        { year:2013, name:"Copa Piers", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/aurich.png",}   },
+        { year:2013, name:"Copa Diaire", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/utc.png",}   },
+        { year:2013, name:"Copa Advance", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/galvez.png",}   },
+        { year:2013, name:"Copa Trinchera Norte", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/leondehuanuco.png",}   },
+        { year:2014, name:"Copa Cirugía Peruana", final:{ score:"0 - 0", clubImg:"img/universitario.png", rivalImg:"img/utc.png",}   },
+        { year:2016, name:"Copa Chavín de Huántar", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}   },
+        { year:2016, name:"Diario Oficial El Peruano", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/municipal.png",}   },
+        { year:2016, name:"Copa Mall del Sur", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2016, name:"Copa Pionier", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/municipal.png",}   },
+        { year:2016, name:"Copa AOC", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
+        { year:2016, name:"Copa ACCUD", final:{ score:"2 - 2", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
+        { year:2017, name:"Copa Chavín de Huántar", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/utc.png",}   },
+        { year:2019, name:"Copa Chavín de Huántar", final:{ score:"4 - 0", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
+        { year:2023, name:"Noche Poeta", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}   },
+        { year:2024, name:"Noche Poeta", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}   },
+        { year:2024, name:"Copa Zapping", final:{ score:"0:4 - 0:2", clubImg:"img/universitario.png", rivalImg:"img/cienciano.png",}   },
+      ]
     }
+  ]
+}
+
+  ],
+
+
+reserva: [
+{
+  count: 2,
+  eyebrow: "Torneos amistosos",
+  title: "Torneos : Copas",
+  groups: [
+    {
+      label: "Torneos Nacionales",
+      titles: [
+        { year:2024, name:"Perú Champs", final:{ score:"1:4 - 1:3", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
+      ]
+    },
+    {
+      label: "Torneos Internacionales",
+      titles: [
+        { year:2025, name:"Copa Plata Adidas Cup", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/cruzazul.png",}   },
+      ]
+    }
+  ]
+},
+
+
+],
+
+
+voley: [
+{
+  count: 1,
+  eyebrow: "Torneos amistosos",
+  title: "Torneos : Copas",
+      titles: [
+        { year:2025, name:'Copa "Gigantes del Cenepa"', final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/atenea.png",}   },
+    ]
+},
+ ],
+
+ };
+
+const trophyFallbackSVG = `
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 6H34V16C34 22.6274 29.5228 28 24 28C18.4772 28 14 22.6274 14 16V6Z" fill="currentColor"/>
+  <path d="M14 8H8V12C8 16 11 19 14 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M34 8H40V12C40 16 37 19 34 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="21" y="28" width="6" height="8" fill="currentColor"/>
+  <path d="M15 40H33L31 36H17L15 40Z" fill="currentColor"/>
+  <rect x="12" y="40" width="24" height="3.5" rx="1" fill="currentColor"/>
+</svg>`;
+ 
+const recordIconSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M17 4H7v6a5 5 0 0 0 10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4M17 5h3v2a4 4 0 0 1-3.4 4"/></svg>`;
+ 
+function trophyCell(item){
+  if(item.trophyImg){
+    return `<div class="trophy-mini">
+      <div class="glow"></div>
+      <img src="${item.trophyImg}" alt="Trofeo ${item.year}"
+           onerror="this.outerHTML='${trophyFallbackSVG.replace(/'/g,"\\'")}'; this.parentElement.style.color='var(--gold-bright)';">
+    </div>`;
+  }
+  return `<div class="trophy-mini" style="color:var(--gold-bright)">
+    <div class="glow"></div>
+    ${trophyFallbackSVG}
+  </div>`;
+}
+ 
+function finalRow(item){
+  if(!item.final) return `<div class="final-row"></div>`;
+
+  const club = item.final.clubImg
+    ? `<img class="rival-crest" src="${item.final.clubImg}" alt="">`
+    : "";
+
+  const rival = item.final.rivalImg
+    ? `<img class="rival-crest" src="${item.final.rivalImg}" alt=""
+         onerror="this.outerHTML='<div class=&quot;rival-crest fallback&quot;>${(item.final.rivalAbbr||'??').slice(0,2).toUpperCase()}</div>'">`
+    : (item.final.rivalAbbr ? `<div class="rival-crest fallback">${item.final.rivalAbbr.slice(0,2).toUpperCase()}</div>` : "");
+
+  return `<div class="final-row">${club}<span class="score">${item.final.score}</span>${rival}</div>`;
+}
+
+function cardHTML(item){
+  return `
+    <div class="card1">
+      <div class="card1-top">
+        <div class="year">${item.year}</div>
+        ${trophyCell(item)}
+      </div>
+      <div class="name">${item.name}</div>
+      ${finalRow(item)}
+    </div>
+  `;
+}
+ 
+const content = document.getElementById('content');
+ 
+function render(cat){
+  content.innerHTML = "";
+  const sections = DATA[cat] || [];
+  if(!sections.length){
+    content.innerHTML = `<div class="section show" style="text-align:center; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:13px; padding:60px 20px;">
+      Todavía no hay títulos cargados en esta categoría.
+    </div>`;
+    return;
+  }
+ 
+  sections.forEach(sec => {
+    const section = document.createElement('section');
+    section.className = 'section';
+ 
+    let body = '';
+    if(sec.groups){
+      // Varios subtítulos dentro de la misma sección
+      body = sec.groups.map(g => `
+        <div class="group-label">${g.label}</div>
+        <div class="grid">${g.titles.map(cardHTML).join('')}</div>
+      `).join('');
+    } else {
+      // Formato clásico: una sola grilla
+      body = `<div class="grid">${sec.titles.map(cardHTML).join('')}</div>`;
+    }
+ 
+    section.innerHTML = `
+      <div class="section-head">
+        <div class="tally">
+          <div class="tally-num">${sec.count}</div>
+          <div class="tally-text">
+            <div class="eyebrow">${sec.eyebrow}</div>
+            <div class="title">${sec.title}</div>
+          </div>
+        </div>
+        ${sec.record ? `<div class="record-badge">${recordIconSVG}${sec.record}</div>` : ""}
+      </div>
+      ${body}
+    `;
+    content.appendChild(section);
+  });
+ 
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.section').forEach((el,i) => {
+      setTimeout(() => el.classList.add('show'), i * 90);
+    });
   });
 }
-document.addEventListener('DOMContentLoaded', aplicarEscudos);
+ 
+document.getElementById('tabs').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.cat);
+});
+ 
+render('masculino');
+ 
+
 </script>
+
 </body>
 </html>

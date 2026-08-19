@@ -103,10 +103,12 @@
           <div class="controls">
             <div class="select-wrap">
               <select id="viewSelect">
+                <option value="Fase II" selected>Fase II</option>
                 <option value="acumulado" selected>Acumulado</option>
                 <option value="sub18">Overview Sub-18</option>
                 <option value="sub16">Overview Sub-16</option>
                 <option value="Liga Nacional Juvenil">Liga Nacional Juvenil</option>
+
               </select>
             </div>
             <div class="select-wrap">
@@ -527,7 +529,7 @@ async function render() {
   const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
   // Vista de partidos — no tocar
-  if (!["acumulado", "sub18", "sub16"].includes(view)) return;
+ if (!["acumulado", "sub18", "sub16", "Fase II"].includes(view)) return;
 
   tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
 
@@ -540,14 +542,16 @@ async function render() {
 
   let rows = [];
 
-  if (view === "sub18") {
-    rows = data.filter(r => r.categoria === "sub18");
-  } else if (view === "sub16") {
-    rows = data.filter(r => r.categoria === "sub16");
-  } else {
+if (view === "sub18") {
+  rows = data.filter(r => r.categoria === "sub18");
+} else if (view === "sub16") {
+  rows = data.filter(r => r.categoria === "sub16");
+} else if (view === "Fase II") {
+  rows = data.filter(r => r.categoria === "Fase II");
+} else {
     // Acumulado: sumar sub18 + sub16 por equipo
     const map = {};
-    data.forEach(r => {
+     data.filter(r => r.categoria === "sub18" || r.categoria === "sub16").forEach(r => {
       if (!map[r.equipo]) {
         map[r.equipo] = { name: r.equipo, logo: `img/${r.logo}`, pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"" };
       }
@@ -587,6 +591,10 @@ async function render() {
     return b.gf - a.gf;
   });
 
+  if (view === "Fase II") {
+    rows.forEach((t, i) => { t.zone = i < 2 ? "cl" : ""; });
+  }
+
   tbody.innerHTML = "";
   rows.forEach((t, i) => {
     const pts = t.g*3+t.e;
@@ -594,8 +602,8 @@ async function render() {
     const dgStr = dg>0?"+"+dg:String(dg);
     const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
     const last5 = (t.last||"").split("").slice(-5).map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = (view === "acumulado" && t.zone) ? "zone-"+t.zone : "";
-
+    const zClass = ((view === "acumulado" || view === "Fase II") && t.zone) ? "zone-"+t.zone : "";
+    
     tbody.insertAdjacentHTML("beforeend", `
       <tr class="${zClass}">
         <td class="td-pos">${i+1}</td>
@@ -761,7 +769,7 @@ async function render() {
 
   function actualizarTablas() {
     const liga = filtroLiga.value;
-    const esTablaPos = ["acumulado", "sub18", "sub16"].includes(liga);
+    const esTablaPos = ["acumulado", "sub18", "sub16", "Fase II"].includes(liga);
     
     if (esTablaPos) {
       tablaPosiciones.style.display = "block";
@@ -806,7 +814,7 @@ async function render() {
   filtroLiga.addEventListener("change", actualizarTablas);
 
   window.addEventListener("DOMContentLoaded", () => {
-    filtroLiga.value = "acumulado";
+    filtroLiga.value = "Fase II";
     filtroAnio.value = "2026";
     actualizarTablas();
   });

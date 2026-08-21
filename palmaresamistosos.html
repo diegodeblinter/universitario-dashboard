@@ -52,9 +52,289 @@ body { visibility: hidden; }
   object-fit: contain;           /* evita que se estire/deforme */
   display: block;
 }
+
+
+
+
+
+
+
+
+
+  :root {
+    --fondo: #191d29;
+    --panel: #191d29;
+    --panel-izq: #191d29;
+    --borde: #131318;
+    --azul: #eeb20c;
+    --azul-claro: #5293cf;
+    --texto: #f2f2f4;
+    --texto-tenue: #8a8a92;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+
+
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: #06327e;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin: 6px 0 8px;
+  }
+
+  .header p {
+    color: var(--texto-tenue);
+    font-size: 0.85rem;
+  }
+
+.grid {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  height: auto;
+  min-height: 190px;
+}
+
+  /* ---------- TARJETA ---------- */
+  .palmares-page .card {
+    display: flex;
+    background: #191d29;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 200px; /* altura FIJA: ninguna imagen puede agrandar la tarjeta */
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .palmares-page .card-imagen {
+    flex: 0 0 30%;
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 30%, #191d29, transparent 60%),
+      #191d29;
+    display: flex;
+    align-items: flex-end;   /* todos los trofeos "paran" sobre la misma base */
+    justify-content: center;
+    padding: 16px;
+    overflow: hidden; /* la imagen nunca se sale del recuadro */
+  }
+
+  .card-imagen img {
+    max-width: 140%;
+    max-height: 140%; /* nunca puede superar el alto fijo de .card-imagen */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    transform: scale(var(--escala, 1)); /* zoom individual, solo afecta a esta imagen */
+    transform-origin: center bottom; /* crece hacia arriba, manteniendo la base fija */
+  }
+
+  .palmares-page .card-cuerpo {
+    flex: 1;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .anio-pill {
+    display: inline-block;
+    align-self: flex-start;
+    background: linear-gradient(135deg, var(--azul-claro), var(--azul));
+    color: #111111;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    padding: 2px 12px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+  }
+
+  .nombre-torneo {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--texto);
+    line-height: 1.25;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .separador {
+    height: 1px;
+    background: var(--borde);
+    margin-bottom: 8px;
+  }
+
+  .detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-bottom: 10px;
+  }
+
+  .detalle .etiqueta {
+     font-size: 0.45rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--texto-tenue);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .detalle .valor {
+  font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--texto);
+  }
+
+  /* ---------- ECUALIZADOR DECORATIVO ---------- */
+  .ecualizador {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 18px;
+    opacity: 0.85;
+  }
+
+  .ecualizador span {
+    flex: 1;
+    background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+  .sin-resultados {
+    text-align: center;
+    color: var(--texto-tenue);
+    font-size: 0.9rem;
+    padding: 60px 20px;
+  }
+
+  /* ---------- CARD GRANDE QUE AGRUPA UN TIPO DE TORNEO ---------- */
+  .grupo-card {
+    max-width: 1610px;
+    margin: 0 auto 26px;
+    background: linear-gradient(180deg, #1f2a3d, #1f2a3d);
+  
+    border-radius: 22px;
+    padding: 26px 26px 30px;
+  }
+
+  .grupo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+
+  .grupo-titulo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .grupo-numero {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #eeb20c;
+    line-height: 1;
+  }
+
+  .grupo-textos .grupo-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: #eeb20c;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .grupo-textos .grupo-titulo {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--texto);
+  }
+
+  .grupo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #eeb20c, #eeb20c);
+    color: #201703;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Sub-secciones dentro de un mismo grupo (ej. Apertura / Clausura) */
+  .subgrupo-titulo {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #f3dfaa;
+    margin: 22px 0 12px;
+  }
+
+  .subgrupo-titulo:first-child {
+    margin-top: 0;
+  }
+
+  @media (max-width: 180px) {
+    .card { flex-direction: column; height: auto; }
+    .card-imagen { flex: none; padding: 16px; height: 120px; }
+    .detalles { grid-template-columns: 1fr; }
+  }
+
+.palmares-page .wrap,
+.palmares-page .container,
+.palmares-page .grupo-card {
+  width: 100%;
+  max-width: 1900px;
+}
+
+
+.grid-grupos {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
 </style>
 </head>
 <body>
+
 <div class="app">
 
 <!-- ══ MENU ══ -->
@@ -101,17 +381,21 @@ body { visibility: hidden; }
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
       Masculino
     </button>
+
     <button class="tab" data-cat="reserva">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
       Reserva
     </button>
+
     <button class="tab" data-cat="voley">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M17 5h3v2a4 4 0 0 1-3.4 4" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="10" y="14" width="4" height="4"/><path d="M8 21h8l-1-3H9l-1 3z"/></svg>
       Vóley
     </button>
   </nav>
 
-  <main id="content"></main>
+  <!-- IMPORTANTE: este es el contenedor donde se dibujan las tarjetas.
+       Debe existir con id="grid" y class="grid" para que el script las encuentre. -->
+  <div class="grid-grupos" id="grid"></div>
 
  
          </div>
@@ -136,8 +420,6 @@ body { visibility: hidden; }
 </div>
 
 </div><!-- /app -->
-
-
 
 
 
@@ -178,7 +460,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
   });
 });
-  
+ 
 // ── SIDEBAR
 fetch('sidebar.html')
   .then(res => res.text())
@@ -211,230 +493,287 @@ fetch('sidebar.html')
   });
  
  
-/* ============================================================
-   DATA — un objeto por categoría (masculino, femenino, ...).
-   Cada categoría tiene una o más secciones (torneos nacionales,
-   internacionales, etc). Cada sección puede venir de dos formas:
-     - "titles": lista plana de títulos (formato clásico)
-     - "groups": lista de subgrupos, cada uno con su "label" y su
-       propia lista de "titles" (para separar Apertura/Clausura, etc.)
-   Cada título admite:
-     year, name, trophyImg (opcional), final: { score, rivalImg, rivalAbbr } (opcional)
-   Si trophyImg / rivalImg no existen o fallan al cargar,
-   se reemplazan automáticamente por un ícono de respaldo.
-   ============================================================ */
-const DATA = {
-  masculino: [
-{
-  count: 43,
-  eyebrow: "Torneos amistosos",
-  title: "Torneos : Copas",
-  groups: [
-    {
-      label: "Torneos Nacionales",
-      titles: [
-        { year:1951, name:"Copa Dorada", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:1960, name:"Torneo Relámpago", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/municipal.png",}   },
-        { year:2005, name:"Copa de Verano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:2009, name:"Aniversario de Lima Cricket FC", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
-      ]
-    },
-    {
-      label: "Torneos Internacionales",
-      titles: [
-        { year:1934, name:"Cuadrangular Escudo de Oro", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:1937, name:"Torneo Presidente de la República", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/cristobal.png",}   },
-        { year:1974, name:"Inauguración Estadio Alianza Lima", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/nacionaluruguay.png",}   },
-        { year:2000, name:"Copa El Gráfico-Perú", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/universidaddechile.png",}   },
-        { year:2006, name:"Aniversario de Sporting Cristal", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:2011, name:"Noche Crema", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/cali.png",}   },
-        { year:"2020-II", name:"Copa San Juan", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/huracan.png",}   },
-      ]
-    },
-    {
-      label: "Otros Trofeos",
-      titles: [
-        { year:1934, name:"Exteriores de Chile", final:{ score:"8 - 0", clubImg:"img/universitario.png", rivalImg:"img/universidaddechile.png",}   },
-        { year:1944, name:"Copa Efemérides", final:{ score:"5 - 3", clubImg:"img/universitario.png", rivalImg:"img/racing.png",}   },
-        { year:1950, name:"Amistoso - SM. de Tucumán", final:{ score:"? - ?", clubImg:"img/universitario.png", rivalImg:"img/tucuman.png",}   },
-        { year:1953, name:"Copa Despedida de Lolo", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:1955, name:"Evita Perón", final:{ score:"0 - 0", clubImg:"img/universitario.png", rivalImg:"img/huracan.png",}   },
-        { year:1955, name:"Evita Perón", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/lanus.png",}   },
-        { year:1961, name:"Amistoso Internacional", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/peñarol.png",}   },
-        { year:1990, name:"Copa Clásica", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:1992, name:"Copa Clásica", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:1998, name:"Copa Clásica", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:1999, name:"Copa Inmigración China", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2009, name:"Copa Líbero", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/aurich.png",}   },
-        { year:2011, name:"Copa San Ignacio de Loyola", final:{ score:"0 - 0", clubImg:"img/universitario.png", rivalImg:"img/cni.png",}   },
-        { year:2011, name:"Copa Submarinos Peruanos", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2011, name:"Copa ISP", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
-        { year:2013, name:"Copa Piers", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/aurich.png",}   },
-        { year:2013, name:"Copa Diaire", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/utc.png",}   },
-        { year:2013, name:"Copa Advance", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/galvez.png",}   },
-        { year:2013, name:"Copa Trinchera Norte", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/leondehuanuco.png",}   },
-        { year:2014, name:"Copa Cirugía Peruana", final:{ score:"0 - 0", clubImg:"img/universitario.png", rivalImg:"img/utc.png",}   },
-        { year:2016, name:"Copa Chavín de Huántar", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}   },
-        { year:2016, name:"Diario Oficial El Peruano", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/municipal.png",}   },
-        { year:2016, name:"Copa Mall del Sur", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2016, name:"Copa Pionier", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/municipal.png",}   },
-        { year:2016, name:"Copa AOC", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2016, name:"Copa ACCUD", final:{ score:"2 - 2", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
-        { year:2017, name:"Copa Chavín de Huántar", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/utc.png",}   },
-        { year:2019, name:"Copa Chavín de Huántar", final:{ score:"4 - 0", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
-        { year:2023, name:"Noche Poeta", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}   },
-        { year:2024, name:"Noche Poeta", final:{ score:"1 - 1", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}   },
-        { year:2024, name:"Copa Zapping", final:{ score:"0:4 - 0:2", clubImg:"img/universitario.png", rivalImg:"img/cienciano.png",}   },
-      ]
+
+
+
+
+
+
+    // ==========================================================
+    // EDITA ESTA LISTA con tus trofeos.
+    // "imagen": ruta a tu imagen (ej. "trofeos/liga2023.png")
+    // "desenlace": resultado (ej. "Campeón", "Subcampeón")
+    // "organizacion": entidad organizadora (ej. "Federación Peruana de Fútbol")
+    // "categoria": OBLIGATORIO. Debe ser una de: "masculino", "femenino",
+    //              "reserva", "futsal", "voley" — según a qué pestaña pertenece.
+    // "grupo": OBLIGATORIO. Nombre del card grande que agrupa este trofeo
+    //          (ej. "Primera División del Perú", "Torneos Amistosos", "Copas").
+    //          Todos los trofeos con el mismo "grupo" (y misma categoría)
+    //          se dibujan juntos dentro de un mismo card grande.
+    // "subgrupo": OPCIONAL. Si dentro de un grupo querés sub-secciones
+    //             (ej. "Torneo Apertura" / "Torneo Clausura"), poné este campo.
+    // "escala": OPCIONAL. Zoom individual solo para esa imagen (no afecta a las demás).
+    //           1 = tamaño normal, 1.3 = 30% más grande, 0.9 = 10% más chica, etc.
+    // ==========================================================
+
+    // Config visual de cada "grupo" (card grande). Si un grupo no está acá,
+    // se usan los valores por defecto (eyebrow "Torneos", sin badge).
+    const gruposConfig = {
+      "Torneos Amistosos": { eyebrow: "Torneos Amistosos", badge: null},
+
+    };
+
+    const trofeos = [
+      {nombre: "Copa Dorada",anio: 1951,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Torneos Nacionales"},
+      {nombre: "Torneo Relámpago",anio: 1960,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Torneos Nacionales"},
+      {nombre: "Copa de Verano",anio: 2005,imagen: "img/copas/verano.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Torneos Amistosos", subgrupo: "Torneos Nacionales"},
+      {nombre: "Aniversario de Lima Cricket FC",anio: 2009,imagen: "img/copas/limacricket.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Torneos Amistosos", subgrupo: "Torneos Nacionales"},
+
+      {nombre: "Cuadrangular Escudo de Oro",anio: 1934,imagen: "img/copas/escudooro.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+      {nombre: "T. Presidente de la República",anio: 1937,imagen: "img/copas/copapresi.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+      {nombre: "Inaugu. Estadio Alianza Lima",anio: 1974,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+      {nombre: "Copa El Gráfico-Perú",anio: 2000,imagen: "img/copas/elgrafico.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.0,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+      {nombre: "Aniversario de Sporting Cristal",anio: 2006,imagen: "img/copas/copa50cristal.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.3,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+      {nombre: "Noche Crema",anio: 2011,imagen: "img/copas/copacrema.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+      {nombre: "Copa San Juan",anio: "2020-II",imagen: "img/copas/copasanjuan.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.7,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},    
+  
+      {nombre: "Exteriores de Chile",anio: 1934,imagen: "img/copas/exterioreschile.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Efemérides",anio: 1944,imagen: "img/copas/Efemerides.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.7,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Amistoso - SM. de Tucumán",anio: 1950,imagen: "img/copas/tucuman.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Despedida de Lolo",anio: 1953,imagen: "img/copas/1953lolo.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.3,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Evita Perón",anio: 1955,imagen: "img/copas/evitaperon1955.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.7,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Evita Perón",anio: 1955,imagen: "img/copas/evitaperon1955v2.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.3,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Amistoso Internacional",anio: 1961,imagen: "img/copas/peñarol.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.6,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Clásica",anio: 1990,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Clásica",anio: 1992,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa AEROPERU",anio: 1998,imagen: "img/copas/aereoperu.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Inmigración China",anio: 1999,imagen: "img/copas/inmigracionchina.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Líbero",anio: 2009,imagen: "img/copas/copalibero.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa San Ignacio de Loyola",anio: 2011,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Submarinos Peruanos",anio: 2011,imagen: "img/copas/copasubmarino.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa ISP",anio: 2011,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Pieers",anio: 2013,imagen: "img/copas/copapieers.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.55,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Diaire",anio: 2013,imagen: "img/copas/copadiaire.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Advance",anio: 2013,imagen: "img/copas/advance.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.1,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Trinchera Norte",anio: 2013,imagen: "img/copas/trincheranorte.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Cirugía Peruana",anio: 2014,imagen: "img/copas/.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Chavín de Huántar",anio: 2016,imagen: "img/copas/chavin2014.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.1,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Diario Oficial El Peruano",anio: 2016,imagen: "img/copas/diarioperuano.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Mall del Sur",anio: 2016,imagen: "img/copas/malldelsur.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Pionier",anio: 2016,imagen: "img/copas/pioner.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa AOC",anio: 2016,imagen: "img/copas/copaaoc.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa ACCUD",anio: 2016,imagen: "img/copas/copaaccud.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Chavín de Huántar",anio: 2017,imagen: "img/copas/chavin2017.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.0,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Chavín de Huántar",anio: 2019,imagen: "img/copas/chavin2019.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.0,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Noche Poeta",anio: 2023,imagen: "img/copas/nochepoeta1.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Noche Poeta",anio: 2023,imagen: "img/copas/nochepoeta1.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+      {nombre: "Copa Zapping",anio: 2024,imagen: "img/copas/copazapping.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.0,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},    
+
+
+
+      {nombre: "Perú CHAMPS",anio: 2024,imagen: "img/copas/peruchamps.png",desenlace: "Campeón",organizacion: "A.S.E Perú Champs",categoria: "reserva",escala: 1.1,grupo: "Torneos Amistosos", subgrupo: "Torneos Nacionales"},
+      {nombre: "Copa Plata Adidas Cup",anio: 2025,imagen: "img/copas/adidascup.png",desenlace: "Campeón",organizacion: "ADIDAS",categoria: "reserva",escala: 1.5,grupo: "Torneos Amistosos", subgrupo: "Torneos Internacionales"},
+
+
+
+      {nombre: "Copa “Gigantes del Cenepa” ",anio: 2025,imagen: "img/copas/cenepa.png",desenlace: "Campeón",organizacion: "Liga Profesional",categoria: "voley",escala: 0.9,grupo: "Torneos Amistosos", subgrupo: "Otros Trofeos"},
+
+    ];
+
+    const ICONO_RESPALDO = 'https://cdn-icons-png.flaticon.com/512/616/616489.png';
+    const grid = document.getElementById('grid');
+
+    // ==========================================================
+    // AUTO-RECORTE VISUAL (no toca los archivos originales):
+    // Detecta el espacio transparente (o de fondo uniforme) alrededor
+    // del trofeo y recorta SOLO en pantalla, para que todas las
+    // imágenes "llenen" el mismo recuadro por igual.
+    // ==========================================================
+    function recortarImagenEnCanvas(imgEl) {
+      const w = imgEl.naturalWidth;
+      const h = imgEl.naturalHeight;
+      if (!w || !h) return;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      try {
+        ctx.drawImage(imgEl, 0, 0);
+        const { data } = ctx.getImageData(0, 0, w, h);
+
+        let tieneAlfa = false;
+        for (let i = 3; i < data.length; i += 4 * 97) {
+          if (data[i] < 250) { tieneAlfa = true; break; }
+        }
+
+        let minX = w, minY = h, maxX = -1, maxY = -1;
+
+        if (tieneAlfa) {
+          const UMBRAL_ALFA = 10;
+          for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+              const idx = (y * w + x) * 4;
+              if (data[idx + 3] > UMBRAL_ALFA) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+        } else {
+          const br = data[0], bg = data[1], bb = data[2];
+          const TOLERANCIA = 18;
+          for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+              const idx = (y * w + x) * 4;
+              const dr = Math.abs(data[idx] - br);
+              const dg = Math.abs(data[idx + 1] - bg);
+              const db = Math.abs(data[idx + 2] - bb);
+              if (dr > TOLERANCIA || dg > TOLERANCIA || db > TOLERANCIA) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+        }
+
+        if (maxX < minX || maxY < minY) return;
+
+        const MARGEN = 2;
+        minX = Math.max(0, minX - MARGEN);
+        minY = Math.max(0, minY - MARGEN);
+        maxX = Math.min(w - 1, maxX + MARGEN);
+        maxY = Math.min(h - 1, maxY + MARGEN);
+
+        const cw = maxX - minX + 1;
+        const ch = maxY - minY + 1;
+
+        if (cw >= w * 0.98 && ch >= h * 0.98) return;
+
+        const recorte = document.createElement('canvas');
+        recorte.width = cw;
+        recorte.height = ch;
+        recorte.getContext('2d').drawImage(canvas, minX, minY, cw, ch, 0, 0, cw, ch);
+
+        imgEl.dataset.recortada = '1';
+        imgEl.src = recorte.toDataURL('image/png');
+      } catch (e) {
+        console.warn('No se pudo auto-recortar', imgEl.src, e);
+      }
     }
-  ]
-}
 
-  ],
-
-
-reserva: [
-{
-  count: 2,
-  eyebrow: "Torneos amistosos",
-  title: "Torneos : Copas",
-  groups: [
-    {
-      label: "Torneos Nacionales",
-      titles: [
-        { year:2024, name:"Perú Champs", final:{ score:"1:4 - 1:3", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
-      ]
-    },
-    {
-      label: "Torneos Internacionales",
-      titles: [
-        { year:2025, name:"Copa Plata Adidas Cup", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/cruzazul.png",}   },
-      ]
+    function barrasAleatorias(cantidad) {
+      let html = '';
+      for (let i = 0; i < cantidad; i++) {
+        const alto = 30 + Math.round(Math.random() * 70);
+        html += `<span style="height:${alto}%"></span>`;
+      }
+      return html;
     }
-  ]
-},
 
-
-],
-
-
-voley: [
-{
-  count: 1,
-  eyebrow: "Torneos amistosos",
-  title: "Torneos : Copas",
-      titles: [
-        { year:2025, name:'Copa "Gigantes del Cenepa"', final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/atenea.png",}   },
-    ]
-},
- ],
-
- };
-
-const trophyFallbackSVG = `
-<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M14 6H34V16C34 22.6274 29.5228 28 24 28C18.4772 28 14 22.6274 14 16V6Z" fill="currentColor"/>
-  <path d="M14 8H8V12C8 16 11 19 14 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M34 8H40V12C40 16 37 19 34 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-  <rect x="21" y="28" width="6" height="8" fill="currentColor"/>
-  <path d="M15 40H33L31 36H17L15 40Z" fill="currentColor"/>
-  <rect x="12" y="40" width="24" height="3.5" rx="1" fill="currentColor"/>
-</svg>`;
- 
-const recordIconSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M17 4H7v6a5 5 0 0 0 10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4M17 5h3v2a4 4 0 0 1-3.4 4"/></svg>`;
- 
-function trophyCell(item){
-  if(item.trophyImg){
-    return `<div class="trophy-mini">
-      <div class="glow"></div>
-      <img src="${item.trophyImg}" alt="Trofeo ${item.year}"
-           onerror="this.outerHTML='${trophyFallbackSVG.replace(/'/g,"\\'")}'; this.parentElement.style.color='var(--gold-bright)';">
-    </div>`;
-  }
-  return `<div class="trophy-mini" style="color:var(--gold-bright)">
-    <div class="glow"></div>
-    ${trophyFallbackSVG}
-  </div>`;
-}
- 
-function finalRow(item){
-  if(!item.final) return `<div class="final-row"></div>`;
-
-  const club = item.final.clubImg
-    ? `<img class="rival-crest" src="${item.final.clubImg}" alt="">`
-    : "";
-
-  const rival = item.final.rivalImg
-    ? `<img class="rival-crest" src="${item.final.rivalImg}" alt=""
-         onerror="this.outerHTML='<div class=&quot;rival-crest fallback&quot;>${(item.final.rivalAbbr||'??').slice(0,2).toUpperCase()}</div>'">`
-    : (item.final.rivalAbbr ? `<div class="rival-crest fallback">${item.final.rivalAbbr.slice(0,2).toUpperCase()}</div>` : "");
-
-  return `<div class="final-row">${club}<span class="score">${item.final.score}</span>${rival}</div>`;
-}
-
-function cardHTML(item){
-  return `
-    <div class="card1">
-      <div class="card1-top">
-        <div class="year">${item.year}</div>
-        ${trophyCell(item)}
-      </div>
-      <div class="name">${item.name}</div>
-      ${finalRow(item)}
-    </div>
-  `;
-}
- 
-const content = document.getElementById('content');
- 
-function render(cat){
-  content.innerHTML = "";
-  const sections = DATA[cat] || [];
-  if(!sections.length){
-    content.innerHTML = `<div class="section show" style="text-align:center; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:13px; padding:60px 20px;">
-      Todavía no hay títulos cargados en esta categoría.
-    </div>`;
-    return;
-  }
- 
-  sections.forEach(sec => {
-    const section = document.createElement('section');
-    section.className = 'section';
- 
-    let body = '';
-    if(sec.groups){
-      // Varios subtítulos dentro de la misma sección
-      body = sec.groups.map(g => `
-        <div class="group-label">${g.label}</div>
-        <div class="grid">${g.titles.map(cardHTML).join('')}</div>
-      `).join('');
-    } else {
-      // Formato clásico: una sola grilla
-      body = `<div class="grid">${sec.titles.map(cardHTML).join('')}</div>`;
-    }
- 
-    section.innerHTML = `
-      <div class="section-head">
-        <div class="tally">
-          <div class="tally-num">${sec.count}</div>
-          <div class="tally-text">
-            <div class="eyebrow">${sec.eyebrow}</div>
-            <div class="title">${sec.title}</div>
+    // ==========================================================
+    // render(categoria): dibuja en #grid solo los trofeos de la
+    // categoría pedida, ordenados del más antiguo al más reciente.
+    // Esta es la función que faltaba: la llaman las pestañas y la
+    // línea render('masculino') de más abajo.
+    // ==========================================================
+    // Arma el HTML de una sola tarjeta de trofeo (la chica, con imagen)
+    function tarjetaTrofeoHTML(t) {
+      return `
+        <div class="card">
+          <div class="card-imagen">
+            <img src="${t.imagen}" alt="${t.nombre}"
+                 style="--escala: ${t.escala || 1};"
+                 onerror="this.src='${ICONO_RESPALDO}'"
+                 onload="if(!this.dataset.recortada){ recortarImagenEnCanvas(this); }">
+          </div>
+          <div class="card-cuerpo">
+            <span class="anio-pill">${t.anio}</span>
+            <div class="nombre-torneo">${t.nombre}</div>
+            <div class="separador"></div>
+            <div class="detalles">
+              <div class="detalle">
+                <div class="etiqueta">Desenlace</div>
+                <div class="valor">${t.desenlace}</div>
+              </div>
+              <div class="detalle">
+                <div class="etiqueta">Organización</div>
+                <div class="valor">${t.organizacion}</div>
+              </div>
+            </div>
+            <div class="ecualizador">${barrasAleatorias(28)}</div>
           </div>
         </div>
-        ${sec.record ? `<div class="record-badge">${recordIconSVG}${sec.record}</div>` : ""}
-      </div>
-      ${body}
-    `;
-    content.appendChild(section);
-  });
- 
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.section').forEach((el,i) => {
-      setTimeout(() => el.classList.add('show'), i * 90);
-    });
-  });
-}
+      `;
+    }
+
+    function render(categoria) {
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const filtrados = trofeos
+        .filter(t => t.categoria === categoria)
+        .sort((a, b) => a.anio - b.anio);
+
+      if (filtrados.length === 0) {
+        grid.innerHTML = '<div class="sin-resultados">Todavía no hay trofeos cargados en esta categoría.</div>';
+        return;
+      }
+
+      // Agrupamos por "grupo", preservando el orden de aparición
+      const grupos = new Map(); // nombreGrupo -> array de trofeos
+      filtrados.forEach(t => {
+        const nombreGrupo = t.grupo || 'Otros torneos';
+        if (!grupos.has(nombreGrupo)) grupos.set(nombreGrupo, []);
+        grupos.get(nombreGrupo).push(t);
+      });
+
+      grupos.forEach((trofeosDelGrupo, nombreGrupo) => {
+        const cfg = gruposConfig[nombreGrupo] || { eyebrow: 'Torneos', badge: null };
+
+        const grupoCard = document.createElement('div');
+        grupoCard.className = 'grupo-card';
+
+        // Dentro del grupo, sub-agrupamos por "subgrupo" (si existe)
+        const subgrupos = new Map();
+        trofeosDelGrupo.forEach(t => {
+          const nombreSub = t.subgrupo || null;
+          if (!subgrupos.has(nombreSub)) subgrupos.set(nombreSub, []);
+          subgrupos.get(nombreSub).push(t);
+        });
+
+        let cuerpoHTML = '';
+        subgrupos.forEach((lista, nombreSub) => {
+          if (nombreSub) {
+            cuerpoHTML += `<div class="subgrupo-titulo">${nombreSub}</div>`;
+          }
+          cuerpoHTML += `<div class="grid">${lista.map(tarjetaTrofeoHTML).join('')}</div>`;
+        });
+
+        grupoCard.innerHTML = `
+          <div class="grupo-header">
+            <div class="grupo-titulo-wrap">
+              <div class="grupo-numero">${trofeosDelGrupo.length}</div>
+              <div class="grupo-textos">
+                <div class="grupo-eyebrow">${cfg.eyebrow}</div>
+                <div class="grupo-titulo">${nombreGrupo}</div>
+              </div>
+            </div>
+            ${cfg.badge ? `<span class="grupo-badge">${cfg.badge}</span>` : ''}
+          </div>
+          ${cuerpoHTML}
+        `;
+
+        grid.appendChild(grupoCard);
+      });
+    }
+
+
  
 document.getElementById('tabs').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab');

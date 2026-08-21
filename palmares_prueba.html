@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palmarés del Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #0a0a0e;
+    --panel: #131318;
+    --panel-izq: #0e0e12;
+    --borde: #232329;
+    --azul: #0e505c;
+    --azul-claro: #0f80cc;
+    --texto: #f2f2f4;
+    --texto-tenue: #8a8a92;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Poppins', sans-serif;
+    padding: 40px 20px 70px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: #06327e;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin: 6px 0 8px;
+  }
+
+  .header p {
+    color: var(--texto-tenue);
+    font-size: 0.85rem;
+  }
+
+  .grid {
+    max-width: 1900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  /* ---------- TARJETA ---------- */
+  .card {
+    display: flex;
+    background: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    overflow: hidden;
+    height: 190px; /* altura FIJA: ninguna imagen puede agrandar la tarjeta */
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card-imagen {
+    flex: 0 0 35%;
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 30%, #131318, transparent 60%),
+      #131318;
+    display: flex;
+    align-items: flex-end;   /* todos los trofeos "paran" sobre la misma base */
+    justify-content: center;
+    padding: 28px;
+    overflow: hidden; /* la imagen nunca se sale del recuadro */
+  }
+
+  .card-imagen img {
+    max-width: 100%;
+    max-height: 100%; /* nunca puede superar el alto fijo de .card-imagen */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    transform: scale(var(--escala, 1)); /* zoom individual, solo afecta a esta imagen */
+    transform-origin: center bottom; /* crece hacia arriba, manteniendo la base fija */
+  }
+
+  .card-cuerpo {
+    flex: 1;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .anio-pill {
+    display: inline-block;
+    align-self: flex-start;
+    background: linear-gradient(135deg, var(--azul-claro), var(--azul));
+    color: #0c1a33;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    padding: 2px 12px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+  }
+
+  .nombre-torneo {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--texto);
+    line-height: 1.25;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .separador {
+    height: 1px;
+    background: var(--borde);
+    margin-bottom: 8px;
+  }
+
+  .detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-bottom: 10px;
+  }
+
+  .detalle .etiqueta {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--texto-tenue);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .detalle .valor {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--texto);
+  }
+
+  /* ---------- ECUALIZADOR DECORATIVO ---------- */
+  .ecualizador {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 18px;
+    opacity: 0.85;
+  }
+
+  .ecualizador span {
+    flex: 1;
+    background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 280px) {
+    .card { flex-direction: column; height: auto; }
+    .card-imagen { flex: none; padding: 16px; height: 120px; }
+    .detalles { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="eyebrow">Historial de títulos</div>
+    <h1>Palmarés</h1>
+    <p>Cada trofeo, una temporada conquistada.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <script>
+    // ==========================================================
+    // EDITA ESTA LISTA con tus trofeos.
+    // "imagen": ruta a tu imagen (ej. "trofeos/liga2023.png")
+    // "desenlace": resultado (ej. "Campeón", "Subcampeón")
+    // "organizacion": entidad organizadora (ej. "Federación Peruana de Fútbol")
+    // "escala": OPCIONAL. Zoom individual solo para esa imagen (no afecta a las demás).
+    //           1 = tamaño normal, 1.3 = 30% más grande, 0.9 = 10% más chica, etc.
+    // ==========================================================
+    const trofeos = [
+      {nombre: "Liga Provincial de Football",anio: 1929,imagen: "img/copas/1929.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Liga Provincial de Football",anio: 1934,imagen: "img/copas/1934.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Peruano",anio: 1939,imagen: "img/copas/1939.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Peruano",anio: 1941,imagen: "img/copas/1941.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Peruano",anio: 1945,imagen: "img/copas/1945.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.4},
+      {nombre: "Campeonato Peruano",anio: 1946,imagen: "img/copas/1946.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Peruano",anio: 1949,imagen: "img/copas/1949.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Peruano",anio: 1959,imagen: "img/copas/1959.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.4},
+      {nombre: "Campeonato Peruano",anio: 1960,imagen: "img/copas/1960.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.2},
+      {nombre: "Campeonato Peruano",anio: 1964,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1966,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1967,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1969,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1971,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1974,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1982,imagen: "img/copas/1982.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 1985,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1987,imagen: "img/copas/1987.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 1990,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.6},
+      {nombre: "Campeonato Descentralizado",anio: 1992,imagen: "img/copas/1992.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 1993,imagen: "img/copas/1993.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",escala: 1.2},
+      {nombre: "Campeonato Descentralizado",anio: 1998,imagen: "img/copas/1998.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 1999,imagen: "img/copas/1999.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 2000,imagen: "img/copas/2000.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 2009,imagen: "img/copas/2009.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Campeonato Descentralizado",anio: 2013,imagen: "img/copas/2013.png",desenlace: "Campeón",organizacion: "Federación de Fútbol"},
+      {nombre: "Fútbol Profesional Liga 1",anio: 2023,imagen: "img/copas/liga1_2026.png",desenlace: "Campeón",organizacion: "Liga Profesional"},
+      {nombre: "Fútbol Profesional Liga 1",anio: 2024,imagen: "img/copas/liga1_2026.png",desenlace: "Campeón",organizacion: "Liga Profesional"},
+      {nombre: "Fútbol Profesional Liga 1",anio: 2025,imagen: "img/copas/liga1_2026.png",desenlace: "Campeón",organizacion: "Liga Profesional"},
+    ];
+
+    const ICONO_RESPALDO = 'https://cdn-icons-png.flaticon.com/512/616/616489.png';
+    const grid = document.getElementById('grid');
+
+    // ==========================================================
+    // AUTO-RECORTE VISUAL (no toca los archivos originales):
+    // Detecta el espacio transparente (o de fondo uniforme) alrededor
+    // del trofeo y recorta SOLO en pantalla, para que todas las
+    // imágenes "llenen" el mismo recuadro por igual.
+    // ==========================================================
+    function recortarImagenEnCanvas(imgEl) {
+      const w = imgEl.naturalWidth;
+      const h = imgEl.naturalHeight;
+      if (!w || !h) return;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      try {
+        ctx.drawImage(imgEl, 0, 0);
+        const { data } = ctx.getImageData(0, 0, w, h);
+
+        // Detectamos si la imagen tiene canal alfa usable (PNG con transparencia)
+        let tieneAlfa = false;
+        for (let i = 3; i < data.length; i += 4 * 97) { // muestreo rápido
+          if (data[i] < 250) { tieneAlfa = true; break; }
+        }
+
+        let minX = w, minY = h, maxX = -1, maxY = -1;
+
+        if (tieneAlfa) {
+          // Bounding box de píxeles con alfa > umbral
+          const UMBRAL_ALFA = 10;
+          for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+              const idx = (y * w + x) * 4;
+              if (data[idx + 3] > UMBRAL_ALFA) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+        } else {
+          // Sin transparencia: comparamos contra el color de la esquina superior izquierda
+          const br = data[0], bg = data[1], bb = data[2];
+          const TOLERANCIA = 18;
+          for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+              const idx = (y * w + x) * 4;
+              const dr = Math.abs(data[idx] - br);
+              const dg = Math.abs(data[idx + 1] - bg);
+              const db = Math.abs(data[idx + 2] - bb);
+              if (dr > TOLERANCIA || dg > TOLERANCIA || db > TOLERANCIA) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+        }
+
+        // Si no se detectó contenido claro, dejamos la imagen tal cual
+        if (maxX < minX || maxY < minY) return;
+
+        // Un pequeño margen de seguridad para no cortar filos del trofeo
+        const MARGEN = 2;
+        minX = Math.max(0, minX - MARGEN);
+        minY = Math.max(0, minY - MARGEN);
+        maxX = Math.min(w - 1, maxX + MARGEN);
+        maxY = Math.min(h - 1, maxY + MARGEN);
+
+        const cw = maxX - minX + 1;
+        const ch = maxY - minY + 1;
+
+        // Si el recorte es prácticamente toda la imagen, no vale la pena
+        if (cw >= w * 0.98 && ch >= h * 0.98) return;
+
+        const recorte = document.createElement('canvas');
+        recorte.width = cw;
+        recorte.height = ch;
+        recorte.getContext('2d').drawImage(canvas, minX, minY, cw, ch, 0, 0, cw, ch);
+
+        imgEl.dataset.recortada = '1';
+        imgEl.src = recorte.toDataURL('image/png');
+      } catch (e) {
+        // Si el navegador bloquea el canvas (por CORS en imágenes externas), no pasa nada:
+        // la imagen simplemente se queda como estaba.
+        console.warn('No se pudo auto-recortar', imgEl.src, e);
+      }
+    }
+
+    function barrasAleatorias(cantidad) {
+      let html = '';
+      for (let i = 0; i < cantidad; i++) {
+        const alto = 30 + Math.round(Math.random() * 70);
+        html += `<span style="height:${alto}%"></span>`;
+      }
+      return html;
+    }
+
+    trofeos
+      .sort((a, b) => a.anio - b.anio) // del más antiguo al más reciente
+      .forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-imagen">
+            <img src="${t.imagen}" alt="${t.nombre}"
+                 style="--escala: ${t.escala || 1};"
+                 onerror="this.src='${ICONO_RESPALDO}'"
+                 onload="if(!this.dataset.recortada){ recortarImagenEnCanvas(this); }">
+          </div>
+          <div class="card-cuerpo">
+            <span class="anio-pill">${t.anio}</span>
+            <div class="nombre-torneo">${t.nombre}</div>
+            <div class="separador"></div>
+            <div class="detalles">
+              <div class="detalle">
+                <div class="etiqueta">Desenlace</div>
+                <div class="valor">${t.desenlace}</div>
+              </div>
+              <div class="detalle">
+                <div class="etiqueta">Organización</div>
+                <div class="valor">${t.organizacion}</div>
+              </div>
+            </div>
+            <div class="ecualizador">${barrasAleatorias(28)}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+
+      
+  </script>
+
+</body>
+</html>

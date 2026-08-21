@@ -61,13 +61,275 @@ body { visibility: hidden; }
 
 
 
+  :root {
+    --fondo: #191d29;
+    --panel: #191d29;
+    --panel-izq: #191d29;
+    --borde: #131318;
+    --azul: #eeb20c;
+    --azul-claro: #5293cf;
+    --texto: #f2f2f4;
+    --texto-tenue: #8a8a92;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
 
 
 
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: #06327e;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin: 6px 0 8px;
+  }
+
+  .header p {
+    color: var(--texto-tenue);
+    font-size: 0.85rem;
+  }
+
+.grid {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  height: auto;
+  min-height: 190px;
+}
+
+  /* ---------- TARJETA ---------- */
+  .palmares-page .card {
+    display: flex;
+    background: #191d29;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 200px; /* altura FIJA: ninguna imagen puede agrandar la tarjeta */
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .palmares-page .card-imagen {
+    flex: 0 0 30%;
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 30%, #191d29, transparent 60%),
+      #191d29;
+    display: flex;
+    align-items: flex-end;   /* todos los trofeos "paran" sobre la misma base */
+    justify-content: center;
+    padding: 16px;
+    overflow: hidden; /* la imagen nunca se sale del recuadro */
+  }
+
+  .card-imagen img {
+    max-width: 140%;
+    max-height: 140%; /* nunca puede superar el alto fijo de .card-imagen */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    transform: scale(var(--escala, 1)); /* zoom individual, solo afecta a esta imagen */
+    transform-origin: center bottom; /* crece hacia arriba, manteniendo la base fija */
+  }
+
+  .palmares-page .card-cuerpo {
+    flex: 1;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .anio-pill {
+    display: inline-block;
+    align-self: flex-start;
+    background: linear-gradient(135deg, var(--azul-claro), var(--azul));
+    color: #111111;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    padding: 2px 12px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+  }
+
+  .nombre-torneo {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--texto);
+    line-height: 1.25;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .separador {
+    height: 1px;
+    background: var(--borde);
+    margin-bottom: 8px;
+  }
+
+  .detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-bottom: 10px;
+  }
+
+  .detalle .etiqueta {
+     font-size: 0.45rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--texto-tenue);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .detalle .valor {
+  font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--texto);
+  }
+
+  /* ---------- ECUALIZADOR DECORATIVO ---------- */
+  .ecualizador {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 18px;
+    opacity: 0.85;
+  }
+
+  .ecualizador span {
+    flex: 1;
+    background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+  .sin-resultados {
+    text-align: center;
+    color: var(--texto-tenue);
+    font-size: 0.9rem;
+    padding: 60px 20px;
+  }
+
+  /* ---------- CARD GRANDE QUE AGRUPA UN TIPO DE TORNEO ---------- */
+  .grupo-card {
+    max-width: 1610px;
+    margin: 0 auto 26px;
+    background: linear-gradient(180deg, #1f2a3d, #1f2a3d);
+  
+    border-radius: 22px;
+    padding: 26px 26px 30px;
+  }
+
+  .grupo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+
+  .grupo-titulo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .grupo-numero {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #eeb20c;
+    line-height: 1;
+  }
+
+  .grupo-textos .grupo-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: #eeb20c;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .grupo-textos .grupo-titulo {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--texto);
+  }
+
+  .grupo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #eeb20c, #eeb20c);
+    color: #201703;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Sub-secciones dentro de un mismo grupo (ej. Apertura / Clausura) */
+  .subgrupo-titulo {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #f3dfaa;
+    margin: 22px 0 12px;
+  }
+
+  .subgrupo-titulo:first-child {
+    margin-top: 0;
+  }
+
+  @media (max-width: 180px) {
+    .card { flex-direction: column; height: auto; }
+    .card-imagen { flex: none; padding: 16px; height: 120px; }
+    .detalles { grid-template-columns: 1fr; }
+  }
+
+.palmares-page .wrap,
+.palmares-page .container,
+.palmares-page .grupo-card {
+  width: 100%;
+  max-width: 1900px;
+}
 
 
-
-
+.grid-grupos {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
 
 </style>
 </head>
@@ -137,7 +399,9 @@ body { visibility: hidden; }
     </button>
   </nav>
 
-  <main id="content"></main>
+  <!-- IMPORTANTE: este es el contenedor donde se dibujan las tarjetas.
+       Debe existir con id="grid" y class="grid" para que el script las encuentre. -->
+  <div class="grid-grupos" id="grid"></div>
 
  
          </div>
@@ -235,443 +499,355 @@ fetch('sidebar.html')
   });
  
  
-/* ============================================================
-   DATA — un objeto por categoría (masculino, femenino, ...).
-   Cada categoría tiene una o más secciones (torneos nacionales,
-   internacionales, etc). Cada sección puede venir de dos formas:
-     - "titles": lista plana de títulos (formato clásico)
-     - "groups": lista de subgrupos, cada uno con su "label" y su
-       propia lista de "titles" (para separar Apertura/Clausura, etc.)
-   Cada título admite:
-     year, name, trophyImg (opcional), final: { score, rivalImg, rivalAbbr } (opcional)
-   Si trophyImg / rivalImg no existen o fallan al cargar,
-   se reemplazan automáticamente por un ícono de respaldo.
-   ============================================================ */
-const DATA = {
-  masculino: [
-    {
-      count: 29,
-      eyebrow: "Torneos nacionales",
-      title: "Primera División del Perú",
-      record: "Récord nacional",
-      titles: [
-        { year:1929, name:"Liga Provincial de Football", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}  },
-        { year:1934, name:"Liga Provincial de Football", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:1939, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1941, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1945, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1946, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1949, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1959, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1960, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1964, name:"Campeonato Peruano", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1966, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1967, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1969, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1971, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1974, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1982, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1985, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}   },
-        { year:1987, name:"Campeonato Descentralizado", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:1990, name:"Campeonato Descentralizado", final:{ score:"4 - 2", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
-        { year:1992, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:1993, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:1998, name:"Campeonato Descentralizado", final:{ score:"3:4 - 3:2", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
-        { year:1999, name:"Campeonato Descentralizado", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2000, name:"Campeonato Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:2009, name:"Campeonato Descentralizado", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2013, name:"Campeonato Descentralizado", final:{ score:"1:5 - 1:4", clubImg:"img/universitario.png", rivalImg:"img/cuscofc.png",}   },
-        { year:2023, name:"Fútbol Profesional Liga 1", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        { year:2024, name:"Fútbol Profesional Liga 1", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:2025, name:"Fútbol Profesional Liga 1", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-      ]
-    },
- 
-    {
-      count: 13,
-      eyebrow: "Torneos cortos",
-      title: "Torneos Cortos",
-      record: "Récord nacional",
-      groups: [
-        {
-          label: "Torneo Apertura",
-          titles: [
-            { year:1998, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-            { year:1999, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-            { year:2000, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-            { year:2002, name:"Torneo Apertura", final:{ score:"1 - 0", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-            { year:2008, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2016, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2020, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2024, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2025, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-          ]
-        },
-        {
-          label: "Torneo Clausura",
-          titles: [
-            { year:2000, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2023, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2024, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-            { year:2025, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-          ]
-        }
-      ]
-    },
 
 
-{
-  count: 12,
-  eyebrow: "Torneos de la Liga",
-  title: "Torneos de la Liga",
-  groups: [
-    {
-      label: "Campeonato Regional del Perú",
-      titles: [
-        { year:1985, name:"Camp. Regional del Perú", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/cni.png",}   },
-        { year:1987, name:"Camp. Regional del Perú", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/unionhuaral.png",}   },
-        { year:1988, name:"Camp. Regional del Perú", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
-        { year:"1990 - II", name:"Camp. Regional del Perú", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
-      ]
-    },
-    {
-      label: "Torneo Regional · Zona Metropolitana",
-      titles: [
-        { year:1984, name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
-        { year:1987, name:"T. Regional Metropolitana", final:{ score:"2 - 0", clubImg:"img/universitario.png", rivalImg:"img/unionhuaral.png",}   },
-        { year:1988, name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
-        { year:"1989 - II", name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
-        { year:"1990 - I", name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}      },
-        { year:"1991 - II", name:"T. Regional Metropolitana", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-      ]
-    },
-    {
-      label: "Torneo Descentralizado",
-      titles: [
-        { year:1985, name:"Torneo Descentralizado", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}     },
-      ]
-    },
-    {
-      label: "Torneo de Primeros Equipos",
-      titles: [
-        { year:1934, name:"Torneo de Primeros Equipos", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-      ]
-    }
-  ]
-},
 
-    {
-      count: 1,
-      eyebrow: "Copas Nacionales",
-      title: "Copas Nacionales",
-      titles: [
-        { year:1970, name:"Copa Presidente de la República", final:{ score:"4 - 0", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
 
+
+
+    // ==========================================================
+    // EDITA ESTA LISTA con tus trofeos.
+    // "imagen": ruta a tu imagen (ej. "trofeos/liga2023.png")
+    // "desenlace": resultado (ej. "Campeón", "Subcampeón")
+    // "organizacion": entidad organizadora (ej. "Federación Peruana de Fútbol")
+    // "categoria": OBLIGATORIO. Debe ser una de: "masculino", "femenino",
+    //              "reserva", "futsal", "voley" — según a qué pestaña pertenece.
+    // "grupo": OBLIGATORIO. Nombre del card grande que agrupa este trofeo
+    //          (ej. "Primera División del Perú", "Torneos Amistosos", "Copas").
+    //          Todos los trofeos con el mismo "grupo" (y misma categoría)
+    //          se dibujan juntos dentro de un mismo card grande.
+    // "subgrupo": OPCIONAL. Si dentro de un grupo querés sub-secciones
+    //             (ej. "Torneo Apertura" / "Torneo Clausura"), poné este campo.
+    // "escala": OPCIONAL. Zoom individual solo para esa imagen (no afecta a las demás).
+    //           1 = tamaño normal, 1.3 = 30% más grande, 0.9 = 10% más chica, etc.
+    // ==========================================================
+
+    // Config visual de cada "grupo" (card grande). Si un grupo no está acá,
+    // se usan los valores por defecto (eyebrow "Torneos", sin badge).
+    const gruposConfig = {
+      "Primera División del Perú": { eyebrow: "Torneos Nacionales", badge: "🏆 Récord Nacional" },
+      "Torneos Cortos": { eyebrow: "Torneo Apertura y Clausura", badge: null },
+      "Torneos de la Liga": { eyebrow: "Torneos de Liga", badge: null },
+      "Copas Nacionales": { eyebrow: "Copas Nacionales", badge: null },
   
+      "Primera División de Fútbol Femenino Peruano": { eyebrow: "Torneos nacionales", badge: "🏆 Récord Nacional"  },
 
-      ]
-    },
+      "Torneo de Menores": { eyebrow: "Torneos Nacionales", badge: null },
+      "Copa Libertadores": { eyebrow: "Torneos Internacionales", badge: null },
 
+      "Primera División de Fútbol Sala": { eyebrow: "Torneos Nacionales", badge: null },
 
+      "Liga Peruana de Vóley": { eyebrow: "Torneos Nacionales", badge: null },
+    };
 
-  ],
-
-
-
-
-  femenino: [
-  {
-    count: 11,
-    eyebrow: "Torneos nacionales",
-    title: "Primera División de Fútbol Femenino Peruano",
-    record: "Récord nacional",
-  
-        titles: [
-          { year:1996, name:"Campeonato Femenino", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-          { year:"1997 - I", name:"Campeonato Femenino", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-          { year:"1997 - II", name:"Campeonato Femenino", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
-          { year:2001, name:"Campeonato Femenino", final:{ score:"? - ?", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
-          { year:2002, name:"Campeonato Femenino", final:{ score:"3 - 2", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
-          { year:2003, name:"Campeonato Femenino", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/sportboys.png",}   },
-          { year:2014, name:"Campeonato Femenino", final:{ score:"7 - 0", clubImg:"img/universitario.png", rivalImg:"img/vargas.png",}   },
-          { year:2015, name:"Campeonato Femenino", final:{ score:"8 - 0", clubImg:"img/universitario.png", rivalImg:"img/cgtp.png",}   },
-          { year:2016, name:"Campeonato Femenino", final:{ score:"5 - 1", clubImg:"img/universitario.png", rivalImg:"img/villaverde.png",}   },
-          { year:2019, name:"Campeonato Femenino", final:{ score:"6 - 1", clubImg:"img/universitario.png", rivalImg:"img/amazon.png",}   },
-          { year:2023, name:"Liga Femenina FPF", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-        ]
-      
+    const trofeos = [
+      {nombre: "Liga Provincial de Football",anio: 1929,imagen: "img/copas/1929.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Liga Provincial de Football",anio: 1934,imagen: "img/copas/1934.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1939,imagen: "img/copas/1939.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1941,imagen: "img/copas/1941.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1945,imagen: "img/copas/1945.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1946,imagen: "img/copas/1946.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1949,imagen: "img/copas/1949.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1959,imagen: "img/copas/1959.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.4,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1960,imagen: "img/copas/1960.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.2,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Peruano",anio: 1964,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1966,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1967,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1969,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1971,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1974,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1982,imagen: "img/copas/1982.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1985,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1987,imagen: "img/copas/1987.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1990,imagen: "img/copas/copaxxxx.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.5,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1992,imagen: "img/copas/1992.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.1, grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1993,imagen: "img/copas/1993.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 1.3,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1998,imagen: "img/copas/1998.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 1999,imagen: "img/copas/1999.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 2000,imagen: "img/copas/2000.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 2009,imagen: "img/copas/2009.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.8,grupo: "Primera División del Perú"},
+      {nombre: "Campeonato Descentralizado",anio: 2013,imagen: "img/copas/2013.png",desenlace: "Campeón",organizacion: "Federación de Fútbol",categoria: "masculino",escala: 0.9,grupo: "Primera División del Perú"},
+      {nombre: "Fútbol Profesional Liga 1",anio: 2023,imagen: "img/copas/liga1_2026.png",desenlace: "Campeón",organizacion: "Liga Profesional",categoria: "masculino",escala: 1.2,grupo: "Primera División del Perú"},
+      {nombre: "Fútbol Profesional Liga 1",anio: 2024,imagen: "img/copas/liga1_2026.png",desenlace: "Campeón",organizacion: "Liga Profesional",categoria: "masculino",escala: 1.2,grupo: "Primera División del Perú"},
+      {nombre: "Fútbol Profesional Liga 1",anio: 2025,imagen: "img/copas/liga1_2026.png",desenlace: "Campeón",organizacion: "Liga Profesional",categoria: "masculino",escala: 1.2,grupo: "Primera División del Perú"},
     
-  },
+      {nombre: "Torneo Apertura", anio: 1998, imagen: "img/copas/1998a.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 1.3,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 1999, imagen: "img/copas/1999a.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2000, imagen: "img/copas/2000a.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 1.4,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2002, imagen: "img/copas/2002a.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 1.3,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2008, imagen: "img/copas/2008a.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 1.2,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2016, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 0.8,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2020, imagen: "img/copas/apertura.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2024, imagen: "img/copas/apertura.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2025, imagen: "img/copas/apertura.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Clausura", anio: 2000, imagen: "img/copas/2000c.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.1,grupo: "Torneos Cortos", subgrupo: "Torneo Clausura"},
+      {nombre: "Torneo Clausura", anio: 2023, imagen: "img/copas/clausura.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Clausura"},
+      {nombre: "Torneo Clausura", anio: 2024, imagen: "img/copas/clausura.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Clausura"},
+      {nombre: "Torneo Clausura", anio: 2025, imagen: "img/copas/clausura.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "masculino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Clausura"},
+    
+      {nombre: "Campeonato Regional del Perú", anio: 1985, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Campeonato Regional del Perú"},
+      {nombre: "Campeonato Regional del Perú", anio: 1987, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Campeonato Regional del Perú"},
+      {nombre: "Campeonato Regional del Perú", anio: 1988, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Campeonato Regional del Perú"},
+      {nombre: "Campeonato Regional del Perú", anio: "1990-II", imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Campeonato Regional del Perú"},
+      {nombre: "Torneo Regional Metropolitana", anio: 1984, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional · Zona Metropolitana"},
+      {nombre: "Torneo Regional Metropolitana", anio: 1987, imagen: "img/copas/1987rm.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.9,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional · Zona Metropolitana"},
+      {nombre: "Torneo Regional Metropolitana", anio: 1988, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional · Zona Metropolitana"},
+      {nombre: "Torneo Regional Metropolitana", anio: "1989-II", imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional · Zona Metropolitana"},
+      {nombre: "Torneo Regional Metropolitana", anio: "1990-I", imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional · Zona Metropolitana"},
+      {nombre: "Torneo Regional Metropolitana", anio: "1991-II", imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional · Zona Metropolitana"},
+      {nombre: "Torneo Descentralizado", anio: 1985, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Torneo Descentralizado"},
+      {nombre: "Torneo de Primeros Equipos", anio: 1934, imagen: "img/copas/1934.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",grupo: "Torneos de la Liga", subgrupo: "Torneo de Primeros Equipos"},
 
-{
-  count: 3,
-  eyebrow: "Torneos Cortos",
-  title: "Torneos Cortos",
-  groups: [
-    {
-      label: "TORNEO APERTURA",
-      titles: [
-        { year:2003, name:"Torneo Apertura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"img/cni.png",}   },
-        { year:2026, name:"Torneo Apertura", final:{ score:"5 - 3", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   }
-      ]
-    },
-    {
-      label: "TORNEO CLAUSURA",
-      titles: [
-        { year:2025, name:"Torneo Clausura", final:{ score:"1:4 - 1:2", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   }
+      {nombre: "Copa Presidente de la República", anio: 1970, imagen: "img/copas/presi.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "masculino",escala: 1.4,grupo: "Copas Nacionales"},
 
-      ]
+
+
+      {nombre: "Campeonato Femenino", anio: 1996, imagen: "img/copas/1996f.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.0,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: "1997-I", imagen: "img/copas/1997f.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.4,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: "1997-II", imagen: "img/copas/1997f2.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.3,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2001, imagen: "img/copas/2001f.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.3,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2002, imagen: "img/copas/2002fe.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.0,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2003, imagen: "img/copas/2003fe.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.3,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2014, imagen: "img/copas/2014fn.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.9,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2015, imagen: "img/copas/2015fe.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.9,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2016, imagen: "img/copas/2016fe.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.2,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Campeonato Femenino", anio: 2019, imagen: "img/copas/2019f.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.0,grupo: "Primera División de Fútbol Femenino Peruano"},
+      {nombre: "Liga Femenina FPF", anio: 2023, imagen: "img/copas/2025f.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.1,grupo: "Primera División de Fútbol Femenino Peruano"},
+
+      {nombre: "Torneo Apertura", anio: 2003, imagen: "img/copas/2002fa.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.9,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Apertura", anio: 2026, imagen: "img/copas/aperturaf.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Apertura"},
+      {nombre: "Torneo Clausura", anio: 2025, imagen: "img/copas/clausuraf.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.5,grupo: "Torneos Cortos", subgrupo: "Torneo Clausura"},
+
+      {nombre: "Torneo Regional", anio: 2019, imagen: "img/copas/2019fr.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.7,grupo: "Torneos de la Liga", subgrupo: "Torneo Regional"},
+      {nombre: "Zona Metropolitana · Lima", anio: 2014, imagen: "img/copas/2014fm.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 1.1,grupo: "Torneos de la Liga", subgrupo: "Zona Metropolitana · Lima"},
+      {nombre: "Zona Metropolitana · Lima", anio: 2015, imagen: "img/copas/2016fn.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.9,grupo: "Torneos de la Liga", subgrupo: "Zona Metropolitana · Lima"},
+      {nombre: "Zona Metropolitana · Lima", anio: 2016, imagen: "img/copas/2016f.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Zona Metropolitana · Lima"},
+      {nombre: "Zona Metropolitana · Lima", anio: 2019, imagen: "img/copas/2019zn.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "femenino",escala: 0.8,grupo: "Torneos de la Liga", subgrupo: "Zona Metropolitana · Lima"},
+  
+
+
+
+      {nombre: "T. de Promoción y Reserva", anio: 2024, imagen: "img/copas/2024r.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "reserva",escala: 0.8,grupo: "Torneo de Menores", subgrupo: "Torneo de Promoción y Reserva"},
+      {nombre: "Torneo del Inca de Reservas", anio: 2014, imagen: "img/copas/2014Ir.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "reserva",escala: 1.5,grupo: "Torneo de Menores", subgrupo: "Torneo del Inca de Reservas"},
+      {nombre: "Torneo del Inca de Reservas", anio: 2015, imagen: "img/copas/2014Ir.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "reserva",escala: 1.5,grupo: "Torneo de Menores", subgrupo: "Torneo del Inca de Reservas"},
+      {nombre: "Torneo de Reservas", anio: 1930, imagen: "img/copas/1930r.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "reserva",escala: 0.8,grupo: "Torneo de Menores", subgrupo: "Torneo de Reservas"},
+      {nombre: "Torneo de Reservas", anio: 1931, imagen: "img/copas/torneoreservas.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "reserva",escala: 1.1,grupo: "Torneo de Menores", subgrupo: "Torneo de Reservas"},
+      {nombre: "Torneo de Reservas", anio: 1932, imagen: "img/copas/torneoreservas.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "reserva",escala: 1.1,grupo: "Torneo de Menores", subgrupo: "Torneo de Reservas"},
+
+      {nombre: "C. Libertadores Sub-20", anio: 2011, imagen: "img/copas/2011rl.png", desenlace: "Campeón", organizacion: "Conmebol", categoria: "reserva",escala: 1.1,grupo: "Copa Libertadores"},
+
+
+
+      {nombre: "Liga Futsal Pro", anio: 2005, imagen: "img/copas/2005fut.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "futsal",escala: 1.5,grupo: "Primera División de Fútbol Sala"},
+      {nombre: "Liga Futsal Pro", anio: 2019, imagen: "img/copas/2019fut.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "futsal",escala: 1.4,grupo: "Primera División de Fútbol Sala"},
+      {nombre: "Liga Futsal Pro", anio: 2024, imagen: "img/copas/2024fut.png", desenlace: "Campeón", organizacion: "Liga Profesional", categoria: "futsal",escala: 1.4,grupo: "Primera División de Fútbol Sala"},
+
+      {nombre: "Torneo Clausura", anio: 2012, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "futsal",escala: 0.8,grupo: "Torneos Cortos", subgrupo: "Torneo Clausura"},
+
+      {nombre: "Torneo de Verano", anio: 2008, imagen: "img/copas/.png", desenlace: "Campeón", organizacion: "Federación de Fútbol", categoria: "futsal",escala: 0.8,grupo: "Torneos de la Liga"},
+
+
+
+
+      {nombre: "Podio en LNSV - Tercer Lugar",anio: "2025-26",imagen: "img/copas/voley3lugar.png",desenlace: "Campeón",organizacion: "Liga Profesional",categoria: "voley",escala: 1.0,grupo: "Liga Peruana de Vóley"},
+
+
+    ];
+
+    const ICONO_RESPALDO = 'https://cdn-icons-png.flaticon.com/512/616/616489.png';
+    const grid = document.getElementById('grid');
+
+    // ==========================================================
+    // AUTO-RECORTE VISUAL (no toca los archivos originales):
+    // Detecta el espacio transparente (o de fondo uniforme) alrededor
+    // del trofeo y recorta SOLO en pantalla, para que todas las
+    // imágenes "llenen" el mismo recuadro por igual.
+    // ==========================================================
+    function recortarImagenEnCanvas(imgEl) {
+      const w = imgEl.naturalWidth;
+      const h = imgEl.naturalHeight;
+      if (!w || !h) return;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      try {
+        ctx.drawImage(imgEl, 0, 0);
+        const { data } = ctx.getImageData(0, 0, w, h);
+
+        let tieneAlfa = false;
+        for (let i = 3; i < data.length; i += 4 * 97) {
+          if (data[i] < 250) { tieneAlfa = true; break; }
+        }
+
+        let minX = w, minY = h, maxX = -1, maxY = -1;
+
+        if (tieneAlfa) {
+          const UMBRAL_ALFA = 10;
+          for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+              const idx = (y * w + x) * 4;
+              if (data[idx + 3] > UMBRAL_ALFA) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+        } else {
+          const br = data[0], bg = data[1], bb = data[2];
+          const TOLERANCIA = 18;
+          for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+              const idx = (y * w + x) * 4;
+              const dr = Math.abs(data[idx] - br);
+              const dg = Math.abs(data[idx + 1] - bg);
+              const db = Math.abs(data[idx + 2] - bb);
+              if (dr > TOLERANCIA || dg > TOLERANCIA || db > TOLERANCIA) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+        }
+
+        if (maxX < minX || maxY < minY) return;
+
+        const MARGEN = 2;
+        minX = Math.max(0, minX - MARGEN);
+        minY = Math.max(0, minY - MARGEN);
+        maxX = Math.min(w - 1, maxX + MARGEN);
+        maxY = Math.min(h - 1, maxY + MARGEN);
+
+        const cw = maxX - minX + 1;
+        const ch = maxY - minY + 1;
+
+        if (cw >= w * 0.98 && ch >= h * 0.98) return;
+
+        const recorte = document.createElement('canvas');
+        recorte.width = cw;
+        recorte.height = ch;
+        recorte.getContext('2d').drawImage(canvas, minX, minY, cw, ch, 0, 0, cw, ch);
+
+        imgEl.dataset.recortada = '1';
+        imgEl.src = recorte.toDataURL('image/png');
+      } catch (e) {
+        console.warn('No se pudo auto-recortar', imgEl.src, e);
+      }
     }
-   
-  ]
-},
 
-
-{
-  count: 5,
-  eyebrow: "Torneos de la Liga",
-  title: "Torneos de la Liga",
-  groups: [
-    {
-      label: "TORNEO REGIONAL",
-      titles: [
-        { year:2019, name:"Campeonato Regional del Perú", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   }
-      ]
-    },
-    {
-      label: "ZONA METROPOLITANA · LIMA",
-      titles: [
-        { year:2014, name:"Torneo Clausura", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
-        { year:2015, name:"Torneo Clausura", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        { year:2016, name:"Torneo Clausura", final:{ score:"4 - 1", clubImg:"img/universitario.png", rivalImg:"img/lacantera.png",}   },
-        { year:2019, name:"Torneo Clausura", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   }        
-      ]
+    function barrasAleatorias(cantidad) {
+      let html = '';
+      for (let i = 0; i < cantidad; i++) {
+        const alto = 30 + Math.round(Math.random() * 70);
+        html += `<span style="height:${alto}%"></span>`;
+      }
+      return html;
     }
-   
-  ]
-},
 
-],
-
-reserva: [
-  {
-    count: 1,
-    eyebrow: "Torneos internacionales",
-    title: "Copa Libertadores",
-    titles: [
-      { year:2011, name:"Copa Libertadores Sub-20", final:{ score:"1:4 - 1:2", clubImg:"img/universitario.png", rivalImg:"img/boca.png",}   },
-    ]
-  },
-
-  {
-    count: 6,
-    eyebrow: "Torneos nacionales",
-    title: "Torneo Peruano",
-    groups: [
-      {
-        label: "Torneo de Promoción y Reserva",
-        titles: [
-          { year:2024, name:"Torneo de Promoción y Reserva", final:{ score:"2 - 1", clubImg:"img/universitario.png", rivalImg:"img/melgar.png",}   },
-        ]
-      },
-      {
-        label: "Torneo del Inca de Reservas",
-        titles: [
-          { year:2014, name:"Torneo del Inca de Reservas", final:{ score:"0:6 - 0:5", clubImg:"img/universitario.png", rivalImg:"img/cristal.png",}   },
-          { year:2015, name:"Torneo del Inca de Reservas", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        ]
-      },
-      {
-        label: "Torneo de Reservas",
-        titles: [
-          { year:1930, name:"Torneo de Reservas", final:{ score:"3 - 1", clubImg:"img/universitario.png", rivalImg:"img/alianzalima.png",}   },
-          { year:1931, name:"Torneo de Reservas", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-          { year:1932, name:"Torneo de Reservas", final:{ score:"", clubImg:"img/universitario.png", rivalImg:"",}    },
-        ]
-      }
-    ]
-  }
-
-
-],
-
-futsal: [
-  {
-    count: 3,
-    eyebrow: "Torneos nacionales",
-    title: "Primera División de Fútbol Sala",
-    groups: [
-      {
-        label: "Ligas",
-        titles: [
-          { year:2005, name:"Liga Futsal Pro", final:{ score:"6 - 4", clubImg:"img/universitario.png", rivalImg:"img/jap.png",}   },
-          { year:2019, name:"Liga Futsal Pro", final:{ score:"8 - 5", clubImg:"img/universitario.png", rivalImg:"img/overall.png",}   },
-          { year:2024, name:"Liga Futsal Pro", final:{ score:"5 - 4", clubImg:"img/universitario.png", rivalImg:"img/pantawalon.png",}   },
-        ]
-      }
-    ]
-  },
-  {
-    count: 1,
-    eyebrow: "Torneos cortos",
-    title: "Torneos Cortos",
-    groups: [
-      {
-        label: "Torneo Clausura",
-        titles: [
-          { year:2012, name:"Torneo Clausura", 
-            final:{ score:"– –" } },
-        ]
-      }
-    ]
-  },
-  {
-    count: 1,
-    eyebrow: "Torneos de la liga",
-    title: "Copas & Torneos Locales",
-    titles: [
-      { year:2008, name:"Torneo de Verano", 
-        final:{ score:"– –" } },
-    ]
-  }
-],
-
-voley: [
-  {
-    count: 1,
-    eyebrow: "Torneos locales",
-    title: "Liga Peruana de Vóley",
-    groups: [
-      {
-        label: "Ligas",
-        titles: [
-          { year:"2025 - 26", name:"Podio en LNSV - Tercer Lugar", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/geminis.png",}  },
-        ]
-      }
-    ]
-  },
-  {
-    count: 2,
-    eyebrow: "Torneo nacional de revalidación",
-    title: "Campeonato Promocional",
-    groups: [
-      {
-        label: "Campeonato",
-        titles: [
-          { year:2009, name:"Copa Perú", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/vallejo.png",}  },
-          { year:2023, name:"Liga Nacional Intermedia", final:{ score:"3 - 0", clubImg:"img/universitario.png", rivalImg:"img/molivoleibol.png",}  },
-        ]
-      }
-    ]
-  }
-],
-
-};
- 
-const trophyFallbackSVG = `
-<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M14 6H34V16C34 22.6274 29.5228 28 24 28C18.4772 28 14 22.6274 14 16V6Z" fill="currentColor"/>
-  <path d="M14 8H8V12C8 16 11 19 14 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M34 8H40V12C40 16 37 19 34 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-  <rect x="21" y="28" width="6" height="8" fill="currentColor"/>
-  <path d="M15 40H33L31 36H17L15 40Z" fill="currentColor"/>
-  <rect x="12" y="40" width="24" height="3.5" rx="1" fill="currentColor"/>
-</svg>`;
- 
-const recordIconSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M17 4H7v6a5 5 0 0 0 10 0V4z"/><path d="M7 5H4v2a4 4 0 0 0 3.4 4M17 5h3v2a4 4 0 0 1-3.4 4"/></svg>`;
- 
-function trophyCell(item){
-  if(item.trophyImg){
-    return `<div class="trophy-mini">
-      <div class="glow"></div>
-      <img src="${item.trophyImg}" alt="Trofeo ${item.year}"
-           onerror="this.outerHTML='${trophyFallbackSVG.replace(/'/g,"\\'")}'; this.parentElement.style.color='var(--gold-bright)';">
-    </div>`;
-  }
-  return `<div class="trophy-mini" style="color:var(--gold-bright)">
-    <div class="glow"></div>
-    ${trophyFallbackSVG}
-  </div>`;
-}
- 
-function finalRow(item){
-  if(!item.final) return `<div class="final-row"></div>`;
-
-  const club = item.final.clubImg
-    ? `<img class="rival-crest" src="${item.final.clubImg}" alt="">`
-    : "";
-
-  const rival = item.final.rivalImg
-    ? `<img class="rival-crest" src="${item.final.rivalImg}" alt=""
-         onerror="this.outerHTML='<div class=&quot;rival-crest fallback&quot;>${(item.final.rivalAbbr||'??').slice(0,2).toUpperCase()}</div>'">`
-    : (item.final.rivalAbbr ? `<div class="rival-crest fallback">${item.final.rivalAbbr.slice(0,2).toUpperCase()}</div>` : "");
-
-  return `<div class="final-row">${club}<span class="score">${item.final.score}</span>${rival}</div>`;
-}
-
-function cardHTML(item){
-  return `
-    <div class="card1">
-      <div class="card1-top">
-        <div class="year">${item.year}</div>
-        ${trophyCell(item)}
-      </div>
-      <div class="name">${item.name}</div>
-      ${finalRow(item)}
-    </div>
-  `;
-}
- 
-const content = document.getElementById('content');
- 
-function render(cat){
-  content.innerHTML = "";
-  const sections = DATA[cat] || [];
-  if(!sections.length){
-    content.innerHTML = `<div class="section show" style="text-align:center; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:13px; padding:60px 20px;">
-      Todavía no hay títulos cargados en esta categoría.
-    </div>`;
-    return;
-  }
- 
-  sections.forEach(sec => {
-    const section = document.createElement('section');
-    section.className = 'section';
- 
-    let body = '';
-    if(sec.groups){
-      // Varios subtítulos dentro de la misma sección
-      body = sec.groups.map(g => `
-        <div class="group-label">${g.label}</div>
-        <div class="grid">${g.titles.map(cardHTML).join('')}</div>
-      `).join('');
-    } else {
-      // Formato clásico: una sola grilla
-      body = `<div class="grid">${sec.titles.map(cardHTML).join('')}</div>`;
-    }
- 
-    section.innerHTML = `
-      <div class="section-head">
-        <div class="tally">
-          <div class="tally-num">${sec.count}</div>
-          <div class="tally-text">
-            <div class="eyebrow">${sec.eyebrow}</div>
-            <div class="title">${sec.title}</div>
+    // ==========================================================
+    // render(categoria): dibuja en #grid solo los trofeos de la
+    // categoría pedida, ordenados del más antiguo al más reciente.
+    // Esta es la función que faltaba: la llaman las pestañas y la
+    // línea render('masculino') de más abajo.
+    // ==========================================================
+    // Arma el HTML de una sola tarjeta de trofeo (la chica, con imagen)
+    function tarjetaTrofeoHTML(t) {
+      return `
+        <div class="card">
+          <div class="card-imagen">
+            <img src="${t.imagen}" alt="${t.nombre}"
+                 style="--escala: ${t.escala || 1};"
+                 onerror="this.src='${ICONO_RESPALDO}'"
+                 onload="if(!this.dataset.recortada){ recortarImagenEnCanvas(this); }">
+          </div>
+          <div class="card-cuerpo">
+            <span class="anio-pill">${t.anio}</span>
+            <div class="nombre-torneo">${t.nombre}</div>
+            <div class="separador"></div>
+            <div class="detalles">
+              <div class="detalle">
+                <div class="etiqueta">Desenlace</div>
+                <div class="valor">${t.desenlace}</div>
+              </div>
+              <div class="detalle">
+                <div class="etiqueta">Organización</div>
+                <div class="valor">${t.organizacion}</div>
+              </div>
+            </div>
+            <div class="ecualizador">${barrasAleatorias(28)}</div>
           </div>
         </div>
-        ${sec.record ? `<div class="record-badge">${recordIconSVG}${sec.record}</div>` : ""}
-      </div>
-      ${body}
-    `;
-    content.appendChild(section);
-  });
- 
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.section').forEach((el,i) => {
-      setTimeout(() => el.classList.add('show'), i * 90);
-    });
-  });
-}
+      `;
+    }
+
+    function render(categoria) {
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const filtrados = trofeos
+        .filter(t => t.categoria === categoria)
+        .sort((a, b) => a.anio - b.anio);
+
+      if (filtrados.length === 0) {
+        grid.innerHTML = '<div class="sin-resultados">Todavía no hay trofeos cargados en esta categoría.</div>';
+        return;
+      }
+
+      // Agrupamos por "grupo", preservando el orden de aparición
+      const grupos = new Map(); // nombreGrupo -> array de trofeos
+      filtrados.forEach(t => {
+        const nombreGrupo = t.grupo || 'Otros torneos';
+        if (!grupos.has(nombreGrupo)) grupos.set(nombreGrupo, []);
+        grupos.get(nombreGrupo).push(t);
+      });
+
+      grupos.forEach((trofeosDelGrupo, nombreGrupo) => {
+        const cfg = gruposConfig[nombreGrupo] || { eyebrow: 'Torneos', badge: null };
+
+        const grupoCard = document.createElement('div');
+        grupoCard.className = 'grupo-card';
+
+        // Dentro del grupo, sub-agrupamos por "subgrupo" (si existe)
+        const subgrupos = new Map();
+        trofeosDelGrupo.forEach(t => {
+          const nombreSub = t.subgrupo || null;
+          if (!subgrupos.has(nombreSub)) subgrupos.set(nombreSub, []);
+          subgrupos.get(nombreSub).push(t);
+        });
+
+        let cuerpoHTML = '';
+        subgrupos.forEach((lista, nombreSub) => {
+          if (nombreSub) {
+            cuerpoHTML += `<div class="subgrupo-titulo">${nombreSub}</div>`;
+          }
+          cuerpoHTML += `<div class="grid">${lista.map(tarjetaTrofeoHTML).join('')}</div>`;
+        });
+
+        grupoCard.innerHTML = `
+          <div class="grupo-header">
+            <div class="grupo-titulo-wrap">
+              <div class="grupo-numero">${trofeosDelGrupo.length}</div>
+              <div class="grupo-textos">
+                <div class="grupo-eyebrow">${cfg.eyebrow}</div>
+                <div class="grupo-titulo">${nombreGrupo}</div>
+              </div>
+            </div>
+            ${cfg.badge ? `<span class="grupo-badge">${cfg.badge}</span>` : ''}
+          </div>
+          ${cuerpoHTML}
+        `;
+
+        grid.appendChild(grupoCard);
+      });
+    }
+
+
  
 document.getElementById('tabs').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab');

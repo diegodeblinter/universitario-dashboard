@@ -100,23 +100,25 @@
           </div>
 
           <!-- Filtros + tablas -->
-          <div class="controls">
-            <div class="select-wrap">
-              <select id="viewSelect">
-                <option value="Fase II" selected>Fase II</option>
-                <option value="acumulado" selected>Acumulado</option>
-                <option value="sub18">Overview Sub-18</option>
-                <option value="sub16">Overview Sub-16</option>
-                <option value="Liga Nacional Juvenil">Liga Nacional Juvenil</option>
+<div class="controls">
+  <div class="select-wrap">
+    <select id="viewSelect">
+       <option value="fase2_acumulado" selected>Fase II Acumulado</option>
+       <option value="fase2_sub18">Fase II Sub-18</option>
+       <option value="fase2_sub16">Fase II Sub-16</option>
+       <option value="fase1_acumulado">Fase I Acumulado</option>
+       <option value="fase1_sub18">Fase I Sub-18</option>
+       <option value="fase1_sub16">Fase I Sub-16</option>
+       <option value="Liga Nacional Juvenil">Liga Nacional</option>
+    </select>
+  </div>
 
-              </select>
-            </div>
-            <div class="select-wrap">
-              <select id="yearSelect">
-                <option>2026</option>
-              </select>
-            </div>
-          </div>
+  <div class="select-wrap">
+    <select id="yearSelect">
+      <option>2026</option>
+    </select>
+  </div>
+</div>
 
           <!-- Tabla posiciones -->
           <div class="table-card" id="tablaPosiciones">
@@ -522,36 +524,52 @@
 const SUPABASE_URL = "https://xwiltuxkdkvbzawcejwe.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3aWx0dXhrZGt2Ynphd2NlandlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjIzMDQsImV4cCI6MjA5NzEzODMwNH0.DKuVLQUUObhI_BQ2A-Rxqno0xb9_2xmjOkPFyHyI1io";
 
+
+
 async function render() {
   const view = document.getElementById("viewSelect").value;
   const year = parseInt(document.getElementById("yearSelect").value);
   const tbody = document.getElementById("tbody");
   const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
 
-  // Vista de partidos — no tocar
- if (!["acumulado", "sub18", "sub16", "Fase II"].includes(view)) return;
+  const vistasTabla = ["fase1_acumulado","fase1_sub18","fase1_sub16","fase2_acumulado","fase2_sub18","fase2_sub16"];
+  if (!vistasTabla.includes(view)) return;
 
   tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
 
-  // Traer sub18 y sub16 juntos
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('Liga Nacional Juvenil')}&temporada=eq.${year}&select=*`,
     { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
   );
   const data = await res.json();
 
+  // Qué categoría(s) reales de la BD corresponden a cada opción del combo
+  const categoriasPorVista = {
+    fase1_sub18:     ["sub18"],
+    fase1_sub16:      ["sub16"],
+    fase1_acumulado: ["sub18", "sub16"],
+    fase2_sub18:     ["fase2_sub18"],
+    fase2_sub16:     ["fase2_sub16"],
+    fase2_acumulado: ["fase2_sub18", "fase2_sub16"],
+  };
+  const cats = categoriasPorVista[view];
+  const esAcumulado = view === "fase1_acumulado" || view === "fase2_acumulado";
+
   let rows = [];
 
-if (view === "sub18") {
-  rows = data.filter(r => r.categoria === "sub18");
-} else if (view === "sub16") {
-  rows = data.filter(r => r.categoria === "sub16");
-} else if (view === "Fase II") {
-  rows = data.filter(r => r.categoria === "Fase II");
-} else {
-    // Acumulado: sumar sub18 + sub16 por equipo
+  if (!esAcumulado) {
+    // Vista simple: una sola categoría, tal cual viene de la BD
+    rows = data
+      .filter(r => r.categoria === cats[0])
+      .map(r => ({
+        name: r.equipo, logo: `img/${r.logo}`,
+        pj: r.pj, g: r.g, e: r.e, p: r.p, gf: r.gf, gc: r.gc,
+        last: r.forma || "", zone: r.zona || ""
+      }));
+  } else {
+    // Acumulado: suma sub18 + sub16 (de Fase I o Fase II según corresponda)
     const map = {};
-     data.filter(r => r.categoria === "sub18" || r.categoria === "sub16").forEach(r => {
+    data.filter(r => cats.includes(r.categoria)).forEach(r => {
       if (!map[r.equipo]) {
         map[r.equipo] = { name: r.equipo, logo: `img/${r.logo}`, pj:0, g:0, e:0, p:0, gf:0, gc:0, last:"", zone:"" };
       }
@@ -561,28 +579,9 @@ if (view === "sub18") {
       t.last = (t.last + (r.forma || "")).slice(-5);
     });
     rows = Object.values(map);
-
-    // Ordenar y asignar zone cl a los 4 primeros
-    rows.sort((a,b) => {
-      const pa = a.g*3+a.e, pb = b.g*3+b.e;
-      if (pb !== pa) return pb - pa;
-      return (b.gf-b.gc) - (a.gf-a.gc);
-    });
-    rows.forEach((t, i) => { t.zone = i < 4 ? "cl" : ""; });
   }
 
-  // Para sub18/sub16, mapear campos de Supabase al formato esperado
-  if (view !== "acumulado") {
-    rows = rows.map(r => ({
-      name: r.equipo,
-      logo: `img/${r.logo}`,
-      pj: r.pj, g: r.g, e: r.e, p: r.p,
-      gf: r.gf, gc: r.gc,
-      last: r.forma || "",
-      zone: r.zona || ""
-    }));
-  }
-
+  // Orden por puntos, luego diferencia de gol, luego GF
   rows.sort((a,b) => {
     const pa = a.g*3+a.e, pb = b.g*3+b.e;
     if (pb !== pa) return pb - pa;
@@ -591,9 +590,9 @@ if (view === "sub18") {
     return b.gf - a.gf;
   });
 
-  if (view === "Fase II") {
-    rows.forEach((t, i) => { t.zone = i < 2 ? "cl" : ""; });
-  }
+  // Corte de clasificación: Fase I clasifican los 4 primeros, Fase II los 2 primeros
+  const corte = view.startsWith("fase1") ? 4 : 2;
+  rows.forEach((t, i) => { t.zone = i < corte ? "cl" : ""; });
 
   tbody.innerHTML = "";
   rows.forEach((t, i) => {
@@ -602,8 +601,8 @@ if (view === "sub18") {
     const dgStr = dg>0?"+"+dg:String(dg);
     const dgClass = dg>0?"dg-pos":dg<0?"dg-neg":"dg-zer";
     const last5 = (t.last||"").split("").slice(-5).map(c=>`<div class="dot ${dotClass[c]||'dot-d'}"></div>`).join("");
-    const zClass = ((view === "acumulado" || view === "Fase II") && t.zone) ? "zone-"+t.zone : "";
-    
+    const zClass = t.zone ? "zone-"+t.zone : "";
+
     tbody.insertAdjacentHTML("beforeend", `
       <tr class="${zClass}">
         <td class="td-pos">${i+1}</td>
@@ -621,6 +620,8 @@ if (view === "sub18") {
       </tr>`);
   });
 }
+
+
   // ══════════════════════════════════════
   // TABLA DE PARTIDOS + PAGINACIÓN
   // ══════════════════════════════════════
@@ -767,20 +768,20 @@ if (view === "sub18") {
   renderPaginaPartidos();
 }
 
-  function actualizarTablas() {
-    const liga = filtroLiga.value;
-    const esTablaPos = ["acumulado", "sub18", "sub16", "Fase II"].includes(liga);
-    
-    if (esTablaPos) {
-      tablaPosiciones.style.display = "block";
-      tablaPartidos.style.display   = "none";
-      render();
-    } else {
-      tablaPosiciones.style.display = "none";
-      tablaPartidos.style.display   = "block";
-      actualizarPartidos();
-    }
+function actualizarTablas() {
+  const liga = filtroLiga.value;
+  const esTablaPos = liga !== "Liga Nacional Juvenil";
+
+  if (esTablaPos) {
+    tablaPosiciones.style.display = "block";
+    tablaPartidos.style.display   = "none";
+    render();
+  } else {
+    tablaPosiciones.style.display = "none";
+    tablaPartidos.style.display   = "block";
+    actualizarPartidos();
   }
+}
 
 
   function buildAcumulado(year) {
@@ -813,11 +814,14 @@ if (view === "sub18") {
   filtroAnio.addEventListener("change", actualizarTablas);
   filtroLiga.addEventListener("change", actualizarTablas);
 
-  window.addEventListener("DOMContentLoaded", () => {
-    filtroLiga.value = "Fase II";
-    filtroAnio.value = "2026";
-    actualizarTablas();
-  });
+window.addEventListener("DOMContentLoaded", () => {
+  filtroLiga.value = "fase2_acumulado";
+  filtroAnio.value = "2026";
+  actualizarTablas();
+  cargarProximoPartido("Juvenil","Liga Nacional Juvenil");
+  cargarFormaReciente();
+  cargarUltimosLiga1();
+}); 
 
 
 

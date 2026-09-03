@@ -842,8 +842,9 @@ window.addEventListener("DOMContentLoaded", () => {
 function cargarProximoPartido(genero, liga) {
   let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
 
-  const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0); // comparar solo por fecha, sin horas
+  // Fecha de hoy en formato YYYY-MM-DD, sin problemas de zona horaria
+  const hoyStr = new Date().toLocaleDateString("sv-SE"); 
+  // "sv-SE" (sueco) da formato YYYY-MM-DD de forma nativa y confiable
 
   let pendientes = partidos.filter(p => {
     if (
@@ -855,8 +856,7 @@ function cargarProximoPartido(genero, liga) {
       !p.fecha.match(/^\d{4}-\d{2}-\d{2}/)
     ) return false;
 
-    const fechaPartido = new Date(p.fecha);
-    return fechaPartido >= hoy; // 👈 solo partidos de hoy en adelante
+    return p.fecha.slice(0, 10) >= hoyStr; // 👈 comparación de strings, incluye HOY
   });
 
   const tbody = document.getElementById("proximopartido");
@@ -867,7 +867,7 @@ function cargarProximoPartido(genero, liga) {
     return;
   }
 
-  pendientes.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  pendientes.sort((a, b) => a.fecha.localeCompare(b.fecha));
   const p = pendientes[0];
 
   tbody.innerHTML = `<tr><td>
@@ -885,7 +885,6 @@ function cargarProximoPartido(genero, liga) {
     </div>
   </td></tr>`;
 }
-
 
 
 

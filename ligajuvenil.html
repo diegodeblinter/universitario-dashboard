@@ -839,16 +839,25 @@ window.addEventListener("DOMContentLoaded", () => {
     return mapa[liga]||"default.png";
   }
 
- function cargarProximoPartido(genero, liga) {
-  let partidos = JSON.parse(localStorage.getItem("partidos"))||[];
-  let pendientes = partidos.filter(p =>
-    p.estado?.toLowerCase() === "pendiente" &&
-    p.genero === genero &&
-    p.liga === liga &&
-    p.fecha &&                          // ← excluir null/vacío
-    p.fecha !== "YY-MM-DD" &&           // ← excluir placeholder
-    p.fecha.match(/^\d{4}-\d{2}-\d{2}/) // ← solo fechas reales
-  );
+function cargarProximoPartido(genero, liga) {
+  let partidos = JSON.parse(localStorage.getItem("partidos")) || [];
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0); // comparar solo por fecha, sin horas
+
+  let pendientes = partidos.filter(p => {
+    if (
+      p.estado?.toLowerCase() !== "pendiente" ||
+      p.genero !== genero ||
+      p.liga !== liga ||
+      !p.fecha ||
+      p.fecha === "YY-MM-DD" ||
+      !p.fecha.match(/^\d{4}-\d{2}-\d{2}/)
+    ) return false;
+
+    const fechaPartido = new Date(p.fecha);
+    return fechaPartido >= hoy; // 👈 solo partidos de hoy en adelante
+  });
 
   const tbody = document.getElementById("proximopartido");
   tbody.innerHTML = "";

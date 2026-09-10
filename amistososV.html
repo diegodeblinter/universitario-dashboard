@@ -77,7 +77,7 @@ body { visibility: hidden; }
           </div>
           <div class="select-wrap">
             <select id="yearSelect">
-
+              <option>2026</option>
               <option>2025</option>
             </select>
           </div>
@@ -295,6 +295,7 @@ body { visibility: hidden; }
           </div>
           <div style="position:relative;">
             <select id="filtroAnioPlayer" style="appearance:none;background:var(--bg);border:1.5px solid var(--border);color:var(--text-primary);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;padding:6px 32px 6px 12px;border-radius:8px;cursor:pointer;outline:none;transition:border-color .15s;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <option>2026</option>
               <option>2025</option>
             </select>
             <svg style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
@@ -731,7 +732,7 @@ filtroLiga.addEventListener("change", actualizarTablas);
 
 window.addEventListener("DOMContentLoaded", () => {
   filtroLiga.value = "Amistosos";
-  filtroAnio.value = "2025";
+  filtroAnio.value = "2026";
   actualizarTablas();
 });
 
@@ -1002,7 +1003,7 @@ function cargarUltimosLiga1() {
 
 document.addEventListener("DOMContentLoaded", () => {
   filtroLiga.value = "Amistosos";
-  filtroAnio.value = "2025";
+  filtroAnio.value = "2026";
   actualizarTablas();
   cargarProximoPartido("Voley","Amistosos");
   cargarFormaReciente();

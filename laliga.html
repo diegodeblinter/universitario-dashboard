@@ -104,7 +104,8 @@ body { visibility: hidden; }
         <div class="controls">
           <div class="select-wrap">
             <select id="viewSelect">
-              <option value="overview" selected>Overview</option>
+              <option value="apertura" selected>Apertura</option>
+              <option value="clausura">Clausura</option>
               <option value="La Liga Division II">La Liga Division II</option>
             </select>
           </div>
@@ -565,15 +566,15 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 async function render() {
   const view = document.getElementById("viewSelect").value;
   const year = parseInt(document.getElementById("yearSelect").value);
-  if (view !== "overview") return;
+  if (view !== "apertura" && view !== "clausura") return;
 
   const tbody = document.getElementById("tbody");
   tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:20px;color:#94a3b8;">Cargando...</td></tr>`;
 
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('La Liga Division II')}&temporada=eq.${year}&select=*`,
-    { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
-  );
+ const res = await fetch(
+  `${SUPABASE_URL}/rest/v1/posiciones?liga=eq.${encodeURIComponent('La Liga Division II')}&temporada=eq.${year}&categoria=eq.${view}&select=*`,
+  { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+);
   const rows = await res.json();
 
   // pts = g*2 + p*1, desempate por df (guardado en gf)
@@ -581,7 +582,7 @@ async function render() {
     const ptsA = a.g * 2 + a.p;
     const ptsB = b.g * 2 + b.p;
     if (ptsB !== ptsA) return ptsB - ptsA;
-    return b.gf - a.gf; // gf = df manual
+    return b.gf - a.gf;
   });
 
   const dotClass = { W:"dot-w", D:"dot-d", L:"dot-l" };
@@ -764,7 +765,7 @@ function actualizarPartidos() {
 
 function actualizarTablas() {
   const liga = filtroLiga.value;
-  if (liga === "overview") {
+  if (liga === "apertura" || liga === "clausura") {
     tablaPosiciones.style.display = "block";
     tablaPartidos.style.display   = "none";
     render();
@@ -779,7 +780,7 @@ filtroAnio.addEventListener("change", actualizarTablas);
 filtroLiga.addEventListener("change", actualizarTablas);
 
 window.addEventListener("DOMContentLoaded", () => {
-  filtroLiga.value = "overview";
+  filtroLiga.value = "clausura";
   filtroAnio.value = "2026";
   actualizarTablas();
 });
@@ -1057,7 +1058,7 @@ function cargarUltimosLiga1() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  filtroLiga.value = "overview";
+  filtroLiga.value = "clausura";
   filtroAnio.value = "2026";
   actualizarTablas();
   cargarProximoPartido("Basquet","La Liga Division II");

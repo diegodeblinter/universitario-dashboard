@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TailAdmin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+
+html, body { height: auto; min-height: 100%; overflow-y: auto; overflow-x: hidden; }
+.main { display: flex; flex-direction: column; }
+.content { flex: 1; overflow: visible; }
+.topbar { position: sticky; top: 0; z-index: 30; }
+body { visibility: hidden; }
+
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* evita que el body entero haga scroll */
+}
+
+.sidebar {
+  position: sticky; /* o fixed */
+  top: 0;
+  height: 100vh;
+  overflow-y: auto; /* scroll propio del menú si es muy largo */
+  flex-shrink: 0;
+}
+
+.main {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto; /* el scroll ocurre aquí, no en body */
+}
+
+
+
+.pm-club, .pm-opp {
+ 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;   /* antes: center → ahora alineado a la izquierda */
+}
+
+.pm-club img, .pm-opp img {
+  width: auto;
+  height: auto;
+  max-width: 81%;
+  max-height: 81%;
+  object-fit: contain;           /* evita que se estire/deforme */
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+  :root {
+    --fondo: #191d29;
+    --panel: #191d29;
+    --panel-izq: #191d29;
+    --borde: #131318;
+    --azul: #eeb20c;
+    --azul-claro: #5293cf;
+    --texto: #f2f2f4;
+    --texto-tenue: #8a8a92;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+
+
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: #06327e;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin: 6px 0 8px;
+  }
+
+  .header p {
+    color: var(--texto-tenue);
+    font-size: 0.85rem;
+  }
+
+.grid {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  height: auto;
+  min-height: 190px;
+}
+
+  /* ---------- TARJETA ---------- */
+  .palmares-page .card {
+    display: flex;
+    background: #191d29;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 200px; /* altura FIJA: ninguna imagen puede agrandar la tarjeta */
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .palmares-page .card-imagen {
+    flex: 0 0 30%;
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 30%, #191d29, transparent 60%),
+      #191d29;
+    display: flex;
+    align-items: flex-end;   /* todos los trofeos "paran" sobre la misma base */
+    justify-content: center;
+    padding: 16px;
+    overflow: hidden; /* la imagen nunca se sale del recuadro */
+  }
+
+  .card-imagen img {
+    max-width: 140%;
+    max-height: 140%; /* nunca puede superar el alto fijo de .card-imagen */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    transform: scale(var(--escala, 1)); /* zoom individual, solo afecta a esta imagen */
+    transform-origin: center bottom; /* crece hacia arriba, manteniendo la base fija */
+  }
+
+  .palmares-page .card-cuerpo {
+    flex: 1;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .anio-pill {
+    display: inline-block;
+    align-self: flex-start;
+    background: linear-gradient(135deg, var(--azul-claro), var(--azul));
+    color: #111111;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    padding: 2px 12px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+  }
+
+  .nombre-torneo {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--texto);
+    line-height: 1.25;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .separador {
+    height: 1px;
+    background: var(--borde);
+    margin-bottom: 8px;
+  }
+
+  .detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-bottom: 10px;
+  }
+
+  .detalle .etiqueta {
+     font-size: 0.45rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--texto-tenue);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .detalle .valor {
+  font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--texto);
+  }
+
+  /* ---------- ECUALIZADOR DECORATIVO ---------- */
+  .ecualizador {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 18px;
+    opacity: 0.85;
+  }
+
+  .ecualizador span {
+    flex: 1;
+    background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+  .sin-resultados {
+    text-align: center;
+    color: var(--texto-tenue);
+    font-size: 0.9rem;
+    padding: 60px 20px;
+  }
+
+  /* ---------- CARD GRANDE QUE AGRUPA UN TIPO DE TORNEO ---------- */
+  .grupo-card {
+    max-width: 1610px;
+    margin: 0 auto 26px;
+    background: linear-gradient(180deg, #1f2a3d, #1f2a3d);
+  
+    border-radius: 22px;
+    padding: 26px 26px 30px;
+  }
+
+  .grupo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+
+  .grupo-titulo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .grupo-numero {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #eeb20c;
+    line-height: 1;
+  }
+
+  .grupo-textos .grupo-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: #eeb20c;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .grupo-textos .grupo-titulo {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--texto);
+  }
+
+  .grupo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #eeb20c, #eeb20c);
+    color: #201703;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Sub-secciones dentro de un mismo grupo (ej. Apertura / Clausura) */
+  .subgrupo-titulo {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #f3dfaa;
+    margin: 22px 0 12px;
+  }
+
+  .subgrupo-titulo:first-child {
+    margin-top: 0;
+  }
+
+  @media (max-width: 180px) {
+    .card { flex-direction: column; height: auto; }
+    .card-imagen { flex: none; padding: 16px; height: 120px; }
+    .detalles { grid-template-columns: 1fr; }
+  }
+
+.palmares-page .wrap,
+.palmares-page .container,
+.palmares-page .grupo-card {
+  width: 100%;
+  max-width: 1900px;
+}
+
+
+.grid-grupos {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* ---------- JUGADORES / JUGADORAS REFERENTES ---------- */
+.referentes-split {
+  width: 100%;
+  max-width: 1900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+@media (max-width: 900px) { .referentes-split { grid-template-columns: 1fr; } }
+
+.ref-panel {
+  background: #1f2a3d;
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.ref-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #232830;
+}
+.ref-header .icono { color: var(--azul); flex-shrink: 0; }
+.ref-header .titulos { display: flex; flex-direction: column; }
+.ref-header .nombre {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.ref-header .sub {
+  font-size: 0.72rem;
+  color: var(--texto-tenue);
+}
+.ref-header .count {
+  margin-left: auto;
+  background: var(--azul);
+  color: #201703;
+  font-weight: 800;
+  font-size: 0.8rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ref-fila {
+  display: flex;
+   align-items: center;
+  gap: 14px;
+  padding: 14px 4px;
+  border-bottom: 1px solid rgb(63, 63, 75);
+}
+.ref-fila:last-child { border-bottom: none; }
+.ref-fila.top { background: linear-gradient(90deg, rgba(238,178,12,0.10), transparent 60%); border-radius: 10px; }
+
+.ref-rank {
+  width: 18px;
+  padding-top: 8px;
+  color: var(--texto-tenue);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.ref-jugador {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 180px;
+  flex-shrink: 0;
+}
+.ref-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #131a29;
+  border: 1px solid var(--borde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--azul-claro);
+  flex-shrink: 0;
+}
+.ref-nombre { font-weight: 700; font-size: 0.82rem; line-height: 1.2; }
+.ref-posicion { font-size: 0.7rem; color: var(--texto-tenue); }
+.ref-cuenta { font-size: 0.68rem; color: var(--azul); font-weight: 700; margin-top: 2px; }
+
+.ref-vitrina {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  flex: 1;
+}
+.ref-trofeo { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 40px; }
+.ref-trofeo-icon { width: 45px; height: 45px; object-fit: contain; display: block; }
+.ref-trofeo-anio { font-size: 0.65rem; font-weight: 600; color: var(--texto-tenue); }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- ══ MENU ══ -->
+<div id="sidebar-container"></div>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <div class="topbar">
+    <div class="topbar-search">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Type to search...">
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-icons">
+      <div class="topbar-icon-btn" style="position:relative;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+    </div>
+    <div class="topbar-user">
+      <div class="topbar-user-info">
+        <div class="topbar-user-name">Diego Rodríguez</div>
+        <div class="topbar-user-role">Ux Designer</div>
+      </div>
+      <div class="topbar-avatar">DR</div>
+    </div>
+  </div>
+
+  <div class="container">
+   <div class="content palmares-page">
+
+       <div class="container">
+  <!-- ══ HEADER ══ -->
+
+  
+         <div class="wrap">
+
+  <nav class="tabs" id="tabs">
+
+
+
+  </nav>
+
+  <!-- IMPORTANTE: este es el contenedor donde se dibujan las tarjetas.
+       Debe existir con id="grid" y class="grid" para que el script las encuentre. -->
+  <div class="grid-grupos" id="grid">
+
+    <div class="referentes-split">
+
+      <!-- ══ MASCULINO ══ -->
+      <div class="ref-panel">
+        <div class="ref-header">
+          <svg class="icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a2 2 0 0 1-2 4h-1M7 5H4a2 2 0 0 0 2 4h1"/></svg>
+          <div class="titulos">
+            <div class="nombre">Jugadores Referentes</div>
+            <div class="sub">Masculino · Universitario de Deportes</div>
+          </div>
+          <div class="count">16</div>
+        </div>
+
+        <div class="ref-fila top">
+          <div class="ref-rank">1</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">JC</div>
+            <div>
+              <div class="ref-nombre">José Luis Carranza</div>
+              <div class="ref-posicion">centrocampista</div>
+              <div class="ref-cuenta">8 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1985</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1987.png" alt="Trofeo"><div class="ref-trofeo-anio">1987</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1990</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1992.png" alt="Trofeo"><div class="ref-trofeo-anio">1992</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1993.png" alt="Trofeo"><div class="ref-trofeo-anio">1993</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1998.png" alt="Trofeo"><div class="ref-trofeo-anio">1998</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1999.png" alt="Trofeo"><div class="ref-trofeo-anio">1999</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2000.png" alt="Trofeo"><div class="ref-trofeo-anio">2000</div></div>
+
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">2</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">LC</div>
+            <div>
+              <div class="ref-nombre">Luis Cruzado</div>
+              <div class="ref-posicion">centrocampista</div>
+              <div class="ref-cuenta">7 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1959.png" alt="Trofeo"><div class="ref-trofeo-anio">1959</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1960.png" alt="Trofeo"><div class="ref-trofeo-anio">1960</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1964</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1966</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1967</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1969</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1971</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">3</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">AU</div>
+            <div>
+              <div class="ref-nombre">Ángel Uribe</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">7 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1959.png" alt="Trofeo"><div class="ref-trofeo-anio">1959</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1960.png" alt="Trofeo"><div class="ref-trofeo-anio">1960</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1964</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1966</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1967</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1969</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1971</div></div>
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">4</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">JF</div>
+            <div>
+              <div class="ref-nombre">José Fernández</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">6 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1959.png" alt="Trofeo"><div class="ref-trofeo-anio">1959</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1960.png" alt="Trofeo"><div class="ref-trofeo-anio">1960</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1964</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1966</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1967</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1969</div></div>
+          </div>
+        </div>
+
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">5</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">TF</div>
+            <div>
+              <div class="ref-nombre">Teodoro Fernández</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">6 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1934.png" alt="Trofeo"><div class="ref-trofeo-anio">1934</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1939.png" alt="Trofeo"><div class="ref-trofeo-anio">1939</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1941.png" alt="Trofeo"><div class="ref-trofeo-anio">1941</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1945.png" alt="Trofeo"><div class="ref-trofeo-anio">1945</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1946.png" alt="Trofeo"><div class="ref-trofeo-anio">1946</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1949.png" alt="Trofeo"><div class="ref-trofeo-anio">1949</div></div>
+          </div>
+        </div>
+
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">6</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">TF</div>
+            <div>
+              <div class="ref-nombre">Percy Rojas</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">6 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1966</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1967</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1969</div></div>
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1971</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1974</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1982.png" alt="Trofeo"><div class="ref-trofeo-anio">1982</div></div>           
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">7</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">HC</div>
+            <div>
+              <div class="ref-nombre">Héctor Chumpitaz</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">5 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1966</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1967</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1969</div></div>
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1971</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1974</div></div>         
+          </div>
+        </div>
+
+
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">8</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">RM</div>
+            <div>
+              <div class="ref-nombre">Roberto Martínez</div>
+              <div class="ref-posicion">Luis Cruzado</div>
+              <div class="ref-cuenta">4 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1987.png" alt="Trofeo"><div class="ref-trofeo-anio">1987</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/copaxxxx.png" alt="Trofeo"><div class="ref-trofeo-anio">1990</div></div>
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1992.png" alt="Trofeo"><div class="ref-trofeo-anio">1992</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1993.png" alt="Trofeo"><div class="ref-trofeo-anio">1993</div></div>         
+          </div>
+        </div>
+
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">9</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">PA</div>
+            <div>
+              <div class="ref-nombre">Piero Alva</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">4 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1998.png" alt="Trofeo"><div class="ref-trofeo-anio">1998</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1999.png" alt="Trofeo"><div class="ref-trofeo-anio">1999</div></div>
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2000.png" alt="Trofeo"><div class="ref-trofeo-anio">2000</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2009.png" alt="Trofeo"><div class="ref-trofeo-anio">2009</div></div>         
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">10</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">JS</div>
+            <div>
+              <div class="ref-nombre">José del Solar</div>
+              <div class="ref-posicion">centrocampista</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1987.png" alt="Trofeo"><div class="ref-trofeo-anio">1987</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1999.png" alt="Trofeo"><div class="ref-trofeo-anio">1999</div></div>   
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2000.png" alt="Trofeo"><div class="ref-trofeo-anio">2000</div></div>       
+          </div>
+        </div>
+
+
+            <div class="ref-fila">
+          <div class="ref-rank">11</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">OI</div>
+            <div>
+              <div class="ref-nombre">Óscar Ibáñez</div>
+              <div class="ref-posicion">Arquero</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1998.png" alt="Trofeo"><div class="ref-trofeo-anio">1998</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1999.png" alt="Trofeo"><div class="ref-trofeo-anio">1999</div></div>   
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2000.png" alt="Trofeo"><div class="ref-trofeo-anio">2000</div></div>       
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">12</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">EF</div>
+            <div>
+              <div class="ref-nombre">Edison Flores</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2024</div></div>   
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2025</div></div>       
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">13</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">AP</div>
+            <div>
+              <div class="ref-nombre">Andy Polo</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2024</div></div>   
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2025</div></div>     
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">14</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">AC</div>
+            <div>
+              <div class="ref-nombre">Aldo Corzo</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2024</div></div>   
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2025</div></div>     
+          </div>
+        </div>    
+
+            <div class="ref-fila">
+          <div class="ref-rank">15</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">AV</div>
+            <div>
+              <div class="ref-nombre">Alex Valera</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2024</div></div>   
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025.png" alt="Trofeo"><div class="ref-trofeo-anio">2025</div></div>     
+          </div>
+        </div>
+
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">16</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#7dd3fc;">RR</div>
+            <div>
+              <div class="ref-nombre">Raúl Ruidíaz</div>
+              <div class="ref-posicion">Delantero</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+             <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2009.png" alt="Trofeo"><div class="ref-trofeo-anio">2009</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2013.png" alt="Trofeo"><div class="ref-trofeo-anio">2013</div></div>       
+          </div>
+        </div>
+           
+      </div>
+
+
+
+      <!-- ══ FEMENINO ══ -->
+      <div class="ref-panel">
+        <div class="ref-header">
+          <svg class="icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a2 2 0 0 1-2 4h-1M7 5H4a2 2 0 0 0 2 4h1"/></svg>
+          <div class="titulos">
+            <div class="nombre">Jugadoras Referentes</div>
+            <div class="sub">Femenino · Universitario de Deportes</div>
+          </div>
+          <div class="count">16</div>
+        </div>
+
+        <div class="ref-fila top">
+          <div class="ref-rank">1</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">VA</div>
+            <div>
+              <div class="ref-nombre">Vivian Ayres</div>
+              <div class="ref-posicion">Delantera</div>
+              <div class="ref-cuenta">6 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1996f.png" alt="Trofeo"><div class="ref-trofeo-anio">1996</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-I</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f2.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-II</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2001f.png" alt="Trofeo"><div class="ref-trofeo-anio">2001</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2002fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2002</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2003fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2003</div></div>
+
+          </div>
+        </div>
+
+          <div class="ref-fila top">
+          <div class="ref-rank">2</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">LB</div>
+            <div>
+              <div class="ref-nombre">Lorena Bosmans</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">5 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1996f.png" alt="Trofeo"><div class="ref-trofeo-anio">1996</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-I</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f2.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-II</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2001f.png" alt="Trofeo"><div class="ref-trofeo-anio">2001</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2002fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2002</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2003fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2003</div></div>
+          </div>
+        </div>
+
+          <div class="ref-fila top">
+          <div class="ref-rank">3</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">SQ</div>
+            <div>
+              <div class="ref-nombre">Susana Quintana</div>
+              <div class="ref-posicion">Delantera</div>
+              <div class="ref-cuenta">5 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1996f.png" alt="Trofeo"><div class="ref-trofeo-anio">1996</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-I</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f2.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-II</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2001f.png" alt="Trofeo"><div class="ref-trofeo-anio">2001</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2002fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2002</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2003fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2003</div></div>
+          </div>
+        </div>
+
+          <div class="ref-fila">
+          <div class="ref-rank">4</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">CN</div>
+            <div>
+              <div class="ref-nombre">Cindy Novoa</div>
+              <div class="ref-posicion">centrocampista</div>
+              <div class="ref-cuenta">5 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2014fn.png" alt="Trofeo"><div class="ref-trofeo-anio">2014</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2015fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2015</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2016fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2016</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+     
+
+
+          <div class="ref-fila">
+          <div class="ref-rank">5</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">SE</div>
+            <div>
+              <div class="ref-nombre">Esthefany Espino</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">5 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2014fn.png" alt="Trofeo"><div class="ref-trofeo-anio">2014</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2015fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2015</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2016fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2016</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">6</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">GC</div>
+            <div>
+              <div class="ref-nombre">Geraldine Cisneros</div>
+              <div class="ref-posicion">Centrocampista</div>
+              <div class="ref-cuenta">4 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2015fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2015</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2016fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2016</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">7</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">AG</div>
+            <div>
+              <div class="ref-nombre">Aissa Garibay</div>
+              <div class="ref-posicion">Delantera</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1996f.png" alt="Trofeo"><div class="ref-trofeo-anio">1996</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-I</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/1997f2.png" alt="Trofeo"><div class="ref-trofeo-anio">1997-II</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">8</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">KF</div>
+            <div>
+              <div class="ref-nombre">Kimbherly Flores</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2014fn.png" alt="Trofeo"><div class="ref-trofeo-anio">2014</div></div>            
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">9</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">EP</div>
+            <div>
+              <div class="ref-nombre">Even Pizango</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2014fn.png" alt="Trofeo"><div class="ref-trofeo-anio">2014</div></div>            
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2016fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2016</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">10</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">XC</div>
+            <div>
+              <div class="ref-nombre">Xioczana Canales</div>
+              <div class="ref-posicion">Delantera</div>
+              <div class="ref-cuenta">3 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2016fe.png" alt="Trofeo"><div class="ref-trofeo-anio">2016</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+
+        <div class="ref-fila">
+          <div class="ref-rank">11</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">SF</div>
+            <div>
+              <div class="ref-nombre">Scarleth Flores</div>
+              <div class="ref-posicion">Centrocampista</div>
+              <div class="ref-cuenta">2 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">12</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">SV</div>
+            <div>
+              <div class="ref-nombre">Stephannie Vásquez </div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">2 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+          <div class="ref-fila">
+          <div class="ref-rank">13</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">SR</div>
+            <div>
+              <div class="ref-nombre">Sabrina Ramírez</div>
+              <div class="ref-posicion">Delantera</div>
+              <div class="ref-cuenta">2 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">14</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">NM</div>
+            <div>
+              <div class="ref-nombre">Nahomi Martínez</div>
+              <div class="ref-posicion">Centrocampista</div>
+              <div class="ref-cuenta">2 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">15</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">FH</div>
+            <div>
+              <div class="ref-nombre">Fabiola Herrera</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">2 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2019f.png" alt="Trofeo"><div class="ref-trofeo-anio">2019</div></div>
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+        <div class="ref-fila">
+          <div class="ref-rank">16</div>
+          <div class="ref-jugador">
+            <div class="ref-avatar" style="color:#e0b0ff;">SL</div>
+            <div>
+              <div class="ref-nombre">Stephanie Lacoste</div>
+              <div class="ref-posicion">Defensa</div>
+              <div class="ref-cuenta">1 títulos</div>
+            </div>
+          </div>
+          <div class="ref-vitrina">
+            <div class="ref-trofeo"><img class="ref-trofeo-icon" src="img/copas/2025f.png" alt="Trofeo"><div class="ref-trofeo-anio">2023</div></div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+ 
+         </div>
+
+
+
+
+  <footer>
+    Palmarés actualizado · Datos basados en fuentes oficiales del club.<br>
+    El título 2026 está sujeto a confirmación final de temporada.
+  </footer>
+
+       </div>
+
+
+
+</div>
+
+
+  </div>
+
+</div>
+
+</div><!-- /app -->
+
+
+
+
+
+
+
+<script>
+  
+// ── MENU ──
+function toggleMenu(id, parentEl) {
+  const sub = document.getElementById('sub-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!sub) return;
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) { sub.classList.add('open'); if (arrow) arrow.classList.add('open'); parentEl.classList.add('active'); }
+}
+function setNavActive(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.nav-arrow').forEach(a => a.classList.remove('open'));
+  el.classList.add('active');
+}
+function setSubActive(el) {
+  document.querySelectorAll('.nav-sub-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+ 
+// ── SIDEBAR
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('sidebar-container').innerHTML = html;
+ 
+    // Marcar automáticamente el item activo según la página actual
+    const pagina = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-sub-item a').forEach(a => {
+      if (a.getAttribute('href') === pagina) {
+        a.closest('.nav-sub-item').classList.add('active');
+ 
+        // Abrir el submenu padre automáticamente
+        const sub = a.closest('.nav-sub');
+        if (sub) {
+          sub.classList.add('open');
+          const id = sub.id.replace('sub-', '');
+          const arrow = document.getElementById('arrow-' + id);
+          if (arrow) arrow.classList.add('open');
+          const parentItem = sub.previousElementSibling;
+          if (parentItem) parentItem.classList.add('active');
+        }
+      }
+    });
+    document.body.style.visibility = 'visible';
+  })
+  .catch(err => {
+    console.error('No se pudo cargar sidebar.html:', err);
+    document.body.style.visibility = 'visible'; // mostrar igual aunque falle
+  });
+ 
+
+
+ 
+
+</script>
+
+</body>
+</html>
